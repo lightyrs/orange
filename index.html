@@ -1,0 +1,148 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<base target='_blank' /> 
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>orange</title>
+  <meta name="description" content="Hacker News Reader">
+  <meta name="author" content="Harris Novick">
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <!-- CSS: implied media=all -->
+  <!-- CSS concatenated and minified via ant build script-->
+	<link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/reader.css">
+  <!-- end CSS-->
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+	
+	<!--[if lt IE 9]>
+	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+  <div class="container-fluid">
+		<section class="sidebar" id="sidebar" role="sidebar">
+			<h1>
+				<span id="spinner"></span>
+				<a href="/">orange</a>
+			</h1>
+			<nav>
+				<ul class="unstyled">
+					<li><a href="#" data-search="hn">HN</a></li>					
+					<li><a href="#" data-search="ask">Ask HN</a></li>					
+					<li><a href="#" data-search="show">Show HN</a></li>
+					<li><a href="#" class="search">Search HN</a></li>
+					<ul class="searches unstyled"></ul>
+				</ul>
+			</nav>
+		</section>
+    <section class="content clearfix" id="main" role="main" data-bind="template: { name: 'itemTemplate', foreach: items }">
+
+    </section>
+		<div class="search popover right">
+		  <div class="arrow"></div>
+		  <div class="inner">
+		    <div class="content">
+					<input class="medium query" size="30" type="text" />
+					<input type="submit" class="btn primary" value="Search HN" />
+		    </div>
+		  </div>
+		</div>
+  </div> <!--! end of #container -->
+
+	<div id="reader">
+		<div id="article_container">
+				<article>
+					<div class="page">
+						<header>					
+							<h2 id="article_title"></h2>
+							<div id="article_favicon"></div>	
+						</header>
+						<div id="page_content"></div>
+					</div>
+				</article>
+			</div>		
+	</div>
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+	<script src="js/mylibs/jquery.cookies.min.js"></script>
+	<script src="js/mylibs/jquery.jsonp-2.1.4.min.js"></script>
+	<script src="js/mylibs/jquery.tmpl.min.js"></script>
+	<script src="js/mylibs/knockout-1.2.1.min.js"></script>
+	<script src="js/mylibs/spin.min.js"></script>
+	<script src="js/mylibs/date.extensions.min.js"></script>
+	<script src="js/mylibs/jquery.viewport.min.js"></script>
+	<script src="js/mylibs/jquery.scrollstop.min.js"></script>
+	<script src="js/mylibs/jquery.favicons.min.js"></script>
+	<script src="js/mylibs/jquery.myimgscale-0.2.min.js"></script>
+	<script src="js/mylibs/jquery.imagefit.min.js"></script>
+	<script src="js/mylibs/prettify.min.js"></script>
+	<link rel="stylesheet" href="css/prettify.css">
+	
+  <!-- scripts concatenated and minified via ant build script-->
+  <script defer src="js/script.js"></script>
+  <!-- end scripts-->
+
+	<script type="text/x-jquery-tmpl" id="itemTemplate">
+		<article class="item pre-render">
+			<div class="thumbnail"></div>
+			<p class="date">
+				<a data-bind="attr: { href: hn_url }, text: published_date" target="_blank"></a>
+			</p>
+			<a class="favicon" href="#"></a>
+			<img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." />
+			<h3 class="title"><a data-bind="attr: { href: url }, text: title" target="_blank"></a></h3>
+			<div class="content">
+				<div class="body hn" data-bind="text: hn_text"></div>
+				<div class="body article"></div>
+				<footer>
+					<ul class="meta unstyled">
+						<li class="user">
+							<a data-bind="attr: { href: hn_user_url }, text: user" target="_blank"></a>
+						</li>
+						<li class="points">
+							<img src="img/upvotes.png" alt="points" />
+							<a href="#" data-bind="text: points"></a>
+						</li>
+						<li class="comments">
+							<img src="img/comments.png" alt="comments" />
+							<a href="#" data-bind="text: num_comments"></a>
+						</li>					
+					</ul>
+				</footer>			
+			</div>
+		</article>
+	</script>
+
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
+</body>
+</html>

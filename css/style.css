@@ -1,0 +1,243 @@
+.container-fluid {
+	padding: 0;
+	position: relative;
+}
+
+.container-fluid > .sidebar {
+	float: left;
+	width: 19%;
+	height: 100%;
+	position: fixed;
+	margin: 0;
+	padding: 17px 0;
+	background-color: #f60;
+}
+
+.sidebar h1 {
+	float: right;
+	position: relative;
+	text-align: right;
+	padding: 0 12px 0 0;
+}
+
+h1 #spinner {
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	line-height: 36px;
+	height: 36px;
+	width: 19px;
+	padding-top: 2px;
+}
+
+h1 a {
+	color: #fff;
+}
+
+h1 a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.sidebar nav {
+	float: right;
+	clear: both;
+	text-align: right;
+	padding: 0 12px 0 0;
+	line-height: 24px;
+}
+
+nav ul li a {
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+nav ul li a:hover {
+	color: #fff;
+}
+
+nav ul.searches li a {
+	font-weight: normal;
+	font-size: 14px;
+}
+
+nav ul.searches li a.close {
+	font-weight: bold;
+	font-size: 11px;
+	margin-right: 6px;
+	position: relative;
+	top: -1px;
+}
+
+.container-fluid > .content {
+	float: left;
+	width: 80%;
+	margin: 0 0 0 20%;
+	padding: 17px 0 7px;
+	max-width: none;
+	min-width: 0;
+}
+
+article.item {
+	opacity: 0;
+	width: 209px;
+	height: 209px;
+	border: 1px solid #ccc;
+	float: left;
+	overflow: hidden;
+	padding: 15px;
+	margin: 0 0 10px 10px;
+	position: relative;
+}
+
+article.item:hover {
+	cursor: pointer;
+	border-color: #0069d6;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 1px 6px rgba(0, 105, 214, 0.25);
+  box-shadow: 0 1px 6px rgba(0, 105, 214, 0.25);
+}
+
+article.item > * {
+	position: relative;
+	z-index: 10;
+}
+
+article.item .loader {
+	float: right;
+	margin-right: 10px;
+}
+
+article.item .date {
+	float: left;
+}
+
+article.item.preview .date a {
+	color: white;
+	text-shadow: 1px 1px 1px black;	
+}
+
+article.item .favicon {
+	float: right;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+
+article.item .favicon img {
+	width: 16px;
+	height: 16px;
+}
+
+article.item.expanded h3.title {
+	height: auto;
+}
+
+article.item h3.title {
+	max-width: 380px;
+	height: 155px;
+	clear: both;
+	line-height: 24px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+
+article.item.preview h3.title a {
+	color: #fff;
+	text-shadow: 1px 1px 1px black;
+}
+
+article.item .content {
+	word-wrap: break-word;
+	white-space: normal;
+}
+
+article.item .body {
+	display: none;
+}
+
+article.item .body.hn {
+	margin: 15px auto 0;
+}
+
+article.item .body.article {
+	padding: 0 20px 0 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-width: 440px;
+	height: 367px;
+	margin: 15px 0 0;
+}
+
+article.item .thumbnail {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+	width: 237px;
+	height: 237px;
+	border: 1px solid #fff;
+}
+
+article.item footer {
+	margin-top: 7px;
+	padding-top: 7px;
+	text-align: right;
+}
+
+article.item footer ul.meta {
+	margin: 0;
+	padding: 0;
+	line-height: 18px;
+}
+
+article.item footer ul.meta li {
+	font-weight: bold;
+	display: inline;
+	padding: 0 0 0 10px;
+}
+
+article.item.preview footer ul.meta li a {
+	color: white;
+	text-shadow: 1px 1px 1px black;
+}
+
+article.item footer li.user {
+	padding: 0;
+}
+
+article.item footer li.user a {
+	float: left;
+	display: block;
+	font-weight: bold;
+}
+
+article.item footer li img { 
+	-khtml-opacity: .50; 
+	-moz-opacity: .50; 
+	-ms-filter: "alpha(opacity=50)"; 
+	filter: alpha(opacity=50); 
+	opacity: .50;
+	position: relative;
+	top: 1px;
+}
+
+.popover.search {
+	top: 108px;
+	left: 20%;
+	margin-left: -7px;	
+	position: fixed;
+}
+
+.popover.search .inner {
+	width: auto;
+}
+
+.popover.search .inner .content {
+	border-radius: 3px;
+ -moz-border-radius: 3px;
+ -webkit-border-radius: 3px;
+}

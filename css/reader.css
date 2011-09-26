@@ -1,0 +1,204 @@
+html.frozen,
+body.frozen {
+	overflow: hidden;
+}
+
+#reader {
+	display: none;
+	position: fixed !important;
+	left: 0px !important;
+	top: 0px;
+	right: 0px !important;
+	bottom: 0px !important;
+	width: 100% !important;
+	height: 100% !important;
+	border: none;
+	background-color: transparent;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 999999 !important;
+	font: menu !important;
+	color: black !important;
+	cursor: default !important;
+	float: none !important;
+	letter-spacing: normal !important;
+	line-height: normal !important;
+	text-align: left !important;
+	text-decoration: none !important;
+	white-space: normal !important;
+	word-spacing: normal !important;
+	margin: 0px;
+	padding: 0px;
+	direction: ltr !important;
+	-webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;  /* FF4+ */
+   -ms-transition: -ms-transform 0.3s ease-out;  /* IE10 */
+    -o-transition: -o-transform 0.3s ease-out;  /* Opera 10.5+ */
+       transition: transform 0.3s ease-out;
+	-webkit-transform: translate3d(0px, 0px, 0px) !important;
+  -moz-transform: translate3d(0px, 0px, 0px) !important;  /* FF4+ */
+   -ms-transform: translate3d(0px, 0px, 0px) !important;  /* IE10 */
+    -o-transform: translate3d(0px, 0px, 0px) !important;  /* Opera 10.5+ */
+       transition: translate3d(0px, 0px, 0px) !important;
+	zoom: 1;
+}
+
+* html #article_container { 
+	width: expression( document.body.clientWidth > 899 ? "898px" : "auto" );
+	width: expression( document.body.clientWidth < 401 ? "400px" : "auto" ); 
+}
+
+#article_container {
+	width: 68%;
+	height: 100%;
+	margin: 0 auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+	text-align: left;
+	max-width: 1028px;
+	min-width: 400px;
+}
+
+* html #reader > #article_container > article { 
+	height: expression( this.scrollHeight < 100.1% ? "100%" : "auto" );
+}
+
+#reader > #article_container > article {
+	display: block;
+	margin: 101% 0 20px;
+	min-height: 100%;
+	border: 1px solid #C3C3C3;
+	background-color: #FDFDFD;
+}
+
+#reader article .page {
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: 0;
+	line-height: 1.4em !important;
+	display: block;
+	padding: 8.333333333333334% 10%;
+	font-family: Palatino, Georgia, Times, "Times New Roman";
+	color: #342E38;
+	-webkit-user-select: auto;
+	/*-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 40px;*/
+}
+
+#reader header {
+	overflow: hidden;
+}
+
+#reader #article_favicon {
+	top: 6px;
+	position: relative;
+	float: right;
+	width: 16px;
+	height: 16px;
+}
+
+#reader #article_favicon a {
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+
+#reader #article_favicon img {
+	width: 16px;
+	height: 16px;
+}
+
+#reader #article_title {
+	float: left;
+	font-weight: bold !important;
+	font-size: 1.8em !important;
+	line-height: 1.25em !important;
+	margin-bottom: 1.5em !important;
+	word-wrap: break-word !important;
+	text-align: left !important;
+	width: 93%;
+}
+
+#reader #page_content {
+	clear: both;
+	line-height: 1.4em !important;
+	font-size: 18px !important;
+	overflow: hidden;
+}
+
+#reader #page_content * {
+	word-wrap: break-word !important;
+}
+
+#reader #page_content h1,
+#reader #page_content h2,
+#reader #page_content h3,
+#reader #page_content h4,
+#reader #page_content h5,
+#reader #page_content h6 {
+	color: #342E38;	
+}
+
+#reader #page_content p {
+	margin: 18px 0 !important;
+	line-height: 1.4em !important;
+	font-size: 18px !important;	
+	text-align: justify !important;
+}
+
+#reader #page_content blockquote {
+	line-height: 1.4em;
+}
+
+#reader #page_content img {
+	display: block;
+	padding: 9px 0 18px;
+}
+
+#reader #page_content img.alignright {
+	float: right;
+	padding: 10px 0 10px 25px;
+}
+
+#reader #page_content img.alignleft {
+	float: left;
+	padding: 10px 25px 10px 0;
+}
+
+#reader #page_content img[align="right"] {
+	padding: 10px 0 10px 25px;
+}
+
+#reader #page_content img[align="left"] {
+	padding: 10px 25px 10px 0;
+}
+
+#reader #page_content ul,
+#reader #page_content ol {
+	margin: 9px 0 18px 9px;
+}
+
+#reader #page_content li {
+	line-height: 1.4em !important;
+	font-size: 18px !important;
+	color: #342E38 !important;
+}
+
+#reader #page_content ul li {
+	list-style-position: outside;
+	margin-left: 12px;
+}
+
+#reader #page_content ol li {
+	list-style-position: inside;
+	margin-left: 0;
+}
+
+#reader #page_content pre {
+	margin: 9px 0 27px;
+	background: #000;
+}
+
+#reader #page_content pre code {
+	background-color: transparent;
+	color: #65B042;
+	padding: 0;
+}

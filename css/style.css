@@ -82,7 +82,6 @@ nav ul.searches li a.close {
 }
 
 article.item {
-	opacity: 0;
 	width: 209px;
 	height: 209px;
 	border: 1px solid #ccc;

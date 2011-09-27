@@ -71,12 +71,13 @@
 	<div id="reader">
 		<div id="article_container">
 				<article>
-					<div class="page">
-						<header>					
-							<h2 id="article_title"></h2>
-							<div id="article_favicon"></div>	
-						</header>
+					<div class="page">					
+						<h2 id="article_title"></h2>
 						<div id="page_content"></div>
+						<div id="article_comments">
+							<h5>Comments</h5>
+							<ul class="comments"></ul>
+						</div>
 					</div>
 				</article>
 			</div>		
@@ -107,7 +108,7 @@
   <!-- end scripts-->
 
 	<script type="text/x-jquery-tmpl" id="itemTemplate">
-		<article class="item pre-render">
+		<article class="item pre-render" data-bind="attr: { title: domain }">
 			<div class="thumbnail"></div>
 			<p class="date">
 				<a data-bind="attr: { href: hn_url }, text: published_date" target="_blank"></a>

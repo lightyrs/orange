@@ -1,10 +1,12 @@
 html.frozen,
 body.frozen {
 	overflow: hidden;
+	-webkit-user-select: none;
 }
 
 #reader {
 	display: none;
+	font-size: 19px;
 	position: fixed !important;
 	left: 0px !important;
 	top: 0px;
@@ -16,7 +18,6 @@ body.frozen {
 	background-color: transparent;
 	background-color: rgba(0, 0, 0, 0.8);
 	z-index: 999999 !important;
-	font: menu !important;
 	color: black !important;
 	cursor: default !important;
 	float: none !important;
@@ -29,33 +30,53 @@ body.frozen {
 	margin: 0px;
 	padding: 0px;
 	direction: ltr !important;
+	zoom: 1;
+	-webkit-user-select: auto;
 	-webkit-transition: -webkit-transform 0.3s ease-out;
-  -moz-transition: -moz-transform 0.3s ease-out;  /* FF4+ */
-   -ms-transition: -ms-transform 0.3s ease-out;  /* IE10 */
-    -o-transition: -o-transform 0.3s ease-out;  /* Opera 10.5+ */
-       transition: transform 0.3s ease-out;
-	-webkit-transform: translate3d(0px, 0px, 0px) !important;
+	  -moz-transition: -moz-transform 0.3s ease-out;  /* FF4+ */
+	   -ms-transition: -ms-transform 0.3s ease-out;  /* IE10 */
+	    -o-transition: -o-transform 0.3s ease-out;  /* Opera 10.5+ */
+	       transition: transform 0.3s ease-out;
+		-webkit-transform: translate3d(0px, 0px, 0px) !important;
   -moz-transform: translate3d(0px, 0px, 0px) !important;  /* FF4+ */
    -ms-transform: translate3d(0px, 0px, 0px) !important;  /* IE10 */
     -o-transform: translate3d(0px, 0px, 0px) !important;  /* Opera 10.5+ */
        transition: translate3d(0px, 0px, 0px) !important;
-	zoom: 1;
+}
+
+#reader ::-webkit-scrollbar:horizontal,
+#reader ::-webkit-scrollbar-track:disabled {
+	display: none;
+}               
+#reader ::-webkit-scrollbar-thumb {
+	-webkit-border-image: url(../img/scrollbar-thumb.png) 19 0 19 0;
+	border-width: 19px 0;
+	min-height: 40px;
+}
+#reader ::-webkit-scrollbar-track {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	-webkit-border-image: url(../img/scrollbar-track.png) 21 0 21 0;
+	border-width: 21px 0;
+}
+#reader ::-webkit-scrollbar {
+	width: 21px;
 }
 
 * html #article_container { 
-	width: expression( document.body.clientWidth > 899 ? "898px" : "auto" );
-	width: expression( document.body.clientWidth < 401 ? "400px" : "auto" ); 
+	width: expression( document.body.clientWidth > 1001 ? "1000px" : "auto" );
+	width: expression( document.body.clientWidth < 301 ? "300px" : "auto" ); 
 }
 
 #article_container {
-	width: 68%;
+	width: 70%;
 	height: 100%;
-	margin: 0 auto;
+	margin: 101% auto 0;
 	overflow-y: auto;
 	overflow-x: hidden;
 	text-align: left;
-	max-width: 1028px;
-	min-width: 400px;
+	max-width: 1000px;
+	min-width: 300px;
 }
 
 * html #reader > #article_container > article { 
@@ -64,8 +85,8 @@ body.frozen {
 
 #reader > #article_container > article {
 	display: block;
-	margin: 101% 0 20px;
-	min-height: 100%;
+	margin: 20px 12px 20px 23px;
+	min-height: 101%;
 	border: 1px solid #C3C3C3;
 	background-color: #FDFDFD;
 }
@@ -83,45 +104,21 @@ body.frozen {
 	/*-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 40px;*/
 }
 
-#reader header {
-	overflow: hidden;
-}
-
-#reader #article_favicon {
-	top: 6px;
-	position: relative;
-	float: right;
-	width: 16px;
-	height: 16px;
-}
-
-#reader #article_favicon a {
-	display: block;
-	width: 16px;
-	height: 16px;
-}
-
-#reader #article_favicon img {
-	width: 16px;
-	height: 16px;
-}
-
 #reader #article_title {
 	float: left;
 	font-weight: bold !important;
-	font-size: 1.8em !important;
+	font-size: 1.25em !important;
 	line-height: 1.25em !important;
-	margin-bottom: 1.5em !important;
+	margin: 0.5em 0 1.5em !important;
 	word-wrap: break-word !important;
 	text-align: left !important;
-	width: 93%;
+	width: 99%;
 }
 
 #reader #page_content {
 	clear: both;
 	line-height: 1.4em !important;
 	font-size: 18px !important;
-	overflow: hidden;
 }
 
 #reader #page_content * {
@@ -146,6 +143,7 @@ body.frozen {
 
 #reader #page_content blockquote {
 	line-height: 1.4em;
+	margin: 9px 0 18px;
 }
 
 #reader #page_content img {
@@ -201,4 +199,39 @@ body.frozen {
 	background-color: transparent;
 	color: #65B042;
 	padding: 0;
+}
+
+#reader #article_comments {
+	clear: both;
+	padding: 20px 0;
+	margin: 0.5em 0 .7em;
+}
+
+#reader #article_comments h5 {
+	font-size: 25px;
+}
+
+#reader #article_comments > .comments {
+	font-size: 22;
+	list-style-type: none;	
+	margin: 0;
+}
+
+#reader #article_comments > .comments > li {
+	color: #404040;
+	line-height: 1.2em;
+	padding: 9px 0;
+}
+
+#reader #article_comments .comments > li > small {
+	font-weight: bold;
+	font-size: 70%;
+	color: #404040;
+}
+
+#reader #article_comments .comments li p {
+	margin: 5px 0 !important;
+	line-height: 1.3em !important;
+	font-size: 16px !important;
+	text-align: justify !important;
 }

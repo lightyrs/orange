@@ -48,6 +48,10 @@ h1 a:hover {
 	line-height: 24px;
 }
 
+nav ul {
+	list-style: none;
+}
+
 nav ul li a {
 	color: #fff;
 	font-size: 16px;
@@ -90,6 +94,7 @@ article.item {
 	padding: 15px;
 	margin: 0 0 10px 10px;
 	position: relative;
+	opacity: 0;
 }
 
 article.item:hover {
@@ -224,18 +229,18 @@ article.item footer li img {
 	top: 1px;
 }
 
-.popover.search {
+#search.popover {
 	top: 108px;
 	left: 20%;
 	margin-left: -7px;	
 	position: fixed;
 }
 
-.popover.search .inner {
+#search.popover .inner {
 	width: auto;
 }
 
-.popover.search .inner .content {
+#search.popover .inner .content {
 	border-radius: 3px;
  -moz-border-radius: 3px;
  -webkit-border-radius: 3px;

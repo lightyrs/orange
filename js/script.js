@@ -6,11 +6,13 @@ var Orange = {
 
   init: function() {    
     Orange.cookies.load_queries();
-
     Orange.hnsearch.fetch_json(Orange.urls.front_hn, "hn");
-
     Orange.listeners.init();
   },
+
+	cache: {},
+	
+	articles: [],
 
   cookies: {
     status: function(cookie) {
@@ -165,26 +167,27 @@ var Orange = {
 			var $container = $("#article_container");
 			var $article = $container.find("article");
 			var $page = $article.find(".page");
-			var item, $content, filtered_content, $youtube_embed, youtube_url;
+			var article, $content, filtered_content, $youtube_embed, youtube_url;
       Orange.els.grid.live("click", function(e) {
 				if ($(e.target).hasClass("title")) {
 					var $this = $(e.target).parents("article.item");
-					item = Orange.items[$this.data("item")];
-					$content = item.content;
+					article = Orange.articles[$this.data("article")];
+					$content = article.content;
+					Orange.hnsearch.fetch_comments(article.sigid);			
 					if ($content) {
-						filtered_content = Orange.extraction.clean_content($content);
+						filtered_content = Orange.utils.clean_content($content);
 					}	else {
-						filtered_content = item.hn_text;
+						filtered_content = article.hn_text;
 					}		
 	        Orange.els.reader.fadeIn(100);
 					$container.stop().animate({
 						"margin-top" : "0"
 					}, 300);
 					$("html, body").toggleClass("frozen");				
-					$article.find("#article_title").text(item.title)
+					$article.find("#article_title").text(article.title)
 						.end().find("#page_content").append(filtered_content).imagefit();
-					Orange.hnsearch.fetch_comments(item.sigid);				
-					if (item.domain === "youtube.com") {
+	
+					if (article.domain === "youtube.com") {
 						$youtube_embed = $article.find("object param[name=movie]");
 						youtube_url = $youtube_embed.attr("value");
 						$youtube_embed.parents("object").replaceWith('<iframe width="420" height="315" src=' + youtube_url + 'frameborder="0" wmode="opaque" allowfullscreen></iframe>');
@@ -216,7 +219,8 @@ var Orange = {
 	},
 
 	urls: {
-	  front_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?limit=30&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),360000),72)))%20desc&filter[fields][type]=submission&callback=?",
+		fallback: "http://api.thriftdb.com/api.hnsearch.com/items/_search?limit=30&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),360000),72)))%20desc&filter[fields][type]=submission&callback=?",
+	  front_hn: "http://api.ihackernews.com/page?format=jsonp&callback=?",
 		ask_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][create_ts]=[NOW-30DAYS%20TO%20NOW]&filter[fields][type]=submission&sortby=create_ts%20desc&limit=100&callback=?",
 		show_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][create_ts]=[NOW-30DAYS%20TO%20NOW]&filter[fields][type]=submission&sortby=create_ts%20desc&limit=100&callback=?",
 	  search_hn: function(term) {
@@ -230,50 +234,69 @@ var Orange = {
 	hnsearch: {
 	  fetch_json: function(url, query) {
 	    Orange.spinner.show();
-	    $.getJSON(url, function(data) {
-	      Orange.hnsearch.parse_json(data.results, query);
-	    });
+	    $.jsonp({
+				url: url,
+				cache: true,
+				success: function(data) {
+					Orange.hnsearch.parse_json(data, query);
+				},
+				error: function() {
+					Orange.hnsearch.fetch_json(Orange.urls.fallback, "search");
+				},
+				complete: function() {
+					Orange.spinner.hide();
+				},
+				dataFilter: function(data) {
+					return data.results || data.items;
+				},
+				timeout: 15000
+			});
 	  },
 
 	  parse_json: function(results, query) {    
 
-	    Orange.items = [];
+	    Orange.articles = [];
 	
 			var result = {},
-					item = {},
+					article = {},
 					i = results.length;
+					
 			while (i--) {
-			  result = results[i].item;
+			  result = results[i].item || results[i];
 
-	      item = {
+	      article = {
 					sigid: result._id || "",
 	        title: result.title || "",
 	        hn_text: result.text || "",
 					domain: result.domain || "",
-	        url: result.url || "http://news.ycombinator.com/user?id=" + result.username || "",
-	        points: result.points || "0",
-	        num_comments: result.num_comments || "0",
-	        user: result.username || "",
-	        hn_user_url: "http://news.ycombinator.com/user?id=" + result.username || "",
-	        published_date: Date.fromString(result.create_ts).toRelativeTime() || "",
-	        hn_url: "http://news.ycombinator.com/item?id=" + result.id || ""
+	        url: result.url || "http://news.ycombinator.com/item?id=" + result.id || "",
+	        points: result.points || result.points || "0",
+	        num_comments: result.num_comments || result.commentCount || "0",
+	        user: result.username || result.postedBy || "",
+	        published_date: result.create_ts || result.postedAgo || "",
+	        hn_url: "http://news.ycombinator.com/item?id=" + result.id || "http://news.ycombinator.com/item?id=" + result.id || ""
 	      };
-
-				if (query === "ask") {
-	        item["title"] = item.title.replace(/^Ask HN\: |Ask HN\:|Ask HN - |Ask HN -/i, "");
+	
+				article["hn_user_url"] = "http://news.ycombinator.com/user?id=" + article.user || "";
+				article["cache_url"] = Orange.utils.normalize_urls(article.url);
+	
+				if (query !== "hn") {
+					article["published_date"] = Date.fromString(article.published_date).toRelativeTime();
+				} else if (query === "ask") {
+	        article["title"] = article.title.replace(/^Ask HN\: |Ask HN\:|Ask HN - |Ask HN -/i, "");
 	      } else if (query === "show") {
-	        item["title"] = item.title.replace(/^Show HN\: |Show HN\:|Show HN - |Show HN -/i, "");
+	        article["title"] = article.title.replace(/^Show HN\: |Show HN\:|Show HN - |Show HN -/i, "");
 	      }
-				Orange.items.push(item);
+				Orange.articles.push(article);
 			}
 			
-			i = Orange.items.length
+			i = Orange.articles.length
 			var articles_string = "<div>"
 			
 			while (i--) {
-				item = Orange.items[i]
+				article = Orange.articles[i]
 				
-				articles_string += '<article class="item pre-render" title="' + item.domain + '" data-item="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + item.hn_url + '" target="_blank">' + item.published_date + '</a></p><a class="favicon" href="' + item.url + '"></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + item.url + '" target="_blank">' + item.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + item.hn_user_url + '" target="_blank">' + item.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + item.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a href="#">' + item.num_comments + '</a></li></ul></footer></div></article>';
+				articles_string += '<article class="item pre-render" title="' + article.domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + article.url + '"><img src="http://g.etfv.co/' + article.url + '?defaulticon=lightpng" alt="' + article.domain + '" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a href="#">' + article.num_comments + '</a></li></ul></footer></div></article>';
 			}
 			
 			articles_string += "</div>";
@@ -294,78 +317,154 @@ var Orange = {
 					n(e.slice(1));
 				});
 			})($("article.item"));
-			$("article.item .title a").each(function() {
-				$(this).favicons({
-				  'service': 'http://g.etfv.co/__URL__?defaulticon=lightpng'
-				});
-		  });
 			Orange.listeners.window();
 			Orange.extraction.init();
 	  },
 	
 		fetch_comments: function(sigid) {
-			$.getJSON(Orange.urls.comments_hn(sigid), function(response) {
-				$.each(response.results, function(i, result) {
-				  $("#reader #article_comments > .comments").append("<li class='comment'><small>" + result.item.username + "</small><p>" + result.item.text + "</p></li>");
-				});
+			$.jsonp({
+				url: Orange.urls.comments_hn(sigid),
+				cache: true,
+				success: function(results) {
+					var i = results.length,
+							comments = "<ul class='comments'><h5>Comments</h5>",
+							result;
+							
+					if (i > 0) {
+						while (i--) {
+							result = results[i];
+							comments += "<li class='comment'><small>" + result.item.username + "</small><p>" + result.item.text + "</p></li>";					
+						}
+
+						comments += "</ul>";				
+						$("#reader #article_comments").html(comments);						
+					} else {
+						return;
+					}
+				},
+				dataFilter: function(data) {
+					return data.results;
+				},
+				timeout: 10000
 			});
 		}
 	},
 	
-	extraction: {
+	extraction: {		
 		init: function() {
 			$("article.item.pre-render:in-viewport").each(function() {
-				var $this = $(this);
-				if (Orange.items[$this.data("item")].domain !== "") {
-					Orange.extraction.start($this, Orange.items[$this.data("item")].url);       
-	      } else {
-					Orange.extraction.complete($this);
+				var $this = $(this),
+						article = Orange.articles[$this.data("article")],
+						cache = Orange.cache[article.cache_url];
+						
+				if (cache) {
+					Orange.extraction.success($this, cache["content"], true);
+				} else {
+					if (article.url.substr(0,15) !== "http://news.yco") {
+						try {
+							Orange.extraction.start($this, article.url); 
+						} catch(e) {
+							Orange.extraction.complete($this);
+						};					 
+		      } else {
+						Orange.extraction.complete($this);
+					}					
 				}
 			});			
 		},
 		
 		start: function(el, url) {
-			el.removeClass("pre-render");			
-			$.jsonp({
-			  url: "http://viewtext.org/api/text?url=" + url + "&rl=false&callback=?",
+			el.removeClass("pre-render");		
+			$.ajax({
+			  url: "http://harrisnovick.com/orange/Readability.php?url=" + url,
+				cache: true,
 				success: function(data) {
-					Orange.extraction.success(el, data);
+					Orange.extraction.success(el, data);					
 				},
 				complete: function() {
 					Orange.extraction.complete(el);
 				},
-				timeout: 9000
-			});			
+				dataFilter: function(data) {
+					try {
+						return $(data).wrap("<div />");
+					} catch(e) {
+						el.addClass("error");
+						return $("<div></div>");
+					}					
+				},
+				timeout: 30000
+			});	
 		},
 		
-		success: function(el, data) {
-			var item = Orange.items[el.data("item")],
-					init = true,
-					item_images,
-					best_image;
-			
+		success: function(el, data, cached) {
 
-			item.content = Orange.extraction.dispose_of_useless_images($(data.content));
-			item_images = item.content.find("img").removeAttr("style");
-			
-      best_image = item_images.sort(Orange.extraction.sort.by_image_size)[0];
+				var article = Orange.articles[el.data("article")],
+						init = true,
+						article_images,
+						best_image;
 
-      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
-        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
-      } else {				
-				item_images.load(function() {				
-					if (init == true && best_image && best_image.width >= 150) {
-						init = false;
-						$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
+				if (cached) {
+					$(Orange.cache[article.url]["thumb"]).appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });
+					article.content = Orange.cache[article.url]["content"];
+					Orange.extraction.complete(el);
+				} else {
+					try {
+						article.content = Orange.utils.dispose_of_useless_images(data);
+					} catch(e) {
+						article.content = data;
+					};
+
+					article_images = article.content.find("img").removeAttr("style");
+
+					if (init == true) {
+						article_images.load();				
 					}
-				});
-			}				
+
+		      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0];
+
+		      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
+		        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
+		      } else {				
+						article_images.load(function() {				
+							if (init == true && best_image && best_image.width >= 150) {
+								init = false;
+								$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
+							} else {
+								best_image = "<img src='img/1x1.png' />";
+							}
+						});
+					}
+
+					Orange.cache[article.cache_url] = {
+						content: {},
+						thumb: ""
+					};
+					Orange.cache[article.cache_url]["content"] = article.content;
+					Orange.cache[article.cache_url]["thumb"] = best_image;					
+				}		
 		},
 		
 		complete: function(el) {
 			el.removeClass("pre-render").find(".loader").remove();
+		}
+	},
+	
+	utils: {
+	  sort: {
+	    by_image_size: function(a, b) {
+	      return (b.width+b.height) - (a.width+a.height);
+	    }
+	  },
+			
+		normalize_urls: function(url) {
+			url = url.split("//");
+			url = url[1] || "" + url;
+			while (!url.match(/[a-zA-Z0-9]$/))  {
+				url = url.substring(0, url.length-1);
+			}
+			return url;
 		},
-		
+
 		dispose_of_useless_images: function(content) {		
 			var images = content.find("img");
 			var i = images.length;
@@ -382,20 +481,10 @@ var Orange = {
 				}			
 			}
 			return content;
-		},
-		
-	  sort: {
-	    by_image_size: function(a, b) {
-	      return (b.width+b.height) - (a.width+a.height);
-	    }
-	  },
+		},		
 
 		clean_content: function(content) {
-			content.find("p a, li a, a, p, li, div").each(function() { 
-			  if (!this.childNodes[0] || $(this).hasClass("sidebar")) {
-					$(this).remove();
-				}
-			}).end().find("pre").addClass("prettyprint");
+			content.find("pre").addClass("prettyprint");
 			return content;
 		}
 	}

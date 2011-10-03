@@ -1,6 +1,4 @@
-/* Author: Harris Novick
-
-*/
+// Author: Harris Novick
 
 var Orange = {
 
@@ -84,6 +82,8 @@ var Orange = {
       Orange.listeners.nav();
       Orange.listeners.search();
       Orange.listeners.close();
+      Orange.listeners.username();
+			Orange.listeners.domain();
       Orange.listeners.article();
     },
 
@@ -163,6 +163,20 @@ var Orange = {
       });     
     },
 
+		username: function() {
+			$("article.item li.user a").live("click", function(e) {
+				Orange.hnsearch.fetch_json(Orange.urls.user_hn($(this).text()), "");
+				e.preventDefault();
+			});
+		},
+		
+		domain: function() {
+			$("article.item a.favicon").live("click", function(e) {
+				Orange.hnsearch.fetch_json(Orange.urls.domain_hn($(this).attr("href")), "");
+				e.preventDefault();
+			});
+		},
+
     article: function() {
 			var $container = $("#article_container");
 			var $article = $container.find("article");
@@ -201,7 +215,7 @@ var Orange = {
 							}, 200, function() {
 								Orange.els.reader.fadeOut(100, function() {
 									$("html, body").toggleClass("frozen");
-									$(this).unbind("click").find("#page_content, #article_comments > .comments").html("");									
+									$(this).unbind("click").find("#page_content, #article_comments").html("");									
 								});
 							});
 						}
@@ -219,8 +233,13 @@ var Orange = {
 	},
 
 	urls: {
-		fallback: "http://api.thriftdb.com/api.hnsearch.com/items/_search?limit=30&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),360000),72)))%20desc&filter[fields][type]=submission&callback=?",
-	  front_hn: "http://api.ihackernews.com/page?format=jsonp&callback=?",
+	  front_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?limit=30&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(create_ts,NOW),128000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&callback=?",
+		user_hn: function(user) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=100&callback=?"			
+		},
+		domain_hn: function(domain) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=100&callback=?"			
+		},
 		ask_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][create_ts]=[NOW-30DAYS%20TO%20NOW]&filter[fields][type]=submission&sortby=create_ts%20desc&limit=100&callback=?",
 		show_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][create_ts]=[NOW-30DAYS%20TO%20NOW]&filter[fields][type]=submission&sortby=create_ts%20desc&limit=100&callback=?",
 	  search_hn: function(term) {
@@ -236,7 +255,6 @@ var Orange = {
 	    Orange.spinner.show();
 	    $.jsonp({
 				url: url,
-				cache: true,
 				success: function(data) {
 					Orange.hnsearch.parse_json(data, query);
 				},
@@ -247,7 +265,7 @@ var Orange = {
 					Orange.spinner.hide();
 				},
 				dataFilter: function(data) {
-					return data.results || data.items;
+					return data.results	
 				},
 				timeout: 15000
 			});
@@ -262,7 +280,7 @@ var Orange = {
 					i = results.length;
 					
 			while (i--) {
-			  result = results[i].item || results[i];
+			  result = results[i].item;
 
 	      article = {
 					sigid: result._id || "",
@@ -270,19 +288,17 @@ var Orange = {
 	        hn_text: result.text || "",
 					domain: result.domain || "",
 	        url: result.url || "http://news.ycombinator.com/item?id=" + result.id || "",
-	        points: result.points || result.points || "0",
-	        num_comments: result.num_comments || result.commentCount || "0",
-	        user: result.username || result.postedBy || "",
-	        published_date: result.create_ts || result.postedAgo || "",
-	        hn_url: "http://news.ycombinator.com/item?id=" + result.id || "http://news.ycombinator.com/item?id=" + result.id || ""
+	        points: result.points || "0",
+	        num_comments: result.num_comments || "0",
+	        user: result.username || "",
+	        published_date: Date.fromString(result.create_ts).toRelativeTime() || "",
+	        hn_url: "http://news.ycombinator.com/item?id=" + result.id || ""
 	      };
 	
 				article["hn_user_url"] = "http://news.ycombinator.com/user?id=" + article.user || "";
 				article["cache_url"] = Orange.utils.normalize_urls(article.url);
 	
-				if (query !== "hn") {
-					article["published_date"] = Date.fromString(article.published_date).toRelativeTime();
-				} else if (query === "ask") {
+ 				if (query === "ask") {
 	        article["title"] = article.title.replace(/^Ask HN\: |Ask HN\:|Ask HN - |Ask HN -/i, "");
 	      } else if (query === "show") {
 	        article["title"] = article.title.replace(/^Show HN\: |Show HN\:|Show HN - |Show HN -/i, "");
@@ -296,7 +312,7 @@ var Orange = {
 			while (i--) {
 				article = Orange.articles[i]
 				
-				articles_string += '<article class="item pre-render" title="' + article.domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + article.url + '"><img src="http://g.etfv.co/' + article.url + '?defaulticon=lightpng" alt="' + article.domain + '" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a href="#">' + article.num_comments + '</a></li></ul></footer></div></article>';
+				articles_string += '<article class="item pre-render" title="' + article.domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + article.domain + '"><img src="http://g.etfv.co/' + article.url + '?defaulticon=lightpng" alt="' + article.domain + '" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a href="#">' + article.num_comments + '</a></li></ul></footer></div></article>';
 			}
 			
 			articles_string += "</div>";
@@ -322,9 +338,9 @@ var Orange = {
 	  },
 	
 		fetch_comments: function(sigid) {
+			
 			$.jsonp({
 				url: Orange.urls.comments_hn(sigid),
-				cache: true,
 				success: function(results) {
 					var i = results.length,
 							comments = "<ul class='comments'><h5>Comments</h5>",
@@ -376,7 +392,7 @@ var Orange = {
 		start: function(el, url) {
 			el.removeClass("pre-render");		
 			$.ajax({
-			  url: "http://harrisnovick.com/orange/Readability.php?url=" + url,
+			  url: "orange.php?clean=true&url=" + url,
 				cache: true,
 				success: function(data) {
 					Orange.extraction.success(el, data);					
@@ -398,21 +414,24 @@ var Orange = {
 		
 		success: function(el, data, cached) {
 
+				el.removeClass("pre-render");	
+				
 				var article = Orange.articles[el.data("article")],
 						init = true,
 						article_images,
 						best_image;
 
 				if (cached) {
-					$(Orange.cache[article.url]["thumb"]).appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });
-					article.content = Orange.cache[article.url]["content"];
-					Orange.extraction.complete(el);
-				} else {
 					try {
-						article.content = Orange.utils.dispose_of_useless_images(data);
-					} catch(e) {
-						article.content = data;
-					};
+						$(Orange.cache[article.url]["thumb"]).appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });
+						article.content = Orange.cache[article.url]["content"];		
+			
+					} catch(e) {};
+					Orange.extraction.complete(el);	
+				} else {
+					article.content = Orange.utils.dispose_of_useless_images(data);
+					
+					var cache_article = Orange.cache[article.cache_url] = {};
 
 					article_images = article.content.find("img").removeAttr("style");
 
@@ -420,7 +439,7 @@ var Orange = {
 						article_images.load();				
 					}
 
-		      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0];
+		      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0] || $("<img src='img/1x1.png' />");
 
 		      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
 		        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
@@ -429,18 +448,12 @@ var Orange = {
 							if (init == true && best_image && best_image.width >= 150) {
 								init = false;
 								$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
-							} else {
-								best_image = "<img src='img/1x1.png' />";
 							}
 						});
 					}
 
-					Orange.cache[article.cache_url] = {
-						content: {},
-						thumb: ""
-					};
-					Orange.cache[article.cache_url]["content"] = article.content;
-					Orange.cache[article.cache_url]["thumb"] = best_image;					
+					cache_article["content"] = article.content;
+					cache_article["thumb"] = best_image;					
 				}		
 		},
 		

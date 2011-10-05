@@ -4,32 +4,53 @@ body.frozen {
 	-webkit-user-select: none;
 }
 
+body.frozen .shadow {
+	display: block;
+	width: 100%;
+	height: 10px;
+	position: fixed;
+	left: 0;
+	z-index: 999999;
+	background: transparent;
+	box-shadow: rgba(0,0,0,0.7) 0 0 40px;
+	-moz-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
+	-webkit-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
+}
+
+.shadow.top {
+	top: -10px;	
+}
+
+.shadow.bottom {
+	top: 100%;
+}
+
 #reader {
 	display: none;
 	font-size: 19px;
-	position: fixed !important;
-	left: 0px !important;
+	position: fixed;
+	left: 0px;
 	top: 0px;
-	right: 0px !important;
-	bottom: 0px !important;
-	width: 100% !important;
-	height: 100% !important;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 100%;
 	border: none;
 	background-color: transparent;
 	background-color: rgba(0, 0, 0, 0.8);
-	z-index: 999999 !important;
-	color: black !important;
-	cursor: default !important;
-	float: none !important;
-	letter-spacing: normal !important;
-	line-height: normal !important;
-	text-align: left !important;
-	text-decoration: none !important;
-	white-space: normal !important;
-	word-spacing: normal !important;
+	z-index: 999990;
+	color: black;
+	cursor: default;
+	float: none;
+	letter-spacing: normal;
+	line-height: normal;
+	text-align: left;
+	text-decoration: none;
+	white-space: normal;
+	word-spacing: normal;
 	margin: 0px;
 	padding: 0px;
-	direction: ltr !important;
+	direction: ltr;
 	zoom: 1;
 	-webkit-user-select: auto;
 	-webkit-transition: -webkit-transform 0.3s ease-out;
@@ -37,11 +58,11 @@ body.frozen {
 	   -ms-transition: -ms-transform 0.3s ease-out;  /* IE10 */
 	    -o-transition: -o-transform 0.3s ease-out;  /* Opera 10.5+ */
 	       transition: transform 0.3s ease-out;
-		-webkit-transform: translate3d(0px, 0px, 0px) !important;
-  -moz-transform: translate3d(0px, 0px, 0px) !important;  /* FF4+ */
-   -ms-transform: translate3d(0px, 0px, 0px) !important;  /* IE10 */
-    -o-transform: translate3d(0px, 0px, 0px) !important;  /* Opera 10.5+ */
-       transition: translate3d(0px, 0px, 0px) !important;
+		-webkit-transform: translate3d(0px, 0px, 0px);
+  -moz-transform: translate3d(0px, 0px, 0px);  /* FF4+ */
+   -ms-transform: translate3d(0px, 0px, 0px);  /* IE10 */
+    -o-transform: translate3d(0px, 0px, 0px);  /* Opera 10.5+ */
+       transition: translate3d(0px, 0px, 0px);
 }
 
 #reader ::-webkit-scrollbar:horizontal,
@@ -69,7 +90,7 @@ body.frozen {
 }
 
 #article_container {
-	width: 70%;
+	width: 90%;
 	height: 100%;
 	margin: 101% auto 0;
 	overflow-y: auto;
@@ -87,42 +108,53 @@ body.frozen {
 	display: block;
 	margin: 20px 12px 20px 23px;
 	min-height: 101%;
-	border: 1px solid #C3C3C3;
 	background-color: #FDFDFD;
+	box-shadow: rgba(0,0,0,0.5) 0 0 30px;
+	-moz-box-shadow: rgba(0,0,0,0.5) 0 0 30px;
+	-webkit-box-shadow: rgba(0,0,0,0.5) 0 0 30px;
+	border: 1px solid #bbb;
 }
 
 #reader article .page {
 	text-decoration: none;
 	word-spacing: normal;
 	letter-spacing: 0;
-	line-height: 1.4em !important;
+	line-height: 1.4em;
 	display: block;
 	padding: 8.333333333333334% 10%;
 	font-family: Palatino, Georgia, Times, "Times New Roman";
 	color: #342E38;
 	-webkit-user-select: auto;
-	/*-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 40px;*/
 }
 
 #reader #article_title {
 	float: left;
-	font-weight: bold !important;
-	font-size: 1.25em !important;
-	line-height: 1.25em !important;
-	margin: 0.5em 0 1.5em !important;
-	word-wrap: break-word !important;
-	text-align: left !important;
+	font-weight: bold;
+	font-size: 1.25em;
+	line-height: 1.25em;
+	margin: 0.5em 0 1.5em;
+	word-wrap: break-word;
+	text-align: left;
 	width: 99%;
+}
+
+#reader h1,
+#reader h2,
+#reader h3,
+#reader h4,
+#reader h5,
+#reader h6 {
+	color: #342E38;
 }
 
 #reader #page_content {
 	clear: both;
-	line-height: 1.4em !important;
-	font-size: 18px !important;
+	line-height: 1.4em;
+	font-size: 18px;
 }
 
 #reader #page_content * {
-	word-wrap: break-word !important;
+	word-wrap: break-word;
 }
 
 #reader #page_content h1,
@@ -135,10 +167,10 @@ body.frozen {
 }
 
 #reader #page_content p {
-	margin: 18px 0 !important;
-	line-height: 1.4em !important;
-	font-size: 18px !important;	
-	text-align: justify !important;
+	margin: 18px 0;
+	line-height: 1.4em;
+	font-size: 18px;	
+	text-align: left;
 }
 
 #reader #page_content blockquote {
@@ -175,9 +207,9 @@ body.frozen {
 }
 
 #reader #page_content li {
-	line-height: 1.4em !important;
-	font-size: 18px !important;
-	color: #342E38 !important;
+	line-height: 1.4em;
+	font-size: 18px;
+	color: #342E38;
 }
 
 #reader #page_content ul li {
@@ -190,48 +222,62 @@ body.frozen {
 	margin-left: 0;
 }
 
-#reader #page_content pre {
-	margin: 9px 0 27px;
-	background: #000;
+#reader #page_content pre p {
+	font-size: 14px;
+	line-height: 14px;
+	color: #93A1A1;
+	margin: 0;
+	padding: 0;
 }
 
-#reader #page_content pre code {
-	background-color: transparent;
-	color: #65B042;
-	padding: 0;
+#reader pre {
+	border: 0 none;
 }
 
 #reader #article_comments {
 	clear: both;
-	padding: 20px 0;
-	margin: 0.5em 0 .7em;
+	padding: 20px 0 40px;
 }
 
-#reader #article_comments h5 {
-	font-size: 25px;
+#reader #article_comments p.end-sign {
+	font-size: 24px;
+	text-align: center;
+	margin: 25px 0 48px;
+}
+
+#reader #article_comments h5.header {
+	font-size: 22px;
+	padding-bottom: 9px;
 }
 
 #reader #article_comments > .comments {
-	font-size: 22;
 	list-style-type: none;	
 	margin: 0;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: 0;
+	color: #342E38;
+	text-align: left;
+	line-height: 1.4em;
+	font-size: 18px;
 }
 
 #reader #article_comments > .comments > li {
-	color: #404040;
-	line-height: 1.2em;
-	padding: 9px 0;
+	color: #342E38;
+	padding: 22px 0 10px;
+	text-align: left;
 }
 
-#reader #article_comments .comments > li > small {
+#reader #article_comments > .comments > li > header {
+	padding-bottom: 9px;
+}
+
+#reader #article_comments .comments > li > header > a.user {
 	font-weight: bold;
-	font-size: 70%;
-	color: #404040;
 }
 
 #reader #article_comments .comments li p {
-	margin: 5px 0 !important;
-	line-height: 1.3em !important;
-	font-size: 16px !important;
-	text-align: justify !important;
+	text-align: left;
+	line-height: 1.4em;
+	font-size: 18px;	
 }

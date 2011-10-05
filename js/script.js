@@ -76,6 +76,10 @@ var Orange = {
     }
   },
 
+	triggers: {
+		article: {}
+	},
+
   listeners: {
     init: function() {
 			Orange.listeners.window();
@@ -165,14 +169,22 @@ var Orange = {
 
 		username: function() {
 			$("article.item li.user a").live("click", function(e) {
-				Orange.hnsearch.fetch_json(Orange.urls.user_hn($(this).text()), "");
+				var display_query = $(this).text();
+				var query = encodeURI(display_query);
+				Orange.hnsearch.fetch_json(Orange.urls.user_hn(query), "");
+				$("nav ul.searches").append("<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + display_query + "</a></li>");
+				Orange.cookies.set_queries(query); 
 				e.preventDefault();
 			});
 		},
 		
 		domain: function() {
 			$("article.item a.favicon").live("click", function(e) {
-				Orange.hnsearch.fetch_json(Orange.urls.domain_hn($(this).attr("href")), "");
+				var display_query = $(this).attr("href");
+				var query = encodeURI(display_query);
+				Orange.hnsearch.fetch_json(Orange.urls.domain_hn(query), "");
+				$("nav ul.searches").append("<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + display_query + "</a></li>");
+				Orange.cookies.set_queries(query); 
 				e.preventDefault();
 			});
 		},
@@ -183,11 +195,17 @@ var Orange = {
 			var $page = $article.find(".page");
 			var article, $content, filtered_content, $youtube_embed, youtube_url;
       Orange.els.grid.live("click", function(e) {
-				if ($(e.target).hasClass("title")) {
+				if ($(e.target).hasClass("title") || $(e.target).hasClass("comment-count")) {
 					var $this = $(e.target).parents("article.item");
 					article = Orange.articles[$this.data("article")];
 					$content = article.content;
-					Orange.hnsearch.fetch_comments(article.sigid);			
+					if (article.num_comments > 0) {
+						if ($(e.target).hasClass("comment-count")) {
+							Orange.hnsearch.fetch_comments(article.sigid, true); 
+						} else {
+							Orange.hnsearch.fetch_comments(article.sigid);
+						}						
+					}	
 					if ($content) {
 						filtered_content = Orange.utils.clean_content($content);
 					}	else {
@@ -200,14 +218,9 @@ var Orange = {
 					$("html, body").toggleClass("frozen");				
 					$article.find("#article_title").text(article.title)
 						.end().find("#page_content").append(filtered_content).imagefit();
-	
-					if (article.domain === "youtube.com") {
-						$youtube_embed = $article.find("object param[name=movie]");
-						youtube_url = $youtube_embed.attr("value");
-						$youtube_embed.parents("object").replaceWith('<iframe width="420" height="315" src=' + youtube_url + 'frameborder="0" wmode="opaque" allowfullscreen></iframe>');
-					} else {
-						prettyPrint();
-					}				
+
+					prettyPrint();
+								
 					Orange.els.reader.click(function(e) {
 						if (e.target !== $page[0] && $(e.target).parents(".page").length < 1) {
 							$container.stop().animate({
@@ -312,7 +325,7 @@ var Orange = {
 			while (i--) {
 				article = Orange.articles[i]
 				
-				articles_string += '<article class="item pre-render" title="' + article.domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + article.domain + '"><img src="http://g.etfv.co/' + article.url + '?defaulticon=lightpng" alt="' + article.domain + '" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a href="#">' + article.num_comments + '</a></li></ul></footer></div></article>';
+				articles_string += '<article class="item pre-render" title="' + article.domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + article.domain + '"><img src="http://g.etfv.co/' + article.url + '?defaulticon=lightpng" alt="' + article.domain + '" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a class="comment-count" href="#">' + article.num_comments + '</a></li></ul></footer></div></article>';
 			}
 			
 			articles_string += "</div>";
@@ -334,28 +347,33 @@ var Orange = {
 				});
 			})($("article.item"));
 			Orange.listeners.window();
-			Orange.extraction.init();
+			Orange.extraction.init();		
 	  },
 	
-		fetch_comments: function(sigid) {
+		fetch_comments: function(sigid, scroll) {
 			
 			$.jsonp({
 				url: Orange.urls.comments_hn(sigid),
 				success: function(results) {
 					var i = results.length,
-							comments = "<ul class='comments'><h5>Comments</h5>",
+							comments = "<ul class='comments'><p class='end-sign'>&#10070;</p><h5 class='header'>Comments</h5>",
 							result;
 							
 					if (i > 0) {
 						while (i--) {
 							result = results[i];
-							comments += "<li class='comment'><small>" + result.item.username + "</small><p>" + result.item.text + "</p></li>";					
+							comments += "<li class='comment'><header><a class='user' href='http://news.ycombinator.com/user?id=" + result.item.username + "'>" + result.item.username + "</a></header><p>" + result.item.text + "</p></li>";					
 						}
 
 						comments += "</ul>";				
-						$("#reader #article_comments").html(comments);						
+						$("#reader #article_comments").html(comments);					
 					} else {
 						return;
+					}
+				},
+				complete: function() {
+					if (scroll) {
+						$("#article_container").animate({ scrollTop: ($("#article_comments h5.header").position().top - 100)}, 200, 'ease');
 					}
 				},
 				dataFilter: function(data) {
@@ -375,10 +393,11 @@ var Orange = {
 						
 				if (cache) {
 					Orange.extraction.success($this, cache["content"], true);
+					Orange.extraction.complete($this);
 				} else {
 					if (article.url.substr(0,15) !== "http://news.yco") {
 						try {
-							Orange.extraction.start($this, article.url); 
+							Orange.extraction.start($this, article.url, article.domain); 
 						} catch(e) {
 							Orange.extraction.complete($this);
 						};					 
@@ -389,10 +408,10 @@ var Orange = {
 			});			
 		},
 		
-		start: function(el, url) {
+		start: function(el, url, domain) {
 			el.removeClass("pre-render");		
 			$.ajax({
-			  url: "orange.php?clean=true&url=" + url,
+			  url: "orange.php?clean=true&url=" + url + "&domain=" + domain,
 				cache: true,
 				success: function(data) {
 					Orange.extraction.success(el, data);					
@@ -413,48 +432,44 @@ var Orange = {
 		},
 		
 		success: function(el, data, cached) {
-
-				el.removeClass("pre-render");	
-				
-				var article = Orange.articles[el.data("article")],
-						init = true,
-						article_images,
-						best_image;
-
-				if (cached) {
-					try {
-						$(Orange.cache[article.url]["thumb"]).appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });
-						article.content = Orange.cache[article.url]["content"];		
+			el.removeClass("pre-render");	
 			
-					} catch(e) {};
-					Orange.extraction.complete(el);	
-				} else {
-					article.content = Orange.utils.dispose_of_useless_images(data);
-					
-					var cache_article = Orange.cache[article.cache_url] = {};
+			var article = Orange.articles[el.data("article")],
+					init = true,
+					article_images,
+					best_image;
 
-					article_images = article.content.find("img").removeAttr("style");
+			try {
+				$(Orange.cache[article.url]["thumb"]).appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });
+				article.content = Orange.cache[article.url]["content"];		
+				Orange.extraction.complete(el);	
+			} catch(e) {
+				article.content = Orange.utils.dispose_of_useless_images(data, article.domain);
 
-					if (init == true) {
-						article_images.load();				
-					}
+				var cache_article = Orange.cache[article.cache_url] = {};
 
-		      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0] || $("<img src='img/1x1.png' />");
+				article_images = article.content.find("img").removeAttr("style");
 
-		      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
-		        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
-		      } else {				
-						article_images.load(function() {				
-							if (init == true && best_image && best_image.width >= 150) {
-								init = false;
-								$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
-							}
-						});
-					}
+				if (init == true) {
+					article_images.load();				
+				}
 
-					cache_article["content"] = article.content;
-					cache_article["thumb"] = best_image;					
-				}		
+	      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0] || $("<img src='img/1x1.png' />");
+
+	      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
+	        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
+	      } else {				
+					article_images.load(function() {				
+						if (init == true && best_image && best_image.width >= 150) {
+							init = false;
+							$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
+						}
+					});
+				}
+
+				cache_article["content"] = article.content;
+				cache_article["thumb"] = best_image;						
+			};	
 		},
 		
 		complete: function(el) {
@@ -478,16 +493,22 @@ var Orange = {
 			return url;
 		},
 
-		dispose_of_useless_images: function(content) {		
-			var images = content.find("img");
-			var i = images.length;
+		dispose_of_useless_images: function(content, domain) {		
+			var images = content.find("img"),
+					i = images.length;
 			
 			if (i > 30) {
 				images.remove();
 			} else {		
-				var image;
+				var image,
+				src;
+				
 				while (i--) {
 					image = images[i];
+					src = $(image).attr("src");
+					if (src.substr(0,1) == "/") {
+						$(image).attr("src", "http://" + domain + src);
+					}
 					if (image.width > 0 && image.width < 150 && image.height > 0 && image.height < 150) {
 						$(image).remove();
 					}

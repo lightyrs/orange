@@ -21,3 +21,303 @@
 [02-Oct-2011 19:06:07] PHP Warning:  file_get_contents(http://item?id=3064679) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/orange.php on line 16
 [02-Oct-2011 19:06:33] PHP Warning:  file_get_contents() [<a href='function.file-get-contents'>function.file-get-contents</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/orange.php on line 16
 [02-Oct-2011 19:06:33] PHP Warning:  file_get_contents(http://item?id=3028405) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 14:58:01] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 14:59:08] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 15:45:35] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 15:45:44] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 15:46:35] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 15:54:27] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 15:55:48] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 16:02:33] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 16:03:57] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 16:06:20] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 16:08:05] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:28:55] PHP Warning:  fopen(tmp/349818d9c44bbb5b34e16d72b503a1bf3dbdd5da.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:28:55] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:28:55] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:28:56] PHP Warning:  fopen(tmp/b063f6ca170f3d8ad5486bfe458b3d10ab3e95d5.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:28:56] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:28:56] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:28:56] PHP Warning:  fopen(tmp/f3973676309a72b225cfaeda387e121337e7589a.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:28:56] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:28:56] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:28:57] PHP Warning:  fopen(tmp/0102ba9dd4751c151eb55b6e3561628676629811.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:28:57] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:28:57] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:28:58] PHP Warning:  fopen(tmp/534e874e98c9ee3f898fe58d2ff5daf33f471818.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:28:58] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:28:58] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:28:58] PHP Warning:  fopen(tmp/bd6515ace56e7348f1e7ec8a4515169d3163ee67.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:28:58] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:28:58] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:28:59] PHP Warning:  fopen(tmp/3c2cc2a4fadd30dba7f73a1c55f313ea70ba9b7b.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:00] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:00] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:00] PHP Warning:  fopen(tmp/c348e06eb921b61911b0b1dcb8c79058c9e4f7c0.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:00] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:00] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:00] PHP Warning:  fopen(tmp/082b9dd15eb4e11b74d026755d1b49102dbb7490.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:00] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:00] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:01] PHP Warning:  fopen(tmp/f71f388b0fe3f789294d55019afc5c7bf815cbc5.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:01] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:01] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:02] PHP Warning:  fopen(tmp/29edacae208c8c9b4747a0d6b9660b8a2c43ebdb.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:02] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:02] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:03] PHP Warning:  fopen(tmp/ec336411ef7e8b83f48e051951ec81ae519fb371.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:03] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:03] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:04] PHP Warning:  fopen(tmp/ddb8a5383711f677d5fca249af185ce5fec8f70b.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:04] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:04] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:04] PHP Warning:  fopen(tmp/a60acc4cff9bec0d412554da8fadb39673f8f9c1.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:04] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:04] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:04] PHP Warning:  fopen(tmp/3fb7db10bcf8054e707fe642770374793ff00526.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:04] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:04] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:05] PHP Warning:  fopen(tmp/8127d8e4fb53d1a0544087294b24ed047fbafb9f.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:05] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:05] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:05] PHP Warning:  fopen(tmp/c2dc2108b7e6ea3114e315a34e2e0b67df68f2e9.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:05] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:05] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:05] PHP Warning:  fopen(tmp/4ffb80252730542d66ca25137e6bf8e82e4930e4.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:05] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:05] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:05] PHP Warning:  fopen(tmp/592b5531696e019694173929df7d8e370ef5ffb7.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:05] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:05] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:06] PHP Warning:  fopen(tmp/c423a3451ad6f858393cc91068c19471a91bb81b.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:06] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:06] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:07] PHP Warning:  fopen(tmp/0c6abbd31155a80939aeeb9c65ca3f36b22bdbb2.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:07] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:07] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:07] PHP Warning:  fopen(tmp/43f83546594783180a9e993bb479176ea6c66630.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:07] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:07] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:09] PHP Warning:  fopen(tmp/273ce5a2cdd09ef9a8129a96a80df49c8e09fc7a.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:09] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:09] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:09] PHP Warning:  fopen(tmp/8cd4a05a4487904f1316b6ab001077fa27f3a843.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:09] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:09] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:09] PHP Warning:  fopen(tmp/1997621100752fb80d7c81f237eaef0fda2e1707.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:09] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:09] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:10] PHP Warning:  fopen(tmp/8c2ae5991ed8f7ca847fa2de06e6f476ef018317.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:10] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:10] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:10] PHP Warning:  fopen(tmp/d6132bfbe4c4939453dd3aab84eae5ed28135a44.cache) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 43
+[03-Oct-2011 17:29:10] PHP Warning:  flock() expects parameter 1 to be resource, boolean given in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 44
+[03-Oct-2011 17:29:10] PHP Warning:  fclose(): supplied argument is not a valid stream resource in /home/harris11/public_html/orange/Cache/Casual/Container/File.php on line 48
+[03-Oct-2011 17:29:35] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 24
+[03-Oct-2011 17:29:38] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 24
+[03-Oct-2011 17:29:44] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 24
+[03-Oct-2011 17:29:57] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 24
+[03-Oct-2011 17:30:01] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 24
+[03-Oct-2011 17:31:10] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 24
+[03-Oct-2011 17:32:12] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:12] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:12] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:13] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:13] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:13] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:14] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:14] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:14] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:14] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:14] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:15] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:15] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:15] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:15] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:15] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:15] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:16] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:16] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:16] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:16] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:16] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:16] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:17] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:17] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:17] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:17] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:17] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:32:18] PHP Fatal error:  Class 'DateInterval' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:44] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:44] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:44] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:44] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:44] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:45] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:46] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:46] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:46] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:46] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:37:46] PHP Fatal error:  Class 'date_diff' not found in /home/harris11/public_html/orange/Cache/Casual/Data.php on line 62
+[03-Oct-2011 17:57:00] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:00] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:00] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:00] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:00] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:00] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:02] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:02] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:02] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:02] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:02] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:02] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:03] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:03] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:03] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:03] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:03] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:03] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:03] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:04] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:04] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:04] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:04] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:04] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:05] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:05] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:05] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:05] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:05] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:57:05] PHP Parse error:  syntax error, unexpected T_IF in /home/harris11/public_html/orange/SimpleCache.php on line 31
+[03-Oct-2011 17:58:11] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:11] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:11] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:11] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:11] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:12] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:12] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:12] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:12] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:12] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:12] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:12] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:13] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:13] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:13] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:13] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:13] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:15] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:15] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:15] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:15] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:15] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:15] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:16] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:16] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:16] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:16] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:16] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:16] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:58:17] PHP Fatal error:  Cannot use object of type SimpleCache as array in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:42] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:43] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:43] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:43] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:43] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:43] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:44] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:44] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:44] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:44] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:44] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:44] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:44] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:45] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:45] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:45] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:45] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:45] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:47] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:47] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:47] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:47] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:47] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:47] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:48] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:48] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:48] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:48] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:48] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 17:59:48] PHP Fatal error:  Can't use method return value in write context in /home/harris11/public_html/orange/orange.php on line 16
+[03-Oct-2011 18:02:17] PHP Warning:  file_put_contents(cache/http://samaltman.com/how-to-get-into-y-combinator.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:18] PHP Warning:  file_put_contents(cache/http://blog.typekit.com/2011/10/03/adobe-acquires-typekit/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:18] PHP Warning:  file_put_contents(cache/https://github.com/glenjamin/node-fib.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:18] PHP Warning:  file_put_contents(cache/http://blog.bitbucket.org/2011/10/03/bitbucket-now-rocks-git/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:19] PHP Warning:  file_put_contents(cache/http://blogs.nitobi.com/andre/index.php/2011/10/03/nitobi-enters-into-acquisition-agreement-with-adobe/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:20] PHP Warning:  file_put_contents(cache/http://www.techdirt.com/blog/wireless/articles/20111001/00365416161/patent-troll-says-anyone-using-wifi-infringes-wont-sue-individuals-this-stage.shtml.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:21] PHP Warning:  file_put_contents(cache/http://techcrunch.com/2011/10/03/adobe-acquires-developer-of-html5-mobile-app-framework-phonegap-nitobi/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:21] PHP Warning:  file_put_contents(cache/http://feefighters.com/blog/bbb-accreditation/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:21] PHP Warning:  file_put_contents(cache/http://bemmu.posterous.com/what-it-costs-to-live-in-japan.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:21] PHP Warning:  file_put_contents(cache/http://www.marketwatch.com/story/adobe-acquires-web-typography-innovator-typekit-2011-10-03.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:24] PHP Warning:  file_put_contents(cache/http://arstechnica.com/business/news/2011/10/when-clever-goes-wrong-how-etsy-overcame-poor-architectural-choices.ars.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:24] PHP Warning:  file_put_contents(cache/http://www.adobe.com/devnet/html5/articles/css-shaders.html.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:24] PHP Warning:  file_put_contents(cache/http://patentexaminer.org/2011/09/innovatios-infringement-suit-rampage-expands-to-corporate-hotels/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:24] PHP Warning:  file_put_contents(cache/http://blog.handcraft.com/2011/10/an-open-letter-to-stripe/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:25] PHP Warning:  file_put_contents(cache/http://export.synack.me/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:25] PHP Warning:  file_put_contents(cache/http://www.smorepages.com/facebook-browser.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:25] PHP Warning:  file_put_contents(cache/https://github.com/sickill/git-dude.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:26] PHP Warning:  file_put_contents(cache/https://torrentfreak.com/politician-violates-his-own-two-strikes-anti-piracy-plan-111001/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:26] PHP Warning:  file_put_contents(cache/https://docs.google.com/viewer?a=v.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:27] PHP Warning:  file_put_contents(cache/http://blog.thumbtack.com/2011/10/03/that-daily-deal-you-bought-maybe-not-so-great-a-deal-after-all/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:27] PHP Warning:  file_put_contents(cache/http://blog.heroku.com/archives/2011/10/3/scala/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:27] PHP Warning:  file_put_contents(cache/http://www.oracle.com/technetwork/database/nosqldb/overview/index.html.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:27] PHP Warning:  file_put_contents(cache/http://mathias-biilmann.net/posts/2011/10/is-haskell-the-cure.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:29] PHP Warning:  file_put_contents(cache/http://valleybot.com/blog/2011/10/2/deconstructing-a-successful-yc-application.html.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:29] PHP Warning:  file_put_contents(cache/http://blog.asmartbear.com/one-priority.html.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:30] PHP Warning:  file_put_contents(cache/http://www.holmea.demon.co.uk/GPS/Main.htm.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:31] PHP Warning:  file_put_contents(cache/http://thevirtuosi.blogspot.com/2011/10/linear-theory-of-battleship.html.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:31] PHP Warning:  file_put_contents(cache/http://online.wsj.com/article/SB10001424052970203405504576603053795839250.html.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:33] PHP Warning:  file_put_contents(cache/http://andygcook.com/2011/10/how-to-kill-start-up-distractions/.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 20
+[03-Oct-2011 18:02:51] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 23
+[03-Oct-2011 18:08:09] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 24
+[03-Oct-2011 18:25:01] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 18:27:59] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 18:31:13] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 18:32:52] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 18:33:32] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 18:56:11] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[03-Oct-2011 19:46:41] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 20:03:11] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 20:17:34] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 20:51:49] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 20:53:41] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 21:06:03] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 21:06:30] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 21:31:04] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 23:48:22] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[03-Oct-2011 23:48:23] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[04-Oct-2011 00:16:47] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[04-Oct-2011 00:18:19] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: File exists in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[04-Oct-2011 00:22:41] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[04-Oct-2011 09:00:12] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[04-Oct-2011 23:15:22] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[04-Oct-2011 23:17:34] PHP Warning:  file_get_contents() [<a href='function.file-get-contents'>function.file-get-contents</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/orange.php on line 25
+[04-Oct-2011 23:17:34] PHP Warning:  file_get_contents(http://blog.cubeofm.com/if-you-dont-have-a-non-mainstream-opinion-you) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/orange.php on line 25

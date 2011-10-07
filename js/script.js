@@ -4,7 +4,7 @@ var Orange = {
 
   init: function() {    
     Orange.cookies.load_queries();
-    Orange.hnsearch.fetch_json(Orange.urls.front_hn, "hn");
+    Orange.hnsearch.fetch_json(Orange.urls.front_hn, "front");
     Orange.listeners.init();
   },
 
@@ -12,50 +12,70 @@ var Orange = {
 	
 	articles: [],
 
-  cookies: {
-    status: function(cookie) {
-      return typeof(cookie);
-    },    
+	cookies: {
+	  status: function(cookie) {
+	    return typeof(cookie);
+	  },    
 
-    queries: function() {
-      return $.cookie('orange_queries');
-    },
+	  queries: function() {
+	    return $.cookie('orange_queries');
+	  },
 
-    previous_queries: function() {
-      if (Orange.cookies.status(Orange.cookies.queries()) === "object") {
-        return [];
-      } else {
-        return Orange.cookies.queries().split(",");       
-      }
-    },
+	  previous_queries: function() {
+	    if (Orange.cookies.status(Orange.cookies.queries()) === "object") {
+	      return [];
+	    } else {
+	      return Orange.cookies.queries().split(",");       
+	    }
+	  },
 
-    load_queries: function() {
-			var queries = "<ul class='searches'>";
-      $.map(Orange.cookies.previous_queries(), function(query) {
-				queries += "<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + decodeURI(query) + "</a></li>"
-      });    
-			queries += "</ul>"
- 			$("nav > ul").append(queries).fadeIn(350);
-    },
+	  load_queries: function() {
+			var queries_list = "",
+					queries = Orange.cookies.previous_queries().reverse(),
+					i = queries.length,
+					query;
+							
+			while (i--) {
+				query = queries[i];
+				if (query == "hn") {
+					queries_list += "<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">news.ycombinator.com</a></li>";
+				} else if (query !== "") {
+					queries_list += "<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + decodeURI(query) + "</a></li>";
+				} else {
+					Orange.cookies.remove_queries(query);
+				}
+			}
 
-    set_queries: function(value) {
-      if (Orange.cookies.status(Orange.cookies.queries()) === "object") {
-        var first_cookie = [];
-        first_cookie.push(value);
-        $.cookie('orange_queries', first_cookie, { expires: 365 });
-      } else {
-        $.cookie('orange_queries', Orange.cookies.queries() + "," + value);
-      }
-    },
+			$("nav ul.searches").append(queries_list).hide().fadeIn(350);
+	  },
 
-    remove_queries: function(value) {
-      $.cookie('orange_queries', Orange.cookies.queries().replace(value + ",", "").replace("," + value, "").replace(value, ""));
-    },
+	  set_queries: function(query, display_query) {
+			var search = "<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + display_query + "</a></li>";
+	    if (Orange.cookies.status(Orange.cookies.queries()) === "object") {
+				$("nav ul.searches").append(search).children(':last').hide().fadeIn(100);
+	      var first_cookie = [];
+	      first_cookie.push(query);
+	      $.cookie('orange_queries', first_cookie, { expires: 365 });
+	    } else {
+				if ($("nav ul.searches li a[data-search='" + query + "']").length < 1) {
+					$("nav ul.searches").append(search).children(':last').hide().fadeIn(100);
+	        var cookies = Orange.cookies.previous_queries();
+					cookies.push(query);
+	        $.cookie('orange_queries', cookies.join(","));								
+				}
+	    }
+	  },
 
-    destroy_queries: function() {
-      $.cookie('orange_queries', null);
-    }
-  },
+	  remove_queries: function(value) {
+			var cookies = Orange.cookies.previous_queries()
+			cookies.splice(cookies.indexOf(value), 1);
+	    $.cookie('orange_queries', cookies);
+	  },
+
+	  destroy_queries: function() {
+	    $.cookie('orange_queries', null);
+	  }
+	},
 
   spinner: {
     opts: {
@@ -101,7 +121,7 @@ var Orange = {
       $("nav a:not('.search, .close')").live("click", function(e) {
         var term = $(this).data("search");
         var search = "";
-        if (term === "hn") {
+        if (term === "front") {
           search = Orange.urls.front_hn;
         } else if (term === "ask") {
 					search = Orange.urls.ask_hn;
@@ -137,8 +157,7 @@ var Orange = {
                 Orange.els.search.hide();
               } else {
                 Orange.hnsearch.fetch_json(Orange.urls.search_hn(query), query);
-                $("nav ul.searches").append("<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + display_query + "</a></li>");
-                Orange.cookies.set_queries(query);                
+                Orange.cookies.set_queries(query, display_query);                
               }
             });
 
@@ -155,9 +174,12 @@ var Orange = {
     },
 
     close: function() {
-      $("nav a.close").live("click", function(e) {
-        var query = $(this).siblings("a").data("search");
-        $(this).parents("li").remove();
+      $("nav").delegate("a.close", "click", function(e) {
+				var $this = $(this);
+        var query = $this.siblings("a").data("search");
+        $this.parents("li").fadeOut(100, function() {
+					$this.remove();
+				});
         if ($("nav ul.searches li").length < 1) {
           Orange.cookies.destroy_queries();
         } else {
@@ -172,8 +194,7 @@ var Orange = {
 				var display_query = $(this).text();
 				var query = encodeURI(display_query);
 				Orange.hnsearch.fetch_json(Orange.urls.user_hn(query), "");
-				$("nav ul.searches").append("<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + display_query + "</a></li>");
-				Orange.cookies.set_queries(query); 
+				Orange.cookies.set_queries(query, display_query);  
 				e.preventDefault();
 			});
 		},
@@ -182,9 +203,12 @@ var Orange = {
 			$("article.item a.favicon").live("click", function(e) {
 				var display_query = $(this).attr("href");
 				var query = encodeURI(display_query);
-				Orange.hnsearch.fetch_json(Orange.urls.domain_hn(query), "");
-				$("nav ul.searches").append("<li><a href='#' class='close'>x</a><a href='#' data-search=" + query + ">" + display_query + "</a></li>");
-				Orange.cookies.set_queries(query); 
+				if (display_query == "news.ycombinator.com") {
+					Orange.hnsearch.fetch_json(Orange.urls.search_hn("hn"), "");
+				} else {
+					Orange.hnsearch.fetch_json(Orange.urls.domain_hn(query), "");
+				}				
+				Orange.cookies.set_queries(query, display_query);  
 				e.preventDefault();
 			});
 		},
@@ -299,7 +323,7 @@ var Orange = {
 					sigid: result._id || "",
 	        title: result.title || "",
 	        hn_text: result.text || "",
-					domain: result.domain || "",
+					domain: result.domain || "news.ycombinator.com",
 	        url: result.url || "http://news.ycombinator.com/item?id=" + result.id || "",
 	        points: result.points || "0",
 	        num_comments: result.num_comments || "0",
@@ -373,7 +397,7 @@ var Orange = {
 				},
 				complete: function() {
 					if (scroll) {
-						$("#article_container").animate({ scrollTop: ($("#article_comments h5.header").position().top - 100)}, 200, 'ease');
+						$("#article_container").scrollTop($("#article_comments h5.header").position().top - 100);
 					}
 				},
 				dataFilter: function(data) {
@@ -395,7 +419,7 @@ var Orange = {
 					Orange.extraction.success($this, cache["content"], true);
 					Orange.extraction.complete($this);
 				} else {
-					if (article.url.substr(0,15) !== "http://news.yco") {
+					if (article.domain !== "news.ycombinator.com") {
 						try {
 							Orange.extraction.start($this, article.url, article.domain); 
 						} catch(e) {
@@ -444,31 +468,33 @@ var Orange = {
 				article.content = Orange.cache[article.url]["content"];		
 				Orange.extraction.complete(el);	
 			} catch(e) {
-				article.content = Orange.utils.dispose_of_useless_images(data, article.domain);
+				if (article) {
+					article.content = Orange.utils.dispose_of_useless_images(data, article.domain);
 
-				var cache_article = Orange.cache[article.cache_url] = {};
+					var cache_article = Orange.cache[article.cache_url] = {};
 
-				article_images = article.content.find("img").removeAttr("style");
+					article_images = article.content.find("img").removeAttr("style");
 
-				if (init == true) {
-					article_images.load();				
-				}
+					if (init == true) {
+						article_images.load();				
+					}
 
-	      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0] || $("<img src='img/1x1.png' />");
+		      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0] || $("<img src='img/1x1.png' />");
 
-	      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
-	        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
-	      } else {				
-					article_images.load(function() {				
-						if (init == true && best_image && best_image.width >= 150) {
-							init = false;
-							$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
-						}
-					});
-				}
+		      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
+		        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
+		      } else {				
+						article_images.load(function() {				
+							if (init == true && best_image && best_image.width >= 150) {
+								init = false;
+								$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
+							}
+						});
+					}
 
-				cache_article["content"] = article.content;
-				cache_article["thumb"] = best_image;						
+					cache_article["content"] = article.content;
+					cache_article["thumb"] = best_image;					
+				}					
 			};	
 		},
 		

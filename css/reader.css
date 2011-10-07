@@ -7,7 +7,7 @@ body.frozen {
 body.frozen .shadow {
 	display: block;
 	width: 100%;
-	height: 10px;
+	height: 8px;
 	position: fixed;
 	left: 0;
 	z-index: 999999;
@@ -18,7 +18,7 @@ body.frozen .shadow {
 }
 
 .shadow.top {
-	top: -10px;	
+	top: -8px;	
 }
 
 .shadow.bottom {
@@ -185,19 +185,29 @@ body.frozen .shadow {
 
 #reader #page_content img.alignright {
 	float: right;
+	max-width: 60% !important;
+	height: auto !important;
 	padding: 10px 0 10px 25px;
 }
 
 #reader #page_content img.alignleft {
 	float: left;
+	max-width: 60% !important;
+	height: auto !important;
 	padding: 10px 25px 10px 0;
 }
 
 #reader #page_content img[align="right"] {
+	float: right;
+	max-width: 60% !important;
+	height: auto !important;
 	padding: 10px 0 10px 25px;
 }
 
 #reader #page_content img[align="left"] {
+	float: left;
+	max-width: 60% !important;
+	height: auto !important;	
 	padding: 10px 25px 10px 0;
 }
 

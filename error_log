@@ -321,3 +321,61 @@
 [04-Oct-2011 23:15:22] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
 [04-Oct-2011 23:17:34] PHP Warning:  file_get_contents() [<a href='function.file-get-contents'>function.file-get-contents</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/orange.php on line 25
 [04-Oct-2011 23:17:34] PHP Warning:  file_get_contents(http://blog.cubeofm.com/if-you-dont-have-a-non-mainstream-opinion-you) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/orange.php on line 25
+[05-Oct-2011 17:24:24] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[05-Oct-2011 17:35:25] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[05-Oct-2011 17:42:43] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[05-Oct-2011 17:44:18] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[05-Oct-2011 17:45:05] PHP Warning:  file_get_contents() [<a href='function.file-get-contents'>function.file-get-contents</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/orange.php on line 25
+[05-Oct-2011 17:45:05] PHP Warning:  file_get_contents(http://daringfirEeball.net/linked/2011/10/05/steve) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/orange.php on line 25
+[05-Oct-2011 17:45:24] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[05-Oct-2011 17:47:37] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[05-Oct-2011 18:22:37] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 504
+[05-Oct-2011 19:49:43] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[06-Oct-2011 16:12:50] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 16:15:05] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 16:19:00] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[06-Oct-2011 16:23:17] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 16:25:08] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[06-Oct-2011 16:41:27] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[06-Oct-2011 17:10:45] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[06-Oct-2011 17:52:06] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 504
+[06-Oct-2011 18:07:29] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 18:08:07] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[06-Oct-2011 18:09:00] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[06-Oct-2011 19:45:32] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 19:48:46] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 20:00:03] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 504
+[06-Oct-2011 20:00:17] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 504
+[06-Oct-2011 20:43:44] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 22:20:59] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 22:33:01] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[06-Oct-2011 23:32:49] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:03:21] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:03:28] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:08:02] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:08:05] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:09:25] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:12:47] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:17:12] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:21:02] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:21:08] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:22:00] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:22:35] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:22:47] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:34:19] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 00:42:48] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 06:49:07] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[07-Oct-2011 08:13:12] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[07-Oct-2011 08:13:14] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 25
+[07-Oct-2011 08:37:53] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 09:44:19] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 274
+[07-Oct-2011 09:47:32] PHP Warning:  Couldn't fetch JSLikeHTMLElement. Node no longer exists in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 46
+[07-Oct-2011 09:47:32] PHP Notice:  Undefined property via __get(): childNodes in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 46 in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 101
+[07-Oct-2011 09:47:32] PHP Warning:  Couldn't fetch JSLikeHTMLElement. Node no longer exists in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 51
+[07-Oct-2011 09:47:32] PHP Notice:  Undefined property via __get(): ownerDocument in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 51 in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 101
+[07-Oct-2011 09:47:32] PHP Fatal error:  Call to a member function createDocumentFragment() on a non-object in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 51
+[07-Oct-2011 13:30:28] PHP Warning:  Couldn't fetch JSLikeHTMLElement. Node no longer exists in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 46
+[07-Oct-2011 13:30:28] PHP Notice:  Undefined property via __get(): childNodes in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 46 in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 101
+[07-Oct-2011 13:30:28] PHP Warning:  Couldn't fetch JSLikeHTMLElement. Node no longer exists in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 51
+[07-Oct-2011 13:30:28] PHP Notice:  Undefined property via __get(): ownerDocument in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 51 in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 101
+[07-Oct-2011 13:30:28] PHP Fatal error:  Call to a member function createDocumentFragment() on a non-object in /home/harris11/public_html/orange/JSLikeHTMLElement.php on line 51

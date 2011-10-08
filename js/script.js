@@ -4,13 +4,19 @@ var Orange = {
 
   init: function() {    
     Orange.cookies.load_queries();
-    Orange.hnsearch.fetch_json(Orange.urls.front_hn, "front");
+    Orange.hnsearch.fetch_json(Orange.urls.front_hn(0), "front", 0);
     Orange.listeners.init();
   },
 
 	cache: {},
 	
 	articles: [],
+	
+	search: {
+		url: "",
+		query: "",
+		start: 0
+	},
 
 	cookies: {
 	  status: function(cookie) {
@@ -105,6 +111,7 @@ var Orange = {
 			Orange.listeners.window();
       Orange.listeners.nav();
       Orange.listeners.search();
+			Orange.listeners.infinite_scroll();
       Orange.listeners.close();
       Orange.listeners.username();
 			Orange.listeners.domain();
@@ -122,15 +129,15 @@ var Orange = {
         var term = $(this).data("search");
         var search = "";
         if (term === "front") {
-          search = Orange.urls.front_hn;
+          search = Orange.urls.front_hn(0);
         } else if (term === "ask") {
-					search = Orange.urls.ask_hn;
+					search = Orange.urls.ask_hn(0);
         } else if (term === "show") {
-					search = Orange.urls.show_hn;
+					search = Orange.urls.show_hn(0);
 				} else {
-          search = Orange.urls.search_hn(term);					
+          search = Orange.urls.search_hn(term, 0);					
 				}
-        Orange.hnsearch.fetch_json(search, term);
+        Orange.hnsearch.fetch_json(search, term, 0);
         e.preventDefault();
       });
     }, 
@@ -156,7 +163,7 @@ var Orange = {
               if (display_query === "") {
                 Orange.els.search.hide();
               } else {
-                Orange.hnsearch.fetch_json(Orange.urls.search_hn(query), query);
+                Orange.hnsearch.fetch_json(Orange.urls.search_hn(query, 0), query, 0);
                 Orange.cookies.set_queries(query, display_query);                
               }
             });
@@ -172,6 +179,14 @@ var Orange = {
         e.preventDefault();
       });   
     },
+
+		infinite_scroll: function() {
+			$("a.infinite-scroll").live("click", function(e) {
+				var current = Orange.search;
+				Orange.hnsearch.fetch_json(current["url"], current["query"], current["start"]);
+				e.preventDefault();
+			});
+		},
 
     close: function() {
       $("nav").delegate("a.close", "click", function(e) {
@@ -193,7 +208,7 @@ var Orange = {
 			$("article.item li.user a").live("click", function(e) {
 				var display_query = $(this).text();
 				var query = encodeURI(display_query);
-				Orange.hnsearch.fetch_json(Orange.urls.user_hn(query), "");
+				Orange.hnsearch.fetch_json(Orange.urls.user_hn(query, 0), "", 0);
 				Orange.cookies.set_queries(query, display_query);  
 				e.preventDefault();
 			});
@@ -204,9 +219,9 @@ var Orange = {
 				var display_query = $(this).attr("href");
 				var query = encodeURI(display_query);
 				if (display_query == "news.ycombinator.com") {
-					Orange.hnsearch.fetch_json(Orange.urls.search_hn("hn"), "");
+					Orange.hnsearch.fetch_json(Orange.urls.search_hn("hn", 0), "", 0);
 				} else {
-					Orange.hnsearch.fetch_json(Orange.urls.domain_hn(query), "");
+					Orange.hnsearch.fetch_json(Orange.urls.domain_hn(query, 0), "", 0);
 				}				
 				Orange.cookies.set_queries(query, display_query);  
 				e.preventDefault();
@@ -235,10 +250,6 @@ var Orange = {
 					}	else {
 						filtered_content = article.hn_text;
 					}		
-	        Orange.els.reader.fadeIn(100);
-					$container.stop().animate({
-						"margin-top" : "0"
-					}, 300);
 					$("html, body").toggleClass("frozen");				
 					$article.find("#article_title").text(article.title)
 						.end().find("#page_content").append(filtered_content).imagefit();
@@ -247,14 +258,23 @@ var Orange = {
 								
 					Orange.els.reader.click(function(e) {
 						if (e.target !== $page[0] && $(e.target).parents(".page").length < 1) {
-							$container.stop().animate({
-								"margin-top" : "101%"
-							}, 200, function() {
-								Orange.els.reader.fadeOut(100, function() {
-									$("html, body").toggleClass("frozen");
-									$(this).unbind("click").find("#page_content, #article_comments").html("");									
-								});
+							$container.css({
+								"-webkit-transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
+							  "-moz-transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
+							  "-ms-transform": "translate3d(0px, 0px, 0px) translate(0, 101%)", 
+							  "-o-transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
+								"transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
+							  "transition": "translate3d(0px, 0px, 0px)"							
 							});
+							Orange.els.reader.css({
+								"background-color": "rgba(0, 0, 0, 0)"
+							});
+							setTimeout(function() {
+								$("body, html").removeClass("frozen");
+								$container.attr("style", "").scrollTop(0);
+								Orange.els.reader.attr("style", "");
+								$(e.target).unbind("click").find("#page_content, #article_comments").html("");			
+							}, 550);						
 						}
 					});
 					e.preventDefault();					
@@ -270,51 +290,64 @@ var Orange = {
 	},
 
 	urls: {
-	  front_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?limit=30&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(create_ts,NOW),128000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&callback=?",
-		user_hn: function(user) {
-			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=100&callback=?"			
+	  front_hn: function(start) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?weights[title]=1.1&weights[text]=0.7&weights[domain]=2.0&weights[username]=0.1&weights[type]=0.0&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(create_ts,NOW),3600000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&limit=30&pretty_print=true&start=" + start
 		},
-		domain_hn: function(domain) {
-			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=100&callback=?"			
+		user_hn: function(user, start) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=80&start=" + start		
 		},
-		ask_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][create_ts]=[NOW-30DAYS%20TO%20NOW]&filter[fields][type]=submission&sortby=create_ts%20desc&limit=100&callback=?",
-		show_hn: "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][create_ts]=[NOW-30DAYS%20TO%20NOW]&filter[fields][type]=submission&sortby=create_ts%20desc&limit=100&callback=?",
-	  search_hn: function(term) {
-	    return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][create_ts]=[NOW-30DAYS%20TO%20NOW]&filter[fields][type]=submission&sortby=create_ts%20desc&limit=100&callback=?";
+		domain_hn: function(domain, start) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=80&start=" + start		
+		},
+		ask_hn: function(start) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=80&start=" + start			
+		},
+		show_hn: function(start) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=80&start=" + start
+		},
+	  search_hn: function(term, start) {
+	    return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][type]=submission&sortby=create_ts%20desc&limit=80&start=" + start
 	  },
-		comments_hn: function(sigid) {
-			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][type]=comment&filter[fields][parent_sigid]=" + sigid + "&sortby=points%20desc&limit=100&callback=?";
+		comments_hn: function(sigid, start) {
+			return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][type]=comment&filter[fields][parent_sigid]=" + sigid + "&sortby=points%20desc&limit=100&start=" + start
 		}
 	},
 	
 	hnsearch: {
-	  fetch_json: function(url, query) {
+	  fetch_json: function(url, query, start) {
 	    Orange.spinner.show();
-	    $.jsonp({
+	    $.ajax({
 				url: url,
+				dataType: "jsonp",
 				success: function(data) {
-					Orange.hnsearch.parse_json(data, query);
-				},
-				error: function() {
-					Orange.hnsearch.fetch_json(Orange.urls.fallback, "search");
+					var results = data.results;
+					if (start > 0) {
+						Orange.hnsearch.parse_json(results, url, query, start, true);
+					} else {
+						Orange.hnsearch.parse_json(results, url, query, start);						
+					}
 				},
 				complete: function() {
 					Orange.spinner.hide();
-				},
-				dataFilter: function(data) {
-					return data.results	
 				},
 				timeout: 15000
 			});
 	  },
 
-	  parse_json: function(results, query) {    
-
-	    Orange.articles = [];
+	  parse_json: function(results, url, query, start, append) {    
+			if (!append) {
+	    	Orange.articles = [];
+			}
 	
 			var result = {},
 					article = {},
 					i = results.length;
+					
+					Orange.search = {
+						url: url.replace("&start=" + start, "&start=" + (start + i)).replace("&limit=80", "&limit=40"),
+						query: query,
+						start: start + i
+					};
 					
 			while (i--) {
 			  result = results[i].item;
@@ -343,43 +376,57 @@ var Orange = {
 				Orange.articles.push(article);
 			}
 			
-			i = Orange.articles.length
-			var articles_string = "<div>"
+			i = Orange.articles.length;
 			
-			while (i--) {
-				article = Orange.articles[i]
+			var articles_string = "",
+					infinite_scroller = "<a href='#' class='infinite-scroll'>More Submissions</a>";
+			
+			while (i > start) {
+				article = Orange.articles[(i-1)]
 				
-				articles_string += '<article class="item pre-render" title="' + article.domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + article.domain + '"><img src="http://g.etfv.co/' + article.url + '?defaulticon=lightpng" alt="' + article.domain + '" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a class="comment-count" href="#">' + article.num_comments + '</a></li></ul></footer></div></article>';
+				articles_string += '<article class="item pre-render" title="' + article.domain + '" data-article="' + (i-1) + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + article.domain + '"><img src="http://g.etfv.co/' + article.url + '?defaulticon=lightpng" alt="' + article.domain + '" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><div class="content"><div class="body article"></div><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" /><a class="comment-count" href="#">' + article.num_comments + '</a></li></ul></footer></div></article>';
+				
+				i--;
 			}
-			
-			articles_string += "</div>";
 
 	    Orange.spinner.hide();
-			Orange.els.grid.html(articles_string);
-			
-	    Orange.hnsearch.render_json();
+	
+			var previous_articles = Orange.els.grid.children("div").html();
+	
+			if (!append) {
+				Orange.els.grid.html("<div>" + articles_string + "</div>" + infinite_scroller);
+				Orange.hnsearch.render_json();
+			} else {
+				Orange.els.grid.html("<div>" + previous_articles + articles_string + "</div>" + infinite_scroller);
+				Orange.hnsearch.render_json(true);
+			}
 	  },
 
-	  render_json: function() {
+	  render_json: function(append) {
 	    Orange.els.search.hide().find("input.query").val("");
-			$(window).unbind("scrollstop").scrollTop(0);
+			if (!append) {
+				$(window).unbind("scrollstop").scrollTop(0);
+			}	else {
+				$("html, body").animate({scrollTop: $(window).scrollTop() + $(window).height() - 32}, 400);
+			}	
 			(function n(e) {
-				e.eq(0).stop().animate({ 
-					"opacity" : "1.0"
-				}, 29, function() {
+				e.eq(0).addClass("rendered");
+				setTimeout(function() {
 					n(e.slice(1));
-				});
-			})($("article.item"));
+				}, 29);
+			})($("article.item.pre-render"));
 			Orange.listeners.window();
 			Orange.extraction.init();		
 	  },
 	
 		fetch_comments: function(sigid, scroll) {
 			
-			$.jsonp({
-				url: Orange.urls.comments_hn(sigid),
-				success: function(results) {
-					var i = results.length,
+			$.ajax({
+				url: Orange.urls.comments_hn(sigid, 0),
+				dataType: "jsonp",
+				success: function(data) {
+					var results = data.results,
+							i = results.length,
 							comments = "<ul class='comments'><p class='end-sign'>&#10070;</p><h5 class='header'>Comments</h5>",
 							result;
 							
@@ -399,9 +446,6 @@ var Orange = {
 					if (scroll) {
 						$("#article_container").scrollTop($("#article_comments h5.header").position().top - 100);
 					}
-				},
-				dataFilter: function(data) {
-					return data.results;
 				},
 				timeout: 10000
 			});
@@ -482,12 +526,12 @@ var Orange = {
 		      best_image = article_images.sort(Orange.utils.sort.by_image_size)[0] || $("<img src='img/1x1.png' />");
 
 		      if (best_image && best_image.width >= 150 && best_image.height >= 150) {
-		        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });  
+		        $(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage();  
 		      } else {				
 						article_images.load(function() {				
 							if (init == true && best_image && best_image.width >= 150) {
 								init = false;
-								$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage({ fade: 270 });							
+								$(best_image).clone().appendTo(el.find(".thumbnail")).scaleImage();							
 							}
 						});
 					}

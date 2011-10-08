@@ -18,15 +18,26 @@ body.frozen .shadow {
 }
 
 .shadow.top {
-	top: -8px;	
+	top: -10px;	
 }
 
 .shadow.bottom {
 	top: 100%;
+	margin-top: 2px;
+}
+
+body.frozen #reader,
+body.deactivate #reader {
+	background-color: transparent;
+	background-color: rgba(0, 0, 0, 0.8);
+	-webkit-transform: translate3d(0px, 0px, 0px); 
+  	-moz-transform: translate3d(0px, 0px, 0px);  
+  	 -ms-transform: translate3d(0px, 0px, 0px);  
+    	-o-transform: translate3d(0px, 0px, 0px);
+			  transform: translate3d(0px, 0px, 0px); 
 }
 
 #reader {
-	display: none;
 	font-size: 19px;
 	position: fixed;
 	left: 0px;
@@ -37,7 +48,7 @@ body.frozen .shadow {
 	height: 100%;
 	border: none;
 	background-color: transparent;
-	background-color: rgba(0, 0, 0, 0.8);
+	background-color: rgba(0, 0, 0, 0);
 	z-index: 999990;
 	color: black;
 	cursor: default;
@@ -53,16 +64,16 @@ body.frozen .shadow {
 	direction: ltr;
 	zoom: 1;
 	-webkit-user-select: auto;
-	-webkit-transition: -webkit-transform 0.3s ease-out;
-	  -moz-transition: -moz-transform 0.3s ease-out;  /* FF4+ */
-	   -ms-transition: -ms-transform 0.3s ease-out;  /* IE10 */
-	    -o-transition: -o-transform 0.3s ease-out;  /* Opera 10.5+ */
-	       transition: transform 0.3s ease-out;
-		-webkit-transform: translate3d(0px, 0px, 0px);
-  -moz-transform: translate3d(0px, 0px, 0px);  /* FF4+ */
-   -ms-transform: translate3d(0px, 0px, 0px);  /* IE10 */
-    -o-transform: translate3d(0px, 0px, 0px);  /* Opera 10.5+ */
-       transition: translate3d(0px, 0px, 0px);
+	-webkit-transition: background-color 0.45s;
+	  -moz-transition: background-color 0.45s; 
+	   -ms-transition: background-color 0.45s; 
+	    -o-transition: background-color 0.45s; 
+	       transition: background-color 0.45s;
+	-webkit-transform: translate3d(0px, 101%, 0px);
+  	-moz-transform: translate3d(0px, 101%, 0px); 
+  	 -ms-transform: translate3d(0px, 101%, 0px); 
+    	-o-transform: translate3d(0px, 101%, 0px); 
+				 transform: translate3d(0px, 101%, 0px);
 }
 
 #reader ::-webkit-scrollbar:horizontal,
@@ -89,15 +100,34 @@ body.frozen .shadow {
 	width: expression( document.body.clientWidth < 301 ? "300px" : "auto" ); 
 }
 
+body.frozen #article_container,
+body.deactivate #article_container {
+	-webkit-transform: translate3d(0px, 0px, 0px);
+  	-moz-transform: translate3d(0px, 0px, 0px); 
+  	 -ms-transform: translate3d(0px, 0px, 0px); 
+    	-o-transform: translate3d(0px, 0px, 0px);
+				transform: translate3d(0px, 0px, 0px); 
+}
+
 #article_container {
 	width: 90%;
 	height: 100%;
-	margin: 101% auto 0;
+	margin: 0 auto;
 	overflow-y: auto;
 	overflow-x: hidden;
 	text-align: left;
 	max-width: 1000px;
 	min-width: 300px;
+	-webkit-transition: all 0.35s ease-out;
+	  -moz-transition: all 0.35s ease-out;  
+	   -ms-transition: all 0.35s ease-out;  
+	    -o-transition: all 0.35s ease-out;  
+	       transition: all 0.35s ease-out;
+	-webkit-transform: translate3d(0px, 101%, 0px);
+  	-moz-transform: translate3d(0px, 101%, 0px); 
+  	 -ms-transform: translate3d(0px, 101%, 0px); 
+    	-o-transform: translate3d(0px, 101%, 0px);
+				 transform: translate3d(0px, 101%, 0px);
 }
 
 * html #reader > #article_container > article { 
@@ -181,6 +211,12 @@ body.frozen .shadow {
 #reader #page_content img {
 	display: block;
 	padding: 9px 0 18px;
+	width: auto;
+	height: auto;
+}
+
+#reader #page_content p img {
+	padding: 9px 0 24px;
 }
 
 #reader #page_content img.alignright {
@@ -232,7 +268,7 @@ body.frozen .shadow {
 	margin-left: 0;
 }
 
-#reader #page_content pre p {
+#reader pre p {
 	font-size: 14px;
 	line-height: 14px;
 	color: #93A1A1;
@@ -240,8 +276,21 @@ body.frozen .shadow {
 	padding: 0;
 }
 
+#reader pre p,
+#reader pre span {
+	font-weight: normal !important;
+}
+
 #reader pre {
 	border: 0 none;
+	white-space: pre;           
+	white-space: pre-wrap;      
+	white-space: pre-line;      
+	white-space: -pre-wrap;     
+	white-space: -o-pre-wrap;   
+	white-space: -moz-pre-wrap; 
+	white-space: -hp-pre-wrap;  
+	word-wrap: break-word;
 }
 
 #reader #article_comments {
@@ -290,4 +339,15 @@ body.frozen .shadow {
 	text-align: left;
 	line-height: 1.4em;
 	font-size: 18px;	
+}
+
+#reader #article_comments .comments li a {
+	white-space: pre;           
+	white-space: pre-wrap;      
+	white-space: pre-line;      
+	white-space: -pre-wrap;     
+	white-space: -o-pre-wrap;   
+	white-space: -moz-pre-wrap; 
+	white-space: -hp-pre-wrap;  
+	word-wrap: break-word;      
 }

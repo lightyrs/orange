@@ -20,7 +20,7 @@
 	padding: 0 12px 0 0;
 }
 
-h1 #spinner {
+h1 #spinner_one {
 	display: block;
 	position: absolute;
 	left: 0;
@@ -137,7 +137,11 @@ span.infinite-scroll.rendered {
 }
 
 span.infinite-scroll:hover {
+	cursor: pointer;
 	border-color: #F60;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 1px 6px rgba(0, 105, 214, 0.25);
+  box-shadow: 0 1px 6px rgba(0, 105, 214, 0.25);
 }
 
 span.infinite-scroll:hover a {
@@ -154,6 +158,17 @@ span.infinite-scroll a {
 	text-align: center;
 	width: 237px;
 	height: 237px;
+}
+
+span.infinite-scroll #spinner_two {
+	display: block;
+	left: 50%;
+	top: 50%;
+	line-height: 36px;
+	height: 36px;
+	width: 19px;
+	position: absolute;
+	margin: -18px 0 0 -10px;
 }
 
 article.item > * {

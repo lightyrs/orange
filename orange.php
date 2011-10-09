@@ -27,7 +27,7 @@ if ($cache->exists($domain, $cache_url)) {
 			$r = new Readability($html, $url);
 			$r->init();
 			$article = $r->articleContent->innerHTML;
-	    $cache->put($domain, $cache_url, $article);  
+			$cache->put($domain, $cache_url, $article);
 			echo $article;		
 		}
 	}

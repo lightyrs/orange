@@ -30,18 +30,14 @@ body.frozen #reader,
 body.deactivate #reader {
 	background-color: transparent;
 	background-color: rgba(0, 0, 0, 0.8);
-	-webkit-transform: translate3d(0px, 0px, 0px); 
-  	-moz-transform: translate3d(0px, 0px, 0px);  
-  	 -ms-transform: translate3d(0px, 0px, 0px);  
-    	-o-transform: translate3d(0px, 0px, 0px);
-			  transform: translate3d(0px, 0px, 0px); 
+	top: 0;
 }
 
 #reader {
 	font-size: 19px;
 	position: fixed;
 	left: 0px;
-	top: 0px;
+	top: 100%;
 	right: 0px;
 	bottom: 0px;
 	width: 100%;
@@ -59,7 +55,7 @@ body.deactivate #reader {
 	text-decoration: none;
 	white-space: normal;
 	word-spacing: normal;
-	margin: 0px;
+	margin: 0;
 	padding: 0px;
 	direction: ltr;
 	zoom: 1;
@@ -69,11 +65,11 @@ body.deactivate #reader {
 	   -ms-transition: background-color 0.45s; 
 	    -o-transition: background-color 0.45s; 
 	       transition: background-color 0.45s;
-	-webkit-transform: translate3d(0px, 101%, 0px);
-  	-moz-transform: translate3d(0px, 101%, 0px); 
-  	 -ms-transform: translate3d(0px, 101%, 0px); 
-    	-o-transform: translate3d(0px, 101%, 0px); 
-				 transform: translate3d(0px, 101%, 0px);
+	-webkit-transform: translate3d(0px, 0px, 0px);
+  	-moz-transform: translate3d(0px, 0px, 0px); 
+  	 -ms-transform: translate3d(0px, 0px, 0px); 
+    	-o-transform: translate3d(0px, 0px, 0px); 
+				 transform: translate3d(0px, 0px, 0px);
 }
 
 #reader ::-webkit-scrollbar:horizontal,
@@ -325,6 +321,7 @@ body.deactivate #article_container {
 	color: #342E38;
 	padding: 22px 0 10px;
 	text-align: left;
+	line-height: 1.4em;
 }
 
 #reader #article_comments > .comments > li > header {

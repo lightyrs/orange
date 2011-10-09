@@ -6,7 +6,7 @@ class SimpleCache
 	
 	public function put($domain, $key, $content)
 	{		
-		$myCacheDir = 'cache/' . $domain;
+		$myCacheDir = 'cache/' . $domain[0] . '/' . $domain;
 
 		if (! file_exists($myCacheDir))
 			mkdir($myCacheDir);
@@ -18,7 +18,7 @@ class SimpleCache
 	
 	public function get($domain, $key)
 	{
-		$myCacheDir = 'cache/' . $domain;
+		$myCacheDir = 'cache/' . $domain[0] . '/' . $domain;
 		
 		$filename_cache = $myCacheDir . '/' . $key . '.cache'; //Cache filename
 
@@ -37,7 +37,7 @@ class SimpleCache
 	
 	public function exists($domain, $key)
 	{		
-		$myCacheDir = 'cache/' . $domain;
+		$myCacheDir = 'cache/' . $domain[0] . '/' . $domain;
 		
 		$filename_cache = $myCacheDir . '/' . $key . '.cache'; //Cache filename
 

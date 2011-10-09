@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/reader.css">
+	<link rel="stylesheet" href="css/prettify.css">
   <!-- end CSS-->
 	
 	<!--[if lt IE 9]>
@@ -30,7 +31,7 @@
   <div class="container-fluid">
 		<section class="sidebar" id="sidebar" role="sidebar">
 			<h1>
-				<span id="spinner"></span>
+				<span id="spinner_one"></span>
 				<a href="/">orange</a>
 			</h1>
 			<nav>
@@ -59,25 +60,23 @@
 
 	<div id="reader">
 		<div id="article_container">
-			<div class="shadow top"></div>
 			<article>
 				<div class="page">					
 					<h2 id="article_title"></h2>
 					<div id="page_content"></div>
 					<div id="article_comments"></div>
 				</div>
-			</article>
-			<div class="shadow bottom"></div>					
+			</article>				
 		</div>		
 	</div>
-	
-  <!-- JavaScript at the bottom for fast page loading -->
+
+	<div class="shadow top"></div>
+	<div class="shadow bottom"></div>	
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
-	<script src="js/mylibs/jquery.cookies.min.js"></script>
 	<script src="js/mylibs/spin.min.js"></script>
 	<script src="js/mylibs/date.extensions.min.js"></script>
 	<script src="js/mylibs/jquery.myimgscale-0.2.min.js"></script>
@@ -85,7 +84,6 @@
 	<script src="js/mylibs/jquery.scrollstop.min.js"></script>
 	<script src="js/mylibs/jquery.imagefit.min.js"></script>
 	<script src="js/mylibs/prettify.min.js"></script>
-	<link rel="stylesheet" href="css/prettify.css">
 	
   <!-- scripts concatenated and minified via ant build script-->
   <script defer src="js/script.js"></script>

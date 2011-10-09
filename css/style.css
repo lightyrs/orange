@@ -114,6 +114,48 @@ article.item:hover {
   box-shadow: 0 1px 6px rgba(0, 105, 214, 0.25);
 }
 
+span.infinite-scroll {
+	display: block;
+	float: left;
+	border: 1px solid #ccc;
+	line-height: 239px;
+	width: 237px;
+	height: 237px;
+	padding: 1px;
+	margin: 0 0 10px 10px;
+	position: relative;
+	opacity: 0;
+	-webkit-transition: opacity 0.29s;
+	  -moz-transition: opacity 0.29s; 
+	   -ms-transition: opacity 0.29s; 
+	    -o-transition: opacity 0.29s; 
+	       transition: opacity 0.29s;
+}
+
+span.infinite-scroll.rendered {
+	opacity: 1.0;
+}
+
+span.infinite-scroll:hover {
+	border-color: #F60;
+}
+
+span.infinite-scroll:hover a {
+	text-decoration: underline;
+}
+
+span.infinite-scroll a {
+	display: block;
+	background: #F60;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	width: 237px;
+	height: 237px;
+}
+
 article.item > * {
 	position: relative;
 	z-index: 10;
@@ -160,6 +202,7 @@ article.item h3.title {
 
 article.item.preview h3.title a {
 	color: #fff;
+	outline: none;
 	text-shadow: 1px 1px 1px black;
 }
 

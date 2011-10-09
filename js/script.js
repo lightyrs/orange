@@ -393,10 +393,11 @@ var Orange = {
     },
 
     article: function() {
-      var $container = $("#article_container");
-      var $article = $container.find("article");
-      var $page = $article.find(".page");
-      var article, $content, filtered_content, $youtube_embed, youtube_url;
+      var $shadows = Orange.els.reader.find(".shadow"),
+					$container = $("#article_container"),
+		      $article = $container.find("article"),
+      		$page = $article.find(".page"),
+      		article, $content, filtered_content, $youtube_embed, youtube_url;
       Orange.els.grid.live("click", function(e) {
         if ($(e.target).hasClass("title") || $(e.target).hasClass("comment-count")) {
           var $this = $(e.target).parents("article.item");
@@ -427,16 +428,17 @@ var Orange = {
                 "-moz-transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
                 "-ms-transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
                 "-o-transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
-                "transform": "translate3d(0px, 0px, 0px) translate(0, 101%)",
-                "transition": "translate3d(0px, 0px, 0px)"
+                "transform": "translate3d(0px, 0px, 0px) translate(0, 101%)"
               });
               Orange.els.reader.css({
                 "background-color": "rgba(0, 0, 0, 0)"
               });
+							$shadows.css("opacity", "0");
               setTimeout(function() {
                 $("body, html").removeClass("frozen");
                 $container.attr("style", "").scrollTop(0);
                 Orange.els.reader.attr("style", "");
+								$shadows.attr("style", "");
                 $(e.target).unbind("click").find("#page_content, #article_comments").html("");
               }, 550);
             }

@@ -4,11 +4,22 @@ body.frozen {
 	-webkit-user-select: none;
 }
 
+.shadow {
+	display: none;
+	opacity: 0;
+	-webkit-transition: opacity 0.45s;
+	  -moz-transition: opacity 0.45s; 
+	   -ms-transition: opacity 0.45s; 
+	    -o-transition: opacity 0.45s; 
+	       transition: opacity 0.45s;
+}
+
 body.frozen .shadow {
 	display: block;
+	opacity: 1.0;
 	width: 100%;
 	height: 8px;
-	position: fixed;
+	position: absolute;
 	left: 0;
 	z-index: 999999;
 	background: transparent;
@@ -23,7 +34,6 @@ body.frozen .shadow {
 
 .shadow.bottom {
 	top: 100%;
-	margin-top: 2px;
 }
 
 body.frozen #reader,

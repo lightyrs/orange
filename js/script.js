@@ -4,7 +4,6 @@ var Orange = {
 
   init: function() {
     Orange.storage.get("orange_queries");
-		Orange.storage.get("orange_cache");
     Orange.hnsearch.fetch_json(Orange.urls.front_hn(0), "front", 0);
     Orange.listeners.init();
   },
@@ -54,11 +53,10 @@ var Orange = {
     init: function() {
 			var articles = $("article.item.pre-render:in-viewport"),
 					i = articles.length,
-					current;
+					$this;
 					
 			while (i--) {
-				current = articles[i];
-        var $this = $(current),
+        var $this = $(articles[i]),
             article = Orange.articles[$this.data("article")],
             cache = Orange.cache[article.cache_url];
 
@@ -67,18 +65,18 @@ var Orange = {
         } else {
           if (article.domain != "news.ycombinator.com") {
             try {
-              Orange.extraction.start(i, $this, article.url, article.domain);
+              Orange.extraction.start($this, article.url, article.domain);
             } catch(e) {
-              Orange.extraction.complete(i, $this);
+              Orange.extraction.complete($this);
             };
           } else {
-            Orange.extraction.complete(i, $this);
+            Orange.extraction.complete($this);
           }
         }
 			}
     },
 
-    start: function(request, el, url, domain) {
+    start: function(el, url, domain) {
       el.removeClass("pre-render");
       $.ajax({
         url: "orange.php?clean=true&url=" + url + "&domain=" + domain,
@@ -87,7 +85,7 @@ var Orange = {
           Orange.extraction.success(el, data);
         },
         complete: function() {
-          Orange.extraction.complete(request, el);
+          Orange.extraction.complete(el);
         },
         dataFilter: function(data) {
           try {
@@ -112,7 +110,7 @@ var Orange = {
       if (cached) {
         $(data["thumb"]).appendTo(el.find(".thumbnail")).scaleImage();
         article.content = data["content"];
-        Orange.extraction.complete(1, el);
+        Orange.extraction.complete(el);
       } else {
         if (article) {
           Orange.cache[article.cache_url] = {};
@@ -144,12 +142,8 @@ var Orange = {
       };
     },
 
-    complete: function(request, el) {
+    complete: function(el) {
       el.removeClass("pre-render").find(".loader").remove();
-			if (request == 0) {
-				console.log("yea");
-				Orange.storage.set("orange_cache");	
-			}			
     }
   },
 
@@ -184,7 +178,7 @@ var Orange = {
           i = results.length;
 
       Orange.search = {
-        url: url.replace("&start=" + start, "&start=" + (start + i)).replace("&limit=80", "&limit=40"),
+        url: url.replace("&start=" + start, "&start=" + (start + i)),
         query: query,
         start: start + i
       };
@@ -558,19 +552,19 @@ var Orange = {
       return "http://api.thriftdb.com/api.hnsearch.com/items/_search?weights[title]=1.1&weights[text]=0.7&weights[domain]=2.0&weights[username]=0.1&weights[type]=0.0&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(create_ts,NOW),3600000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&limit=30&pretty_print=true&start=" + start
     },
     user_hn: function(user, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=80&start=" + start
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=30&start=" + start
     },
     domain_hn: function(domain, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=80&start=" + start
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=30&start=" + start
     },
     ask_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=80&start=" + start
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=30&start=" + start
     },
     show_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=80&start=" + start
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=30&start=" + start
     },
     search_hn: function(term, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][type]=submission&sortby=create_ts%20desc&limit=80&start=" + start
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][type]=submission&sortby=create_ts%20desc&limit=30&start=" + start
     },
     comments_hn: function(sigid, start) {
       return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][type]=comment&filter[fields][parent_sigid]=" + sigid + "&sortby=points%20desc&limit=100&start=" + start

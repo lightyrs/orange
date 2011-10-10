@@ -1,20 +1,28 @@
 html.frozen,
 body.frozen {
 	overflow: hidden;
+	user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
 	-webkit-user-select: none;
 }
 
 .shadow {
-	display: none;
 	opacity: 0;
-	-webkit-transition: opacity 0.45s;
-	  -moz-transition: opacity 0.45s; 
-	   -ms-transition: opacity 0.45s; 
-	    -o-transition: opacity 0.45s; 
-	       transition: opacity 0.45s;
+	-webkit-transition: opacity 0.36s ease-out;
+	  -moz-transition: opacity 0.36s ease-out; 
+	   -ms-transition: opacity 0.36s ease-out; 
+	    -o-transition: opacity 0.36s ease-out; 
+	       transition: opacity 0.36s ease-out;
+	-webkit-transform: translateZ(0);
+		 -moz-transform: translateZ(0);
+		  -ms-transform: translateZ(0);
+		   -o-transform: translateZ(0);
+		      transform: translateZ(0);
 }
 
-body.frozen .shadow {
+body.frozen .shadow,
+body.deactivate .shadow {
 	display: block;
 	opacity: 1.0;
 	width: 100%;
@@ -26,6 +34,11 @@ body.frozen .shadow {
 	box-shadow: rgba(0,0,0,0.7) 0 0 40px;
 	-moz-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
 	-webkit-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
+	-webkit-transition: opacity 0.36s ease-in;
+	  -moz-transition: opacity 0.36s ease-in; 
+	   -ms-transition: opacity 0.36s ease-in; 
+	    -o-transition: opacity 0.36s ease-in; 
+	       transition: opacity 0.36s ease-in;
 }
 
 .shadow.top {
@@ -40,7 +53,14 @@ body.frozen #reader,
 body.deactivate #reader {
 	background-color: transparent;
 	background-color: rgba(0, 0, 0, 0.8);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000,endColorstr=#CC000000); /* IE6–IE9 */
+	zoom: 1;
 	top: 0;
+	-webkit-transition: background-color 0.36s ease-in;
+	  -moz-transition: background-color 0.36s ease-in; 
+	   -ms-transition: background-color 0.36s ease-in; 
+	    -o-transition: background-color 0.36s ease-in; 
+	       transition: background-color 0.36s ease-in;
 }
 
 #reader {
@@ -69,17 +89,25 @@ body.deactivate #reader {
 	padding: 0px;
 	direction: ltr;
 	zoom: 1;
+	user-select: auto;
+	-moz-user-select: auto;
+	-o-user-select: auto;
 	-webkit-user-select: auto;
-	-webkit-transition: background-color 0.45s;
-	  -moz-transition: background-color 0.45s; 
-	   -ms-transition: background-color 0.45s; 
-	    -o-transition: background-color 0.45s; 
-	       transition: background-color 0.45s;
-	-webkit-transform: translate3d(0px, 0px, 0px);
-  	-moz-transform: translate3d(0px, 0px, 0px); 
-  	 -ms-transform: translate3d(0px, 0px, 0px); 
-    	-o-transform: translate3d(0px, 0px, 0px); 
-				 transform: translate3d(0px, 0px, 0px);
+	-webkit-transition: background-color 0.36s ease-out;
+	  -moz-transition: background-color 0.36s ease-out; 
+	   -ms-transition: background-color 0.36s ease-out; 
+	    -o-transition: background-color 0.36s ease-out; 
+	       transition: background-color 0.36s ease-out;
+	-webkit-transform: translateZ(0);
+		 -moz-transform: translateZ(0);
+		  -ms-transform: translateZ(0);
+		   -o-transform: translateZ(0);
+		      transform: translateZ(0);
+}
+
+#reader embed,
+#reader object {
+	display: none;
 }
 
 #reader ::-webkit-scrollbar:horizontal,
@@ -108,11 +136,16 @@ body.deactivate #reader {
 
 body.frozen #article_container,
 body.deactivate #article_container {
-	-webkit-transform: translate3d(0px, 0px, 0px);
-  	-moz-transform: translate3d(0px, 0px, 0px); 
-  	 -ms-transform: translate3d(0px, 0px, 0px); 
-    	-o-transform: translate3d(0px, 0px, 0px);
-				transform: translate3d(0px, 0px, 0px); 
+	-webkit-transition: all 0.36s ease-in;
+	  -moz-transition: all 0.36s ease-in;  
+	   -ms-transition: all 0.36s ease-in;  
+	    -o-transition: all 0.36s ease-in;  
+	       transition: all 0.36s ease-in;
+	-webkit-transform: translate3d(0, 0, 0);
+  	-moz-transform: translate3d(0, 0, 0); 
+  	 -ms-transform: translate3d(0, 0, 0); 
+    	-o-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0); 
 }
 
 #article_container {
@@ -124,16 +157,16 @@ body.deactivate #article_container {
 	text-align: left;
 	max-width: 1000px;
 	min-width: 300px;
-	-webkit-transition: all 0.35s ease-out;
-	  -moz-transition: all 0.35s ease-out;  
-	   -ms-transition: all 0.35s ease-out;  
-	    -o-transition: all 0.35s ease-out;  
-	       transition: all 0.35s ease-out;
-	-webkit-transform: translate3d(0px, 101%, 0px);
-  	-moz-transform: translate3d(0px, 101%, 0px); 
-  	 -ms-transform: translate3d(0px, 101%, 0px); 
-    	-o-transform: translate3d(0px, 101%, 0px);
-				 transform: translate3d(0px, 101%, 0px);
+	-webkit-transition: all 0.36s ease-out;
+	  -moz-transition: all 0.36s ease-out;  
+	   -ms-transition: all 0.36s ease-out;  
+	    -o-transition: all 0.36s ease-out;  
+	       transition: all 0.36s ease-out;
+	-webkit-transform: translate3d(0, 100%, 0);
+  	-moz-transform: translate3d(0, 100%, 0); 
+  	 -ms-transform: translate3d(0, 100%, 0); 
+    	-o-transform: translate3d(0, 100%, 0);
+				 transform: translate3d(0, 100%, 0);
 }
 
 * html #reader > #article_container > article { 
@@ -157,9 +190,12 @@ body.deactivate #article_container {
 	letter-spacing: 0;
 	line-height: 1.4em;
 	display: block;
-	padding: 8.333333333333334% 10%;
+	padding: 8.34% 10%;
 	font-family: Palatino, Georgia, Times, "Times New Roman";
 	color: #342E38;
+	user-select: auto;
+	-moz-user-select: auto;
+	-o-user-select: auto;
 	-webkit-user-select: auto;
 }
 

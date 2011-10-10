@@ -47,7 +47,7 @@ class Readability
 	public $version = '1.7.1-without-multi-page';
 	public $convertLinksToFootnotes = false;
 	public $revertForcedParagraphElements = true;
-	public $articleTitle;
+	// public $articleTitle;
 	public $articleContent;
 	public $dom;
 	public $url = null; // optional - URL where HTML was retrieved
@@ -104,9 +104,9 @@ class Readability
 	* Get article title element
 	* @return DOMElement
 	*/
-	public function getTitle() {
-		return $this->articleTitle;
-	}
+	// public function getTitle() {
+	// 	return $this->articleTitle;
+	// }
 	
 	/**
 	* Get article content element
@@ -155,7 +155,7 @@ class Readability
 		/* Build readability's DOM tree */
 		$overlay        = $this->dom->createElement('div');
 		$innerDiv       = $this->dom->createElement('div');
-		$articleTitle   = $this->getArticleTitle();
+		// $articleTitle   = $this->getArticleTitle();
 		$articleContent = $this->grabArticle();
 
 		if (!$articleContent) {
@@ -169,7 +169,7 @@ class Readability
 		$innerDiv->setAttribute('id', 'readInner');
 
 		/* Glue the structure of our document together. */
-		$innerDiv->appendChild($articleTitle);
+		// $innerDiv->appendChild($articleTitle);
 		$innerDiv->appendChild($articleContent);
 		$overlay->appendChild($innerDiv);
 		
@@ -182,7 +182,7 @@ class Readability
 		$this->postProcessContent($articleContent);
 		
 		// Set title and content instance variables
-		$this->articleTitle = $articleTitle;
+		// $this->articleTitle = $articleTitle;
 		$this->articleContent = $articleContent;
 		
 		return $this->success;
@@ -212,50 +212,50 @@ class Readability
 	*
 	* @return DOMElement
 	*/
-	protected function getArticleTitle() {
-		$curTitle = '';
-		$origTitle = '';
-
-		try {
-			$curTitle = $origTitle = $this->getInnerText($this->dom->getElementsByTagName('title')->item(0));
-		} catch(Exception $e) {}
-		
-		if (preg_match('/ [\|\-] /', $curTitle))
-		{
-			$curTitle = preg_replace('/(.*)[\|\-] .*/i', '$1', $origTitle);
-			
-			if (count(explode(' ', $curTitle)) < 3) {
-				$curTitle = preg_replace('/[^\|\-]*[\|\-](.*)/i', '$1', $origTitle);
-			}
-		}
-		else if (strpos($curTitle, ': ') !== false)
-		{
-			$curTitle = preg_replace('/.*:(.*)/i', '$1', $origTitle);
-
-			if (count(explode(' ', $curTitle)) < 3) {
-				$curTitle = preg_replace('/[^:]*[:](.*)/i','$1', $origTitle);
-			}
-		}
-		else if(strlen($curTitle) > 150 || strlen($curTitle) < 15)
-		{
-			$hOnes = $this->dom->getElementsByTagName('h1');
-			if($hOnes->length == 1)
-			{
-				$curTitle = $this->getInnerText($hOnes->item(0));
-			}
-		}
-
-		$curTitle = trim($curTitle);
-
-		if (count(explode(' ', $curTitle)) <= 4) {
-			$curTitle = $origTitle;
-		}
-		
-		$articleTitle = $this->dom->createElement('h1');
-		$articleTitle->innerHTML = $curTitle;
-		
-		return $articleTitle;
-	}
+	// protected function getArticleTitle() {
+	// 	$curTitle = '';
+	// 	$origTitle = '';
+	// 
+	// 	try {
+	// 		$curTitle = $origTitle = $this->getInnerText($this->dom->getElementsByTagName('title')->item(0));
+	// 	} catch(Exception $e) {}
+	// 	
+	// 	if (preg_match('/ [\|\-] /', $curTitle))
+	// 	{
+	// 		$curTitle = preg_replace('/(.*)[\|\-] .*/i', '$1', $origTitle);
+	// 		
+	// 		if (count(explode(' ', $curTitle)) < 3) {
+	// 			$curTitle = preg_replace('/[^\|\-]*[\|\-](.*)/i', '$1', $origTitle);
+	// 		}
+	// 	}
+	// 	else if (strpos($curTitle, ': ') !== false)
+	// 	{
+	// 		$curTitle = preg_replace('/.*:(.*)/i', '$1', $origTitle);
+	// 
+	// 		if (count(explode(' ', $curTitle)) < 3) {
+	// 			$curTitle = preg_replace('/[^:]*[:](.*)/i','$1', $origTitle);
+	// 		}
+	// 	}
+	// 	else if(strlen($curTitle) > 150 || strlen($curTitle) < 15)
+	// 	{
+	// 		$hOnes = $this->dom->getElementsByTagName('h1');
+	// 		if($hOnes->length == 1)
+	// 		{
+	// 			$curTitle = $this->getInnerText($hOnes->item(0));
+	// 		}
+	// 	}
+	// 
+	// 	$curTitle = trim($curTitle);
+	// 
+	// 	if (count(explode(' ', $curTitle)) <= 4) {
+	// 		$curTitle = $origTitle;
+	// 	}
+	// 	
+	// 	$articleTitle = $this->dom->createElement('h1');
+	// 	$articleTitle->innerHTML = $curTitle;
+	// 	
+	// 	return $articleTitle;
+	// }
 	
 	/**
 	* Prepare the HTML document for readability to scrape it.
@@ -522,7 +522,12 @@ class Readability
 				}               
 			}
 
-			if ($tagName == 'P' || $tagName == 'TD' || $tagName == 'PRE') {
+			if ($tagName == 'P' || $tagName == 'TD') {
+				$nodesToScore[] = $node;
+			}
+			
+			if ($tagName == 'PRE') {
+				$node->setAttribute('class', 'prettyprint');
 				$nodesToScore[] = $node;
 			}
 

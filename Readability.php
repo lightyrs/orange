@@ -51,6 +51,7 @@ class Readability
 	public $articleContent;
 	public $dom;
 	public $url = null; // optional - URL where HTML was retrieved
+	public $domain;
 	public $debug = false;
 	protected $body = null; // 
 	protected $bodyCache = null; // Cache the body HTML in case we need to re-use it later
@@ -86,7 +87,7 @@ class Readability
 	* @param string UTF-8 encoded string
 	* @param string (optional) URL associated with HTML (used for footnotes)
 	*/	
-	function __construct($html, $url=null)
+	function __construct($html, $url=null, $domain)
 	{
 		/* Turn all double br's into p's */
 		/* Note, this is pretty costly as far as processing goes. Maybe optimize later. */
@@ -98,6 +99,7 @@ class Readability
 		$this->dom->registerNodeClass('DOMElement', 'JSLikeHTMLElement');
 		@$this->dom->loadHTML($html);
 		$this->url = $url;
+		$this->domain = $domain;
 	}
 
 	/**
@@ -114,7 +116,7 @@ class Readability
 	*/
 	public function getContent() {
 		return $this->articleContent;
-	}	
+	}
 	
 	/**
 	* Runs readability.
@@ -180,6 +182,8 @@ class Readability
 		$this->body->removeAttribute('style');
 
 		$this->postProcessContent($articleContent);
+		$this->parseImages($articleContent);
+		$this->convertSmartQuotes($articleContent);
 		
 		// Set title and content instance variables
 		// $this->articleTitle = $articleTitle;
@@ -288,6 +292,78 @@ class Readability
 		//document.body.innerHTML = document.body.innerHTML.replace(readability.regexps.replaceBrs, '</p><p>').replace(readability.regexps.replaceFonts, '<$1span>');
 		// We do this in the constructor for PHP as that's when we have raw HTML - before parsing it into a DOM tree.
 		// Manipulating innerHTML as it's done in JS is not possible in PHP.
+	}
+	
+	/**
+	* Replace smart quotes with apostrophes and quotes
+	* @return HTML String
+	*/	
+	protected function convertSmartQuotes($string) { 
+    $search = array(chr(145), 
+                    chr(146), 
+                    chr(147), 
+                    chr(148), 
+                    chr(151)); 
+
+    $replace = array("'", 
+                     "'", 
+                     '"', 
+                     '"', 
+                     '-'); 
+
+    return str_replace($search, $replace, $string); 
+	}
+
+	/**
+	* Filter article content for valuable images
+	* @return HTML String
+	*/	
+	protected function parseImages($articleContent) {
+		$articleImages = $articleContent->getElementsByTagName('img');
+		$imagesCount = $articleImages->length;
+		
+		if ($imagesCount > 0) {
+			if ($imagesCount >= 30) {
+				for($i = $imagesCount-1; $i >= 0; $i--)	{
+					$articleImages->item($i)->parentNode->removeChild($articleImages->item($i));
+				}			
+			} else {
+				$bestImage = '';
+				$maxSize = -1;
+				for($i = $imagesCount-1; $i >= 0; $i--)	{
+					$attrWidth = $articleImages->item($i)->getAttribute('width');
+					$attrHeight = $articleImages->item($i)->getAttribute('height');
+
+					if ($attrWidth && $attrWidth < 150 || $attrHeight && $attrHeight < 120) {
+						$articleImages->item($i)->parentNode->removeChild($articleImages->item($i));
+					} else {
+						$src = $articleImages->item($i)->getAttribute('src');
+						if (substr($src, 0, 4) != 'http') {
+							if ($src[0] == '/') {
+								$articleImages->item($i)->setAttribute('src', "http://" . $this->domain . $src);
+							} else if (substr($src, 0, 2) == './') {
+								$articleImages->item($i)->setAttribute('src', $url . '/' . substr($src, 2));
+							} else {
+								$articleImages->item($i)->setAttribute('src', $url . '/' . $src);
+							}
+						}
+						list($width, $height) = getimagesize($src);
+
+						if ($width && $height) {
+							if ($width < 150 || $height && $height < 120)	{
+								$articleImages->item($i)->parentNode->removeChild($articleImages->item($i));
+							}	else if ($height && ($width + $height) > $maxSize) {   
+						    $maxSize = $width + $height;
+						  	$bestImage = $articleImages->item($i);
+						  }						
+						}
+					}		
+				}
+				if ($bestImage != '') {
+					$bestImage->setAttribute('class', 'orange-best-image');					
+				}
+			}			
+		}
 	}
 
 	/**
@@ -522,12 +598,7 @@ class Readability
 				}               
 			}
 
-			if ($tagName == 'P' || $tagName == 'TD') {
-				$nodesToScore[] = $node;
-			}
-			
-			if ($tagName == 'PRE') {
-				$node->setAttribute('class', 'prettyprint');
+			if ($tagName == 'P' || $tagName == 'TD' || $tagName == 'PRE') {
 				$nodesToScore[] = $node;
 			}
 

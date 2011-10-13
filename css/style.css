@@ -95,6 +95,10 @@ article.item {
 	margin: 0 0 10px 10px;
 	position: relative;
 	opacity: 0;
+	-moz-opacity: 0; 
+	-ms-filter: "alpha(opacity=0)"; 
+	filter:alpha(opacity=0);
+	-webkit-font-smoothing: antialiased;
 	-webkit-transition: opacity 0.29s ease-out;
 	  -moz-transition: opacity 0.29s ease-out; 
 	   -ms-transition: opacity 0.29s ease-out; 
@@ -105,10 +109,18 @@ article.item {
 		  -ms-transform: translateZ(0);
 		   -o-transform: translateZ(0);
 		      transform: translateZ(0);
+	-webkit-transform-style: preserve-3d;
+	 -moz-transform-style: preserve-3d;
+	  -ms-transform-style: preserve-3d;
+	   -o-transform-style: preserve-3d;
+	      transform-style: preserve-3d;
 }
 
 article.item.rendered {
 	opacity: 1.0;
+	-moz-opacity: 1.0; 
+	-ms-filter: "alpha(opacity=100)"; 
+	filter:alpha(opacity=100);
 }
 
 article.item:hover {
@@ -130,6 +142,9 @@ span.infinite-scroll {
 	margin: 0 0 10px 10px;
 	position: relative;
 	opacity: 0;
+	-moz-opacity: 0; 
+	-ms-filter: "alpha(opacity=0)"; 
+	filter:alpha(opacity=0);
 	-webkit-transition: opacity 0.29s ease-out;
 	  -moz-transition: opacity 0.29s ease-out; 
 	   -ms-transition: opacity 0.29s ease-out; 
@@ -140,11 +155,13 @@ span.infinite-scroll {
 		  -ms-transform: translateZ(0);
 		   -o-transform: translateZ(0);
 		      transform: translateZ(0);
-	
 }
 
 span.infinite-scroll.rendered {
 	opacity: 1.0;
+	-moz-opacity: 1.0; 
+	-ms-filter: "alpha(opacity=100)"; 
+	filter:alpha(opacity=100);
 }
 
 span.infinite-scroll:hover {
@@ -262,11 +279,10 @@ article.item .thumbnail {
 	width: 237px;
 	height: 237px;
 	border: 1px solid #fff;
-}
-
-article.item .thumbnail img {
+	display: block;
 	opacity: 0;
 	-moz-opacity: 0; 
+	-ms-filter: "alpha(opacity=0)"; 
 	filter:alpha(opacity=0);
 	-webkit-transition: opacity 0.31s ease-out;
 	  -moz-transition: opacity 0.31s ease-out; 
@@ -278,11 +294,17 @@ article.item .thumbnail img {
 		  -ms-transform: translateZ(0);
 		   -o-transform: translateZ(0);
 		      transform: translateZ(0);
+	-webkit-transform-style: preserve-3d;
+	 -moz-transform-style: preserve-3d;
+	  -ms-transform-style: preserve-3d;
+	   -o-transform-style: preserve-3d;
+	      transform-style: preserve-3d;
 }
 
-article.item.preview .thumbnail img {
+article.item.preview .thumbnail {
 	opacity: 1.0;
 	-moz-opacity: 1.0; 
+	-ms-filter: "alpha(opacity=100)"; 
 	filter: alpha(opacity=100);
 }
 

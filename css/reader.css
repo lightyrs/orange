@@ -1,3 +1,14 @@
+@font-face {
+    font-family: 'BitstreamVeraSansMonoRoman';
+    src: url('fonts/VeraMono-webfont.eot');
+    src: url('fonts/VeraMono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/VeraMono-webfont.woff') format('woff'),
+         url('fonts/VeraMono-webfont.ttf') format('truetype'),
+         url('fonts/VeraMono-webfont.svg#BitstreamVeraSansMonoRoman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html.frozen,
 body.frozen {
 	overflow: hidden;
@@ -9,6 +20,9 @@ body.frozen {
 
 .shadow {
 	opacity: 0;
+	-moz-opacity: 0; 
+	-ms-filter: "alpha(opacity=0)"; 
+	filter:alpha(opacity=0);
 	-webkit-transition: opacity 0.36s ease-out;
 	  -moz-transition: opacity 0.36s ease-out; 
 	   -ms-transition: opacity 0.36s ease-out; 
@@ -19,12 +33,20 @@ body.frozen {
 		  -ms-transform: translateZ(0);
 		   -o-transform: translateZ(0);
 		      transform: translateZ(0);
+	-webkit-transform-style: preserve-3d;
+	 -moz-transform-style: preserve-3d;
+	  -ms-transform-style: preserve-3d;
+	   -o-transform-style: preserve-3d;
+	      transform-style: preserve-3d;
 }
 
 body.frozen .shadow,
 body.deactivate .shadow {
 	display: block;
 	opacity: 1.0;
+	-moz-opacity: 1.0; 
+	-ms-filter: "alpha(opacity=100)"; 
+	filter:alpha(opacity=100);
 	width: 100%;
 	height: 8px;
 	position: absolute;
@@ -145,17 +167,17 @@ body.deactivate #article_container {
   	-moz-transform: translate3d(0, 0, 0); 
   	 -ms-transform: translate3d(0, 0, 0); 
     	-o-transform: translate3d(0, 0, 0);
-				transform: translate3d(0, 0, 0); 
+				transform: translate3d(0, 0, 0);
 }
 
 #article_container {
-	width: 90%;
+	width: 95%;
 	height: 100%;
 	margin: 0 auto;
 	overflow-y: auto;
 	overflow-x: hidden;
 	text-align: left;
-	max-width: 1000px;
+	max-width: 1050px;
 	min-width: 300px;
 	-webkit-transition: all 0.36s ease-out;
 	  -moz-transition: all 0.36s ease-out;  
@@ -167,6 +189,11 @@ body.deactivate #article_container {
   	 -ms-transform: translate3d(0, 100%, 0); 
     	-o-transform: translate3d(0, 100%, 0);
 				 transform: translate3d(0, 100%, 0);
+	-webkit-transform-style: preserve-3d;
+	 -moz-transform-style: preserve-3d;
+	  -ms-transform-style: preserve-3d;
+	   -o-transform-style: preserve-3d;
+	      transform-style: preserve-3d;
 }
 
 * html #reader > #article_container > article { 
@@ -217,6 +244,14 @@ body.deactivate #article_container {
 #reader h5,
 #reader h6 {
 	color: #342E38;
+}
+
+#reader h2,
+#reader h3,
+#reader h4,
+#reader h5,
+#reader h6 {
+	margin: 9px 0;
 }
 
 #reader #page_content {
@@ -324,15 +359,34 @@ body.deactivate #article_container {
 }
 
 #reader pre {
+	clear: both;
 	border: 0 none;
-	white-space: pre;           
-	white-space: pre-wrap;      
-	white-space: pre-line;      
-	white-space: -pre-wrap;     
-	white-space: -o-pre-wrap;   
-	white-space: -moz-pre-wrap; 
-	white-space: -hp-pre-wrap;  
-	word-wrap: break-word;
+	font-family: 'BitstreamVeraSansMonoRoman', 'Inconsolata', 'Consolas', 'Monaco', 'Menlo', 'Andale Mono', 'Courier', 'Courier New', monospace;
+	line-height: 1.4em;
+	padding: 9px;
+	margin: 18px 0;
+	font-weight: normal !important;
+	font-size: 14px;
+}
+
+#reader pre pre,
+#reader pre pre pre {
+	margin: 9px 0;
+}
+
+#reader pre code {
+	font-size: 14px;
+	font-family: 'BitstreamVeraSansMonoRoman', 'Inconsolata', 'Consolas', 'Monaco', 'Menlo', 'Andale Mono', 'Courier', 'Courier New', monospace;
+	line-height: 1.4em;	
+	background: transparent;
+	font-weight: normal !important;
+}
+
+#reader pre strong,
+#reader pre b,
+#reader code strong,
+#reader code b {
+	font-weight: normal !important;
 }
 
 #reader #article_comments {

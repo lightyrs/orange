@@ -1,3 +1,11 @@
+#preload {
+	display: none;
+}
+
+html.frozen .container-fluid {
+	overflow-y: scroll;
+}
+
 .container-fluid {
 	padding: 0;
 	position: relative;
@@ -294,11 +302,6 @@ article.item .thumbnail {
 		  -ms-transform: translateZ(0);
 		   -o-transform: translateZ(0);
 		      transform: translateZ(0);
-	-webkit-transform-style: preserve-3d;
-	 -moz-transform-style: preserve-3d;
-	  -ms-transform-style: preserve-3d;
-	   -o-transform-style: preserve-3d;
-	      transform-style: preserve-3d;
 }
 
 article.item.preview .thumbnail {

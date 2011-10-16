@@ -9,8 +9,7 @@
     font-style: normal;
 }
 
-html.frozen,
-body.frozen {
+html.frozen {
 	overflow: hidden;
 	user-select: none;
 	-moz-user-select: none;
@@ -23,25 +22,19 @@ body.frozen {
 	-moz-opacity: 0; 
 	-ms-filter: "alpha(opacity=0)"; 
 	filter:alpha(opacity=0);
-	-webkit-transition: opacity 0.36s ease-out;
-	  -moz-transition: opacity 0.36s ease-out; 
-	   -ms-transition: opacity 0.36s ease-out; 
-	    -o-transition: opacity 0.36s ease-out; 
-	       transition: opacity 0.36s ease-out;
+	-webkit-transition: opacity 0.33s ease-out;
+	  -moz-transition: opacity 0.33s ease-out; 
+	   -ms-transition: opacity 0.33s ease-out; 
+	    -o-transition: opacity 0.33s ease-out; 
+	       transition: opacity 0.33s ease-out;
 	-webkit-transform: translateZ(0);
 		 -moz-transform: translateZ(0);
 		  -ms-transform: translateZ(0);
 		   -o-transform: translateZ(0);
 		      transform: translateZ(0);
-	-webkit-transform-style: preserve-3d;
-	 -moz-transform-style: preserve-3d;
-	  -ms-transform-style: preserve-3d;
-	   -o-transform-style: preserve-3d;
-	      transform-style: preserve-3d;
 }
 
-body.frozen .shadow,
-body.deactivate .shadow {
+html.frozen .shadow {
 	display: block;
 	opacity: 1.0;
 	-moz-opacity: 1.0; 
@@ -56,11 +49,11 @@ body.deactivate .shadow {
 	box-shadow: rgba(0,0,0,0.7) 0 0 40px;
 	-moz-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
 	-webkit-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
-	-webkit-transition: opacity 0.36s ease-in;
-	  -moz-transition: opacity 0.36s ease-in; 
-	   -ms-transition: opacity 0.36s ease-in; 
-	    -o-transition: opacity 0.36s ease-in; 
-	       transition: opacity 0.36s ease-in;
+	-webkit-transition: opacity 0.33s ease-in;
+	  -moz-transition: opacity 0.33s ease-in; 
+	   -ms-transition: opacity 0.33s ease-in; 
+	    -o-transition: opacity 0.33s ease-in; 
+	       transition: opacity 0.33s ease-in;
 }
 
 .shadow.top {
@@ -71,18 +64,17 @@ body.deactivate .shadow {
 	top: 100%;
 }
 
-body.frozen #reader,
-body.deactivate #reader {
+html.frozen #reader {
 	background-color: transparent;
 	background-color: rgba(0, 0, 0, 0.8);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000,endColorstr=#CC000000); /* IE6–IE9 */
 	zoom: 1;
 	top: 0;
-	-webkit-transition: background-color 0.36s ease-in;
-	  -moz-transition: background-color 0.36s ease-in; 
-	   -ms-transition: background-color 0.36s ease-in; 
-	    -o-transition: background-color 0.36s ease-in; 
-	       transition: background-color 0.36s ease-in;
+	-webkit-transition: background-color 0.33s ease-in;
+	  -moz-transition: background-color 0.33s ease-in; 
+	   -ms-transition: background-color 0.33s ease-in; 
+	    -o-transition: background-color 0.33s ease-in; 
+	       transition: background-color 0.33s ease-in;
 }
 
 #reader {
@@ -115,11 +107,11 @@ body.deactivate #reader {
 	-moz-user-select: auto;
 	-o-user-select: auto;
 	-webkit-user-select: auto;
-	-webkit-transition: background-color 0.36s ease-out;
-	  -moz-transition: background-color 0.36s ease-out; 
-	   -ms-transition: background-color 0.36s ease-out; 
-	    -o-transition: background-color 0.36s ease-out; 
-	       transition: background-color 0.36s ease-out;
+	-webkit-transition: background-color 0.33s ease-out;
+	  -moz-transition: background-color 0.33s ease-out; 
+	   -ms-transition: background-color 0.33s ease-out; 
+	    -o-transition: background-color 0.33s ease-out; 
+	       transition: background-color 0.33s ease-out;
 	-webkit-transform: translateZ(0);
 		 -moz-transform: translateZ(0);
 		  -ms-transform: translateZ(0);
@@ -156,13 +148,12 @@ body.deactivate #reader {
 	width: expression( document.body.clientWidth < 301 ? "300px" : "auto" ); 
 }
 
-body.frozen #article_container,
-body.deactivate #article_container {
-	-webkit-transition: all 0.36s ease-in;
-	  -moz-transition: all 0.36s ease-in;  
-	   -ms-transition: all 0.36s ease-in;  
-	    -o-transition: all 0.36s ease-in;  
-	       transition: all 0.36s ease-in;
+html.frozen #article_container {
+	-webkit-transition: all 0.33s ease-in;
+	  -moz-transition: all 0.33s ease-in;  
+	   -ms-transition: all 0.33s ease-in;  
+	    -o-transition: all 0.33s ease-in;  
+	       transition: all 0.33s ease-in;
 	-webkit-transform: translate3d(0, 0, 0);
   	-moz-transform: translate3d(0, 0, 0); 
   	 -ms-transform: translate3d(0, 0, 0); 
@@ -179,11 +170,11 @@ body.deactivate #article_container {
 	text-align: left;
 	max-width: 1050px;
 	min-width: 300px;
-	-webkit-transition: all 0.36s ease-out;
-	  -moz-transition: all 0.36s ease-out;  
-	   -ms-transition: all 0.36s ease-out;  
-	    -o-transition: all 0.36s ease-out;  
-	       transition: all 0.36s ease-out;
+	-webkit-transition: all 0.33s ease-out;
+	  -moz-transition: all 0.33s ease-out;  
+	   -ms-transition: all 0.33s ease-out;  
+	    -o-transition: all 0.33s ease-out;
+	       transition: all 0.33s ease-out;
 	-webkit-transform: translate3d(0, 100%, 0);
   	-moz-transform: translate3d(0, 100%, 0); 
   	 -ms-transform: translate3d(0, 100%, 0); 
@@ -298,29 +289,21 @@ body.deactivate #article_container {
 
 #reader #page_content img.alignright {
 	float: right;
-	max-width: 60% !important;
-	height: auto !important;
 	padding: 10px 0 10px 25px;
 }
 
 #reader #page_content img.alignleft {
 	float: left;
-	max-width: 60% !important;
-	height: auto !important;
 	padding: 10px 25px 10px 0;
 }
 
 #reader #page_content img[align="right"] {
 	float: right;
-	max-width: 60% !important;
-	height: auto !important;
 	padding: 10px 0 10px 25px;
 }
 
 #reader #page_content img[align="left"] {
-	float: left;
-	max-width: 60% !important;
-	height: auto !important;	
+	float: left;	
 	padding: 10px 25px 10px 0;
 }
 

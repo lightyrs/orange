@@ -22,6 +22,8 @@ var Orange = {
       });
 
       $("nav ul.searches").append(query_list.join("")).hide().fadeIn(350);
+
+			query_list = null;
     },
 
     storage_set: function(query, display_query) {
@@ -33,10 +35,12 @@ var Orange = {
       }
 
       $("nav ul.searches").append(query_list_item).children(":last").hide().fadeIn(100);
+
+			query_list_item = null;
     },
 
     storage_remove: function(query) {
-      $("nav ul.searches li a[data-search='" + query + "']").parents("li").fadeOut(180, function() {
+      $("nav .searches li a[data-search='" + query + "']").parents("li").fadeOut(180, function() {
         $(this).remove();
       });     
     },
@@ -49,32 +53,48 @@ var Orange = {
   },
 
   els: {
+		window: $(window),
     search: $("#search"),
+		container: $("body > div.container-fluid"),
     grid: $("#article_grid"),
     reader: $("#reader")
   },
 
   extraction: {
     init: function() {
-			$.each(Orange.els.grid.find("article.item.pre-render:in-viewport"), function(i, item) {
-				var $this = $(item),
-        		article = Orange.articles[$this.data("article")];
-
-        if (article.domain !== "news.ycombinator.com") {
-          Orange.extraction.start($this, article.url, article.domain);
-        } else {
-          Orange.extraction.complete($this);
-        }				
-			});
+			var $visible_articles = Orange.els.grid.children("div").children("article.pre-render:in-viewport"),
+													i = $visible_articles.length,
+											$this;
+			
+			if (i) {
+				while (i--) {
+					$this = $($visible_articles[i]),
+					article = Orange.articles[$this.data("article")];
+					
+	        if (article.domain !== "news.ycombinator.com") {
+	          Orange.extraction.request($this, article.url, article.domain);
+	        } else {
+	          Orange.extraction.complete($this);
+	        }		
+					$this = null;
+					article = null;					
+				}		
+			} else {
+				$visible_articles = null;
+				$this = null;
+			}
     },
 
-    start: function(el, url, domain) {
+    request: function(el, url, domain) {
       el.removeClass("pre-render");
       $.ajax({
         url: "orange.php?clean=true&url=" + url + "&domain=" + domain + "&as232f32=?",
         cache: true,
         success: function(data) {
-          Orange.extraction.success(el, data);
+					setTimeout(function() {
+						Orange.extraction.success(el, data);
+						data = null;
+					}, 100);
         },
         complete: function() {
           Orange.extraction.complete(el);
@@ -93,19 +113,24 @@ var Orange = {
 			if (article) { 
 				$images = $(data).find("img");
 
-				if ($images.length > 0) {
+				if ($images.length) {
 					$best_image = $images.filter(function(i, img) { 
 													return $(img).hasClass("orange-best-image"); 
 												}).first();
 
-					if ($best_image.length === 0) {
+					if (!($best_image.length)) {
 						$best_image = $images.sort(Orange.utils.sort.by_image_size).first();
 					}
 
 					$best_image.clone().appendTo(el.find(".thumbnail")).scaleImage();					
 				}
 
-				article.content = data;					
+				article.content = data;
+				
+				$best_image = null;
+				$images = null;
+				article = null;
+				data = null; 	
 			}
     },
 
@@ -127,6 +152,7 @@ var Orange = {
           } else {
             Orange.hnsearch.parse_json(results, url, query, start);
           }
+					results = null;
         },
         complete: function() {
           Orange.spinner.hide();
@@ -138,24 +164,29 @@ var Orange = {
     parse_json: function(results, url, query, start, append) {
       var result = {},
           article = {},
+					articles = [],
+		      infinite_scroller = "<span class='infinite-scroll pre-render'><span id='spinner_two'></span><a href='#'>More Submissions</a></span>",
+					domain,
+					restart,
           i = results.length;
 
-      Orange.search = {
+      Orange.search.current = {
         url: url.replace("&start=" + start, "&start=" + (start + i)),
         query: query,
         start: start + i
       };	
 	
-			if (start > 0 && (start % 150 === 0)) {
+			if (start > 0 && (start % 105 === 0)) {
 				append = false;
 				restart = 0;
-			} else if (start > 150 && (start % 150 !== 0)){
+			} else if (start > 105 && (start % 105 !== 0)){
 				restart = Orange.articles.length;
 			} else {
 				restart = start;
 			}
 			
       if (!append) {
+				delete Orange.articles;
         Orange.articles = [];
       }
 
@@ -184,13 +215,12 @@ var Orange = {
           article.title = article.title.replace(/^Show HN\: |Show HN\:|Show HN - |Show HN -/i, "");
         }
         Orange.articles.push(article);
+
+				result = null;
+				article = null;
       }
 
       i = Orange.articles.length;
-
-      var articles = [],
-          infinite_scroller = "<span class='infinite-scroll pre-render'><span id='spinner_two'></span><a href='#'>More Submissions</a></span>",
-					domain;
 
       while (i > restart) {
         article = Orange.articles[(i-1)];
@@ -199,36 +229,44 @@ var Orange = {
         articles.push('<article class="item pre-render" title="' + domain + '" data-article="' + (i-1) + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + domain + '"><img src="http://' + domain[0] + '.getfavicon.appspot.com/http://' + domain + '?defaulticon=lightpng" alt="' + domain + '" width="16" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." width="16" height="16" /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" width="11" height="11" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" width="13" height="11" /><a class="comment-count" href="#">' + article.num_comments + '</a></li></ul></footer></article>');
 
         i--;
+
+				domain = null;
       }
 
       Orange.spinner.hide();
 
       if (!append) {
-        Orange.els.grid.html("<div>" + articles.join("") + "</div>" + infinite_scroller);
+        Orange.els.grid.detach().html("<div>" + articles.join("") + "</div>" + infinite_scroller).appendTo(Orange.els.container);
         Orange.hnsearch.render_json();
       } else {
 				var previous_articles_html = Orange.els.grid.children("div").html();								
-        Orange.els.grid.html("<div>" + previous_articles_html + articles.join("") + "</div>" + infinite_scroller);
+        Orange.els.grid.detach().html("<div>" + previous_articles_html + articles.join("") + "</div>" + infinite_scroller).appendTo(Orange.els.container);
         Orange.hnsearch.render_json(true);
       }
+
+			article = null;
+			articles = null;
+			results = null;
+			infinite_scroller = null;		
     },
 
     render_json: function(append) {
       Orange.els.search.hide().find("input.query").val("");
       if (!append) {
-				$(window).scrollTop(0).trigger("scroll");
+				Orange.els.window.scrollTop(0).trigger("scroll");
       } else {
-        $("html, body").animate({scrollTop: $(window).scrollTop() + $(window).height() - 22}, 400);
+        $("body").animate({scrollTop: Orange.els.window.scrollTop() + Orange.els.window.height() - 17}, 400);
       }
       (function n(e) {
         e.eq(0).addClass("rendered");
         var fade_timer = setTimeout(function() {
           n(e.slice(1));
         }, 30);
-        if (e.length === 0) {
+        if (!(e.length)) {
           clearTimeout(fade_timer);
+					fade_timer = null;
         }
-      })($(".pre-render"));
+      })(Orange.els.grid.find(".pre-render"));
     },
 
     fetch_comments: function(sigid, scroll) {
@@ -237,23 +275,9 @@ var Orange = {
         dataType: "jsonp",
         cache: true,
         success: function(data) {
-          var results = data.results,
-              i = results.length,
-              comments = ["<ul class='comments'><p class='end-sign'>&#10070;</p><h5 class='header'>Comments</h5>"],
-              result;
-
-          if (i > 0) {
-            while (i--) {
-              result = results[i];
-              comments.push("<li class='comment'><header><a class='user' href='http://news.ycombinator.com/user?id=" + result.item.username + "'>" + result.item.username + "</a></header><p>" + result.item.text + "</p></li>");
-            }
-
-            comments.push("</ul>");
-            $("#reader #article_comments").html(comments.join(""));
-          } else {
-            return;
-          }
-        },
+					Orange.reader.render_comments(data);
+					data = null;
+				},
         complete: function() {
           if (scroll) {
             $("#article_container").scrollTop($("#article_comments").position().top - 530);
@@ -267,18 +291,66 @@ var Orange = {
   listeners: {
     init: function() {
       Orange.listeners.window();
+      Orange.listeners.article();
       Orange.listeners.nav();
       Orange.listeners.search();
       Orange.listeners.close();
       Orange.listeners.username();
       Orange.listeners.domain();
-      Orange.listeners.article();
       Orange.listeners.infinite_scroller();
     },
 
-    window: function() {
-      $(window).bind('scrollstop', function(){
-        Orange.extraction.init();
+    article: function() {
+      var $this,
+					$target;
+          
+      Orange.els.grid.delegate("article.item", "click", function(e) {
+				$target = $(e.target);
+        if ($target.hasClass("title") || $target.hasClass("comment-count")) {
+					$this = $(this);
+					Orange.reader.show($this, $target);
+        	e.preventDefault();
+        } else {
+					$this = null;
+					$target = null;
+				}
+      });
+    },
+
+    close: function() {
+      $("nav").delegate("a.close", "click", function(e) {
+        var query = $(this).siblings("a").data("search");
+        if (!($("nav .searches li").length)) {
+          Orange.storage.destroy("orange_queries");
+        } else {
+          Orange.storage.remove("orange_queries", query);
+        }
+        e.preventDefault();
+      });
+    },
+
+    domain: function() {
+      Orange.els.grid.delegate(".item a.favicon", "click", function(e) {
+        var display_query = $(this).attr("href"),
+            query = encodeURI(display_query);
+        if (display_query === "news.ycombinator.com") {
+          Orange.hnsearch.fetch_json(Orange.urls.search_hn("hn", 0), "", 0);
+        } else {
+          Orange.hnsearch.fetch_json(Orange.urls.domain_hn(query, 0), "", 0);
+        }
+        Orange.storage.set("orange_queries", query, display_query);
+        e.preventDefault();
+      });
+    },
+
+    infinite_scroller: function() {
+      Orange.els.grid.delegate(".infinite-scroll", "click", function(e) {
+        var current = Orange.search.current,
+            opts = { color: '#FFF' };
+        $(this).find("a").text("");
+        Orange.spinner.show("spinner_two", opts);
+        Orange.hnsearch.fetch_json(current.url, current.query, current.start);
+        e.preventDefault();
       });
     },
 
@@ -305,53 +377,15 @@ var Orange = {
           $button = Orange.els.search.find("input.btn");
 
       $("nav a.search").click(function(e) {
-        if (Orange.els.search.filter(":visible").length < 1) {
-          Orange.els.search.show(0, function(){
-            $input.focus();
-
-            $(window).keypress(function(e) {
-              if(e.keyCode === 13) {
-                $button.click();
-              }
-            });
-
-            $button.one("click", function() {
-              var display_query = $input.val(),
-                  query = encodeURI(display_query);
-              if (display_query === "") {
-                Orange.els.search.hide();
-              } else {
-                Orange.hnsearch.fetch_json(Orange.urls.search_hn(query, 0), query, 0);
-                Orange.storage.set("orange_queries", query, display_query);
-              }
-            });
-
-            $("body").bind("click", function(event) {
-              if ($(event.target).closest(".search.popover, nav a.search").length < 1) {
-                Orange.els.search.hide();
-                $button.unbind("click");
-              }
-            });
-          });
-        }
-        e.preventDefault();
-      });
-    },
-
-    close: function() {
-      $("nav").delegate("a.close", "click", function(e) {
-        var query = $(this).siblings("a").data("search");
-        if ($("nav ul.searches li").length < 1) {
-          Orange.storage.destroy("orange_queries");
-        } else {
-          Orange.storage.remove("orange_queries", query);
+        if (!(Orange.els.search.filter(":visible").length)) {
+					Orange.search.show($input, $button);
         }
         e.preventDefault();
       });
     },
 
     username: function() {
-      Orange.els.grid.delegate("article.item li.user a", "click", function(e) {
+      Orange.els.grid.delegate(".item .user a", "click", function(e) {
         var display_query = $(this).text(),
             query = encodeURI(display_query);
         Orange.hnsearch.fetch_json(Orange.urls.user_hn(query, 0), "", 0);
@@ -360,103 +394,160 @@ var Orange = {
       });
     },
 
-    domain: function() {
-      Orange.els.grid.delegate("article.item a.favicon", "click", function(e) {
-        var display_query = $(this).attr("href"),
-            query = encodeURI(display_query);
-        if (display_query === "news.ycombinator.com") {
-          Orange.hnsearch.fetch_json(Orange.urls.search_hn("hn", 0), "", 0);
-        } else {
-          Orange.hnsearch.fetch_json(Orange.urls.domain_hn(query, 0), "", 0);
-        }
-        Orange.storage.set("orange_queries", query, display_query);
-        e.preventDefault();
-      });
-    },
-
-    article: function() {
-      var $shadows = Orange.els.reader.find(".shadow"),
-          $container = $("#article_container"),
-          $article = $container.find("article"),
-          $page = $article.find(".page"),
-          article,
-          $content;
-          
-      Orange.els.grid.delegate("article.item", "click", function(e) {
-        if ($(e.target).hasClass("title") || $(e.target).hasClass("comment-count")) {
-          var $this = $(e.target).parents("article.item");
-          article = Orange.articles[$this.data("article")];
-          $content = article.content;
-          if (article.num_comments > 0) {
-            if ($(e.target).hasClass("comment-count")) {
-              Orange.hnsearch.fetch_comments(article.sigid, true);
-            } else {
-              Orange.hnsearch.fetch_comments(article.sigid);
-            }
-          }
-          if (!$content) {
-            $content = article.hn_text;
-          }
-					$("html, body").addClass("frozen");
-          $article.find("#article_title").text(article.title)
-            .end().find("#page_content").html($content).imagefit();
-
-          try {
-            Orange.els.reader.find('pre').each(function(i, e) {
-							hljs.highlightBlock(e, '  ');
-						});
-            Orange.els.reader.find('code').each(function(i, e) {
-							hljs.highlightBlock(e, '  ');
-						});           
-          } catch(e) {
-            
-          }
-					
-          Orange.els.reader.click(function(e) {
-            if (e.target !== $page[0] && $(e.target).parents(".page").length < 1) {
-              $container.css({
-                "-webkit-transform": "translate3d(0, 100%, 0)",
-                "-moz-transform": "translate3d(0, 100%, 0)",
-                "-ms-transform": "translate3d(0, 100%, 0)",
-                "-o-transform": "translate3d(0, 100%, 0)",
-                "transform": "translate3d(0, 100%, 0)"
-              });
-              Orange.els.reader.css({
-                "background-color": "rgba(0, 0, 0, 0)"
-              });
-              $shadows.css("opacity","0");
-              setTimeout(function() {
-                $("body, html").removeClass("frozen");
-                $container.attr("style", "").scrollTop(0);
-                Orange.els.reader.attr("style", "");
-                $shadows.attr("style", "");
-                $(e.target).unbind("click").find("#page_content, #article_comments").html("");
-              }, 420);
-            }
-          });
-          e.preventDefault();
-        }
-      });
-    },
-
-    infinite_scroller: function() {
-      Orange.els.grid.delegate(".infinite-scroll", "click", function(e) {
-        var current = Orange.search,
-            opts = { color: '#FFF' };
-        $(this).find("a").text("");
-        Orange.spinner.show("spinner_two", opts);
-        Orange.hnsearch.fetch_json(current.url, current.query, current.start);
-        e.preventDefault();
+    window: function() {
+      Orange.els.window.bind('scrollstop', function(){
+        Orange.extraction.init();
       });
     }
   },
 
   queries: {},
 
+	reader: {	
+		show: function($this, $target) {
+			var $container = $("#article_container"),
+					$article = $container.children("article"),
+	        $page = $article.children(".page"),
+	        article,
+	        $content;
+	
+			$("html").addClass("frozen");
+	
+			$page.remove();			
+			
+	    article = Orange.articles[$this.data("article")];
+	    $content = article.content;
+	
+	    if (!$content) {
+	      $content = article.hn_text;
+	    }
+	
+		  $page.find("#article_title").text(article.title)
+				.end().find("#page_content").html($content)
+				.end().appendTo($article);	
+			
+	    if (article.num_comments > 0) {
+	      if ($target.hasClass("comment-count")) {
+	        Orange.hnsearch.fetch_comments(article.sigid, true);
+	      } else {
+	        Orange.hnsearch.fetch_comments(article.sigid);
+	      }
+	    }
+
+			try {
+		    Orange.els.reader.find('code, pre').each(function(i, e) {
+					hljs.highlightBlock(e, '  ');
+				});				
+			} catch(e) {};  // One of those rare occasions: http://goo.gl/oQY5Y      
+			
+			$page.imagefit();
+			
+			Orange.reader.hide($page, $container);	
+			
+			$content = null;
+			$article = null;
+			$this = null;
+			$target = null;		
+		},
+		
+		hide: function($page, $container) {
+			var $shadows = Orange.els.reader.children(".shadow");
+	
+	    Orange.els.reader.click(function(e) {
+	      if (e.target !== $page[0] && !($(e.target).parents(".page").length)) {
+	        $container.css({
+	          "-webkit-transform": "translate3d(0, 100%, 0)",
+	          "-moz-transform": "translate3d(0, 100%, 0)",
+	          "-ms-transform": "translate3d(0, 100%, 0)",
+	          "-o-transform": "translate3d(0, 100%, 0)",
+	          "transform": "translate3d(0, 100%, 0)"
+	        });
+	        Orange.els.reader.css({
+	          "background-color": "rgba(0, 0, 0, 0)"
+	        });
+	        $shadows.css("opacity","0");
+		      setTimeout(function() {
+	          $("body, html").removeClass("frozen");
+	          $container.attr("style", "").scrollTop(0);
+	          Orange.els.reader.attr("style", "");
+	          $shadows.attr("style", "");  
+						$("#page_content, #article_comments").html("");
+		      }, 360);      
+	      } else {
+					$shadows = null;
+				}
+	    });
+		},
+		
+		render_comments: function(data) {
+      var results = data.results,
+          i = results.length,
+          comments = ["<ul class='comments'><p class='end-sign'>&#10070;</p><h5 class='header'>Comments</h5>"],
+          result;
+
+      if (i > 0) {
+        while (i--) {
+          result = results[i];
+          comments.push("<li class='comment'><header><a class='user' href='http://news.ycombinator.com/user?id=" + result.item.username + "'>" + result.item.username + "</a></header><p>" + result.item.text + "</p></li>");
+        	result = null;
+				}
+
+        comments.push("</ul>");
+
+				$("#article_comments").html(comments.join(""));	
+				
+				results = null;	
+				data = null;
+      } else {
+				data = null;
+				results = null;
+				comments = null;
+        return;
+      }
+    }
+	},
+
   search: {
-    url: "",
-    query: "",
-    start: 0
+		current: {
+	    url: "",
+	    query: "",
+	    start: 0			
+		},
+		
+		show: function($input, $button) {
+      Orange.els.search.show(0, function(){
+        $input.focus();
+
+        Orange.els.window.keypress(function(e) {
+          if(e.keyCode === 13) {
+            $button.click();
+          }
+        });
+
+        $button.one("click", function() {
+          var display_query = $input.val(),
+              query = encodeURI(display_query);
+
+          if (display_query === "") {
+            Orange.els.search.hide();
+          } else {
+            Orange.hnsearch.fetch_json(Orange.urls.search_hn(query, 0), query, 0);
+            Orange.storage.set("orange_queries", query, display_query);
+          }
+        });
+
+        Orange.search.hide($button);
+      });			
+		},
+		
+		hide: function($button) {
+			$("body").bind("click", function(event) {
+        if (!($(event.target).closest("#search.popover, nav a.search").length)) {
+          Orange.els.search.hide();
+          $button.unbind("click");
+        }
+      });			
+		}
   },
 
   spinner: {
@@ -520,22 +611,22 @@ var Orange = {
 
   urls: {
     front_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?weights[title]=1.1&weights[text]=0.7&weights[domain]=2.0&weights[username]=0.1&weights[type]=0.0&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(create_ts,NOW),3600000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&limit=30&pretty_print=true&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?weights[title]=1.1&weights[text]=0.7&weights[domain]=2.0&weights[username]=0.1&weights[type]=0.0&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(create_ts,NOW),3600000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&limit=35&pretty_print=true&start=" + start;
     },
     user_hn: function(user, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=30&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=35&start=" + start;
     },
     domain_hn: function(domain, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=30&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=35&start=" + start;
     },
     ask_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=30&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=35&start=" + start;
     },
     show_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=30&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=35&start=" + start;
     },
     search_hn: function(term, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][type]=submission&sortby=create_ts%20desc&limit=30&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][type]=submission&sortby=create_ts%20desc&limit=35&start=" + start;
     },
     comments_hn: function(sigid, start) {
       return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][type]=comment&filter[fields][parent_sigid]=" + sigid + "&sortby=points%20desc&limit=100&start=" + start;

@@ -2,10 +2,6 @@
 	display: none;
 }
 
-html.frozen .container-fluid {
-	overflow-y: scroll;
-}
-
 .container-fluid {
 	padding: 0;
 	position: relative;
@@ -213,8 +209,13 @@ article.item > * {
 }
 
 article.item .loader {
+	display: none;
 	float: right;
 	margin-right: 10px;
+}
+
+article.item.rendered.content .loader {
+	display: block;
 }
 
 article.item .date {
@@ -288,6 +289,7 @@ article.item .thumbnail {
 	height: 237px;
 	border: 1px solid #fff;
 	display: block;
+	overflow: hidden;
 	opacity: 0;
 	-moz-opacity: 0; 
 	-ms-filter: "alpha(opacity=0)"; 

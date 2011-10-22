@@ -9,7 +9,7 @@ var Orange = {
   },
 
   articles: [],
-	
+  
   callbacks: {
     storage_get: function() {
       var query_list = [];
@@ -23,7 +23,7 @@ var Orange = {
 
       $("nav ul.searches").append(query_list.join("")).hide().fadeIn(350);
 
-			query_list = null;
+      query_list = null;
     },
 
     storage_set: function(query, display_query) {
@@ -36,7 +36,7 @@ var Orange = {
 
       $("nav ul.searches").append(query_list_item).children(":last").hide().fadeIn(100);
 
-			query_list_item = null;
+      query_list_item = null;
     },
 
     storage_remove: function(query) {
@@ -53,48 +53,49 @@ var Orange = {
   },
 
   els: {
-		window: $(window),
+    window: $(window),
     search: $("#search"),
-		container: $("body > div.container-fluid"),
+    container: $("body > div.container-fluid"),
     grid: $("#article_grid"),
     reader: $("#reader")
   },
 
   extraction: {
     init: function() {
-			var $visible_articles = Orange.els.grid.children("div").children("article.pre-render:in-viewport"),
-													i = $visible_articles.length,
-											$this;
-			
-			if (i) {
-				while (i--) {
-					$this = $($visible_articles[i]),
-					article = Orange.articles[$this.data("article")];
-					
-	        if (article.domain !== "news.ycombinator.com") {
-	          Orange.extraction.request($this, article.url, article.domain);
-	        } else {
-	          Orange.extraction.complete($this);
-	        }		
-					$this = null;
-					article = null;					
-				}		
-			} else {
-				$visible_articles = null;
-				$this = null;
-			}
+      var $visible_articles = Orange.els.grid.children("div").children("article.pre-render:in-viewport"),
+                          i = $visible_articles.length,
+                      $this,
+                    article;
+      
+      if (i) {
+        $visible_articles.addClass("content");
+        while (i--) {
+          $this = $visible_articles.eq(-i);
+          article = Orange.articles[$this.data("article")];
+          
+          if (article.domain !== "news.ycombinator.com") {
+            setTimeout(Orange.extraction.request($this, article.url, article.domain), 50);
+          } else {
+            Orange.extraction.complete($this);
+          }   
+          $this = null;
+          article = null;         
+        }   
+      } else {
+        $visible_articles = null;
+        $this = null;
+        article = null;
+      }
     },
 
     request: function(el, url, domain) {
       el.removeClass("pre-render");
       $.ajax({
-        url: "orange.php?clean=true&url=" + url + "&domain=" + domain + "&as232f32=?",
+        url: "orange.php?clean=true&url=" + url + "&domain=" + domain,
         cache: true,
         success: function(data) {
-					setTimeout(function() {
-						Orange.extraction.success(el, data);
-						data = null;
-					}, 100);
+          Orange.extraction.success(el, data);
+          data = null;
         },
         complete: function() {
           Orange.extraction.complete(el);
@@ -107,35 +108,35 @@ var Orange = {
       el.removeClass("pre-render");
 
       var article = Orange.articles[el.data("article")],
-					$images,
+          $images,
           $best_image;
 
-			if (article) { 
-				$images = $(data).find("img");
+      if (article) { 
+        $images = $(data).find("img");
 
-				if ($images.length) {
-					$best_image = $images.filter(function(i, img) { 
-													return $(img).hasClass("orange-best-image"); 
-												}).first();
+        if ($images.length) {
+          $best_image = $images.filter(function(i, img) { 
+                          return $(img).hasClass("orange-best-image"); 
+                        }).first();
 
-					if (!($best_image.length)) {
-						$best_image = $images.sort(Orange.utils.sort.by_image_size).first();
-					}
+          if (!($best_image.length)) {
+            $best_image = $images.sort(Orange.utils.sort.by_image_size).first();
+          }
 
-					$best_image.clone().appendTo(el.find(".thumbnail")).scaleImage();					
-				}
+          $best_image.clone().appendTo(el.find(".thumbnail")).scaleImage();     
+        }
 
-				article.content = data;
-				
-				$best_image = null;
-				$images = null;
-				article = null;
-				data = null; 	
-			}
+        article.content = data;
+        
+        $best_image = null;
+        $images = null;
+        article = null;
+        data = null;  
+      }
     },
 
     complete: function(el) {
-      el.removeClass("pre-render").find(".loader").remove();
+      el.removeClass("pre-render").find("img.loader").remove();
     }
   },
 
@@ -146,13 +147,7 @@ var Orange = {
         url: url,
         dataType: "jsonp",
         success: function(data) {
-          var results = data.results;
-          if (start > 0) {
-            Orange.hnsearch.parse_json(results, url, query, start, true);
-          } else {
-            Orange.hnsearch.parse_json(results, url, query, start);
-          }
-					results = null;
+          Orange.hnsearch.parse_json(data.results, url, query, start);
         },
         complete: function() {
           Orange.spinner.hide();
@@ -161,34 +156,22 @@ var Orange = {
       });
     },
 
-    parse_json: function(results, url, query, start, append) {
+    parse_json: function(results, url, query, start) {
       var result = {},
           article = {},
-					articles = [],
-		      infinite_scroller = "<span class='infinite-scroll pre-render'><span id='spinner_two'></span><a href='#'>More Submissions</a></span>",
-					domain,
-					restart,
+          articles = [],
+          infinite_scroller = "<span class='infinite-scroll pre-render'><span id='spinner_two'></span><a href='#'>More Submissions</a></span>",
+          domain,
           i = results.length;
 
       Orange.search.current = {
         url: url.replace("&start=" + start, "&start=" + (start + i)),
         query: query,
         start: start + i
-      };	
-	
-			if (start > 0 && (start % 105 === 0)) {
-				append = false;
-				restart = 0;
-			} else if (start > 105 && (start % 105 !== 0)){
-				restart = Orange.articles.length;
-			} else {
-				restart = start;
-			}
-			
-      if (!append) {
-				delete Orange.articles;
-        Orange.articles = [];
-      }
+      };  
+      
+      delete Orange.articles;
+      Orange.articles = [];
 
       while (i--) {
         result = results[i].item;
@@ -207,7 +190,6 @@ var Orange = {
         };
 
         article.hn_user_url = "http://news.ycombinator.com/user?id=" + article.user || "";
-        article.normal_url = Orange.utils.normalize_urls(article.url);
 
         if (query === "ask") {
           article.title = article.title.replace(/^Ask HN\: |Ask HN\:|Ask HN - |Ask HN -/i, "");
@@ -216,47 +198,35 @@ var Orange = {
         }
         Orange.articles.push(article);
 
-				result = null;
-				article = null;
+        result = null;
+        article = null;
       }
 
       i = Orange.articles.length;
 
-      while (i > restart) {
-        article = Orange.articles[(i-1)];
-				domain = article.domain;
+      while (i--) {
+        article = Orange.articles[i];
+        domain = article.domain;
 
-        articles.push('<article class="item pre-render" title="' + domain + '" data-article="' + (i-1) + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + domain + '"><img src="http://' + domain[0] + '.getfavicon.appspot.com/http://' + domain + '?defaulticon=lightpng" alt="' + domain + '" width="16" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." width="16" height="16" /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" width="11" height="11" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" width="13" height="11" /><a class="comment-count" href="#">' + article.num_comments + '</a></li></ul></footer></article>');
+        articles.push('<article class="item pre-render" title="' + domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + domain + '"><img src="http://' + domain[0] + '.getfavicon.appspot.com/http://' + domain + '?defaulticon=lightpng" alt="' + domain + '" width="16" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." width="16" height="16" /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" width="11" height="11" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" width="13" height="11" /><a class="comment-count" href="#">' + article.num_comments + '</a></li></ul></footer></article>');
 
-        i--;
-
-				domain = null;
+        domain = null;
       }
 
       Orange.spinner.hide();
 
-      if (!append) {
-        Orange.els.grid.detach().html("<div>" + articles.join("") + "</div>" + infinite_scroller).appendTo(Orange.els.container);
-        Orange.hnsearch.render_json();
-      } else {
-				var previous_articles_html = Orange.els.grid.children("div").html();								
-        Orange.els.grid.detach().html("<div>" + previous_articles_html + articles.join("") + "</div>" + infinite_scroller).appendTo(Orange.els.container);
-        Orange.hnsearch.render_json(true);
-      }
+      Orange.els.grid.detach().html("<div>" + articles.join("") + "</div>" + infinite_scroller).appendTo(Orange.els.container);
+      Orange.hnsearch.render_json();
 
-			article = null;
-			articles = null;
-			results = null;
-			infinite_scroller = null;		
+      article = null;
+      articles = null;
+      results = null;
+      infinite_scroller = null;   
     },
 
-    render_json: function(append) {
+    render_json: function() {
       Orange.els.search.hide().find("input.query").val("");
-      if (!append) {
-				Orange.els.window.scrollTop(0).trigger("scroll");
-      } else {
-        $("body").animate({scrollTop: Orange.els.window.scrollTop() + Orange.els.window.height() - 17}, 400);
-      }
+      Orange.els.window.scrollTop(0).trigger("scroll");
       (function n(e) {
         e.eq(0).addClass("rendered");
         var fade_timer = setTimeout(function() {
@@ -264,7 +234,7 @@ var Orange = {
         }, 30);
         if (!(e.length)) {
           clearTimeout(fade_timer);
-					fade_timer = null;
+          fade_timer = null;
         }
       })(Orange.els.grid.find(".pre-render"));
     },
@@ -275,9 +245,9 @@ var Orange = {
         dataType: "jsonp",
         cache: true,
         success: function(data) {
-					Orange.reader.render_comments(data);
-					data = null;
-				},
+          Orange.reader.render_comments(data);
+          data = null;
+        },
         complete: function() {
           if (scroll) {
             $("#article_container").scrollTop($("#article_comments").position().top - 530);
@@ -302,18 +272,18 @@ var Orange = {
 
     article: function() {
       var $this,
-					$target;
+          $target;
           
       Orange.els.grid.delegate("article.item", "click", function(e) {
-				$target = $(e.target);
+        $target = $(e.target);
         if ($target.hasClass("title") || $target.hasClass("comment-count")) {
-					$this = $(this);
-					Orange.reader.show($this, $target);
-        	e.preventDefault();
+          $this = $(this);
+          Orange.reader.show($this, $target);
+          e.preventDefault();
         } else {
-					$this = null;
-					$target = null;
-				}
+          $this = null;
+          $target = null;
+        }
       });
     },
 
@@ -378,7 +348,7 @@ var Orange = {
 
       $("nav a.search").click(function(e) {
         if (!(Orange.els.search.filter(":visible").length)) {
-					Orange.search.show($input, $button);
+          Orange.search.show($input, $button);
         }
         e.preventDefault();
       });
@@ -403,83 +373,67 @@ var Orange = {
 
   queries: {},
 
-	reader: {	
-		show: function($this, $target) {
-			var $container = $("#article_container"),
-					$article = $container.children("article"),
-	        $page = $article.children(".page"),
-	        article,
-	        $content;
-	
-			$("html").addClass("frozen");
-	
-			$page.remove();			
-			
-	    article = Orange.articles[$this.data("article")];
-	    $content = article.content;
-	
-	    if (!$content) {
-	      $content = article.hn_text;
-	    }
-	
-		  $page.find("#article_title").text(article.title)
-				.end().find("#page_content").html($content)
-				.end().appendTo($article);	
-			
-	    if (article.num_comments > 0) {
-	      if ($target.hasClass("comment-count")) {
-	        Orange.hnsearch.fetch_comments(article.sigid, true);
-	      } else {
-	        Orange.hnsearch.fetch_comments(article.sigid);
-	      }
-	    }
+  reader: { 
+    show: function($this, $target) {
+      var $container = $("#article_container"),
+          $article = $container.children("article"),
+          $page = $article.children(".page"),
+          article,
+          $content;
+  
+      $page.remove(); 
+  
+      $("html").addClass("frozen").removeClass("preloading").addClass("activating");    
+      
+      article = Orange.articles[$this.data("article")];
+      $content = article.content;
+  
+      if (!$content) {
+        $content = article.hn_text;
+      }
+  
+      $page.find("#article_title").text(article.title)
+        .end().find("#page_content").html($content)
+        .end().appendTo($article);  
+      
+      if (article.num_comments > 0) {
+        if ($target.hasClass("comment-count")) {
+          Orange.hnsearch.fetch_comments(article.sigid, true);
+        } else {
+          Orange.hnsearch.fetch_comments(article.sigid);
+        }
+      }
 
-			try {
-		    Orange.els.reader.find('code, pre').each(function(i, e) {
-					hljs.highlightBlock(e, '  ');
-				});				
-			} catch(e) {};  // One of those rare occasions: http://goo.gl/oQY5Y      
-			
-			$page.imagefit();
-			
-			Orange.reader.hide($page, $container);	
-			
-			$content = null;
-			$article = null;
-			$this = null;
-			$target = null;		
-		},
-		
-		hide: function($page, $container) {
-			var $shadows = Orange.els.reader.children(".shadow");
-	
-	    Orange.els.reader.click(function(e) {
-	      if (e.target !== $page[0] && !($(e.target).parents(".page").length)) {
-	        $container.css({
-	          "-webkit-transform": "translate3d(0, 100%, 0)",
-	          "-moz-transform": "translate3d(0, 100%, 0)",
-	          "-ms-transform": "translate3d(0, 100%, 0)",
-	          "-o-transform": "translate3d(0, 100%, 0)",
-	          "transform": "translate3d(0, 100%, 0)"
-	        });
-	        Orange.els.reader.css({
-	          "background-color": "rgba(0, 0, 0, 0)"
-	        });
-	        $shadows.css("opacity","0");
-		      setTimeout(function() {
-	          $("body, html").removeClass("frozen");
-	          $container.attr("style", "").scrollTop(0);
-	          Orange.els.reader.attr("style", "");
-	          $shadows.attr("style", "");  
-						$("#page_content, #article_comments").html("");
-		      }, 360);      
-	      } else {
-					$shadows = null;
-				}
-	    });
-		},
-		
-		render_comments: function(data) {
+      try {
+        Orange.els.reader.find('code, pre').each(function(i, e) {
+          hljs.highlightBlock(e, '  ');
+        });       
+      } catch(e) {} // One of those rare occasions: http://goo.gl/oQY5Y      
+      
+      $page.imagefit();
+      
+      Orange.reader.hide($page, $container);  
+      
+      $content = null;
+      $article = null;
+      $this = null;
+      $target = null;   
+    },
+    
+    hide: function($page, $container) { 
+      Orange.els.reader.click(function(e) {
+        if (e.target !== $page[0] && !($(e.target).parents(".page").length)) {
+          $("html").removeClass("activating").addClass("deactivating");
+          setTimeout(function() {
+            $("html").removeClass("frozen").removeClass("deactivating").addClass("preloading");
+            $container.attr("style", "").scrollTop(0);
+            $("#page_content, #article_comments").html("");
+          }, 500);      
+        }
+      });
+    },
+    
+    render_comments: function(data) {
       var results = data.results,
           i = results.length,
           comments = ["<ul class='comments'><p class='end-sign'>&#10070;</p><h5 class='header'>Comments</h5>"],
@@ -489,32 +443,32 @@ var Orange = {
         while (i--) {
           result = results[i];
           comments.push("<li class='comment'><header><a class='user' href='http://news.ycombinator.com/user?id=" + result.item.username + "'>" + result.item.username + "</a></header><p>" + result.item.text + "</p></li>");
-        	result = null;
-				}
+          result = null;
+        }
 
         comments.push("</ul>");
 
-				$("#article_comments").html(comments.join(""));	
-				
-				results = null;	
-				data = null;
+        $("#article_comments").html(comments.join("")); 
+        
+        results = null; 
+        data = null;
       } else {
-				data = null;
-				results = null;
-				comments = null;
+        data = null;
+        results = null;
+        comments = null;
         return;
       }
     }
-	},
+  },
 
   search: {
-		current: {
-	    url: "",
-	    query: "",
-	    start: 0			
-		},
-		
-		show: function($input, $button) {
+    current: {
+      url: "",
+      query: "",
+      start: 0      
+    },
+    
+    show: function($input, $button) {
       Orange.els.search.show(0, function(){
         $input.focus();
 
@@ -537,17 +491,17 @@ var Orange = {
         });
 
         Orange.search.hide($button);
-      });			
-		},
-		
-		hide: function($button) {
-			$("body").bind("click", function(event) {
+      });     
+    },
+    
+    hide: function($button) {
+      $("body").bind("click", function(event) {
         if (!($(event.target).closest("#search.popover, nav a.search").length)) {
           Orange.els.search.hide();
           $button.unbind("click");
         }
-      });			
-		}
+      });     
+    }
   },
 
   spinner: {
@@ -611,22 +565,22 @@ var Orange = {
 
   urls: {
     front_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?weights[title]=1.1&weights[text]=0.7&weights[domain]=2.0&weights[username]=0.1&weights[type]=0.0&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(create_ts,NOW),3600000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&limit=35&pretty_print=true&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?weights[title]=1.1&weights[text]=0.7&weights[domain]=2.0&weights[username]=0.1&weights[type]=0.0&boosts[fields][points]=0.15&boosts[fields][num_comments]=0.15&boosts[functions][pow(2,div(div(ms(NOW,create_ts),3600000),72))]=200.0&sortby=product(points,pow(2,div(div(ms(create_ts,NOW),128000),72)))%20desc&filter[fields][type]=submission&limit=39&pretty_print=true&start=" + start;
     },
     user_hn: function(user, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=35&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][username]=" + user + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=39&start=" + start;
     },
     domain_hn: function(domain, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=35&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][domain]=" + domain + "&sortby=create_ts%20desc&filter[fields][type]=submission&limit=39&start=" + start;
     },
     ask_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=35&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=ask%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=39&start=" + start;
     },
     show_hn: function(start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=35&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=show%20hn&filter[fields][type]=submission&sortby=create_ts%20desc&limit=39&start=" + start;
     },
     search_hn: function(term, start) {
-      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][type]=submission&sortby=create_ts%20desc&limit=35&start=" + start;
+      return "http://api.thriftdb.com/api.hnsearch.com/items/_search?q=" + term + "&filter[fields][type]=submission&sortby=create_ts%20desc&limit=39&start=" + start;
     },
     comments_hn: function(sigid, start) {
       return "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][type]=comment&filter[fields][parent_sigid]=" + sigid + "&sortby=points%20desc&limit=100&start=" + start;
@@ -634,15 +588,6 @@ var Orange = {
   },
 
   utils: {
-    normalize_urls: function(url) {
-      url = url.split("//");
-      url = url[1] || "" + url;
-      while (!url.match(/[a-zA-Z0-9]$/))  {
-        url = url.substring(0, url.length-1);
-      }
-      return "http://" + url;
-    },
-
     sort: {
       by_image_size: function(a, b) {
         return (b.width+b.height) - (a.width+a.height);

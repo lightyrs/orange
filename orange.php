@@ -6,8 +6,8 @@ require_once 'SimpleCache.php';
 require_once 'JSLikeHTMLElement.php';
 require_once 'Readability.php';
 
-if (!isset($_GET['url']) || $_GET['url'] == '' || !isset($_GET['domain']) || $_GET['domain'] == '') {
-  die('Feed me URL + Domain.');
+if (!isset($_GET['url']) || !isset($_GET['domain']) || substr($_GET['url'], 0, 4) != 'http') {
+  die('<p>Sorry, Orange was unable to parse this page for content.</p>');
 }
 
 $url = $_GET['url'];

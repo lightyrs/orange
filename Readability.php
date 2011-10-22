@@ -164,7 +164,7 @@ class Readability
 			$this->success = false;
 			$articleContent = $this->dom->createElement('div');
 			$articleContent->setAttribute('id', 'readability-content');
-			$articleContent->innerHTML = '<p>Sorry, Readability was unable to parse this page for content.</p>';		
+			$articleContent->innerHTML = '<p>Sorry, Orange was unable to parse this page for content.</p>';		
 		}
 		
 		$overlay->setAttribute('id', 'readOverlay');
@@ -181,7 +181,6 @@ class Readability
 		//document.body.insertBefore(overlay, document.body.firstChild);
 		$this->body->removeAttribute('style');
 
-		$this->postProcessContent($articleContent);
 		$this->parseImages($articleContent);
 		$this->convertSmartQuotes($articleContent);
 		
@@ -315,6 +314,35 @@ class Readability
 	}
 
 	/**
+	* Convert relative image path to absolute URL
+	* @return HTML String
+	*/
+	protected function rel2abs($rel, $base) {
+    /* queries and anchors */
+    if ($rel[0]=='#' || $rel[0]=='?') return $base.$rel;
+
+    /* parse base URL and convert to local variables:
+       $scheme, $host, $path */
+    extract(parse_url($base));
+
+    /* remove non-directory element from path */
+    $path = preg_replace('#/[^/]*$#', '', $path);
+
+    /* destroy path if relative url points to root */
+    if ($rel[0] == '/') $path = '';
+
+    /* dirty absolute URL */
+    $abs = "$host$path/$rel";
+
+    /* replace '//' or '/./' or '/foo/../' with '/' */
+    $re = array('#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#');
+    for($n=1; $n>0; $abs=preg_replace($re, '/', $abs, -1, $n)) {}
+
+    /* absolute URL is ready! */
+    return $scheme.'://'.$abs;
+	}
+
+	/**
 	* Filter article content for valuable images
 	* @return HTML String
 	*/	
@@ -331,36 +359,35 @@ class Readability
 				$bestImage = '';
 				$maxSize = -1;
 				for($i = $imagesCount-1; $i >= 0; $i--)	{
-					$attrWidth = $articleImages->item($i)->getAttribute('width');
-					$attrHeight = $articleImages->item($i)->getAttribute('height');
+					$img = $articleImages->item($i);
+					$attrWidth = $img->getAttribute('width');
+					$attrHeight = $img->getAttribute('height');
 
 					if ($attrWidth && $attrWidth < 150 || $attrHeight && $attrHeight < 120) {
-						$articleImages->item($i)->parentNode->removeChild($articleImages->item($i));
+						$img->parentNode->removeChild($img);
 					} else {
-						$src = $articleImages->item($i)->getAttribute('src');
+						$src = $img->getAttribute('src');
 						if (substr($src, 0, 4) != 'http') {
-							if ($src[0] == '/') {
-								$articleImages->item($i)->setAttribute('src', "http://" . $this->domain . $src);
-							} else if (substr($src, 0, 2) == './') {
-								$articleImages->item($i)->setAttribute('src', $url . '/' . substr($src, 2));
-							} else {
-								$articleImages->item($i)->setAttribute('src', $url . '/' . $src);
-							}
+							$src = $this->rel2abs($src, $this->url);
 						}
 						list($width, $height) = getimagesize($src);
 
 						if ($width && $height) {
 							if ($width < 150 || $height && $height < 120)	{
-								$articleImages->item($i)->parentNode->removeChild($articleImages->item($i));
-							}	else if ($height && ($width + $height) > $maxSize) {   
-						    $maxSize = $width + $height;
-						  	$bestImage = $articleImages->item($i);
-						  }						
+								$img->parentNode->removeChild($img);
+							}	else {
+								$img->setAttribute('src', $src);
+								
+								if ($height && ($width + $height) > $maxSize) {   
+							    $maxSize = $width + $height;
+							  	$bestImage = $img;
+							  }
+							}					
 						}
 					}		
 				}
 				if ($bestImage != '') {
-					$bestImage->setAttribute('class', 'orange-best-image');					
+					$bestImage->setAttribute('class', 'orange-best-image');				
 				}
 			}			
 		}

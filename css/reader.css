@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'BitstreamVeraSansMonoRoman';
-    src: url('fonts/VeraMono-webfont.eot');
-    src: url('fonts/VeraMono-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/VeraMono-webfont.woff') format('woff'),
-         url('fonts/VeraMono-webfont.ttf') format('truetype'),
-         url('fonts/VeraMono-webfont.svg#BitstreamVeraSansMonoRoman') format('svg');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'BitstreamVeraSansMonoRoman';
+	src: url('fonts/VeraMono-webfont.eot');
+	src: url('fonts/VeraMono-webfont.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/VeraMono-webfont.woff') format('woff'),
+	     url('fonts/VeraMono-webfont.ttf') format('truetype'),
+	     url('fonts/VeraMono-webfont.svg#BitstreamVeraSansMonoRoman') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 html.frozen {
@@ -17,64 +17,8 @@ html.frozen {
 	-webkit-user-select: none;
 }
 
-.shadow {
-	opacity: 0;
-	-moz-opacity: 0; 
-	-ms-filter: "alpha(opacity=0)"; 
-	filter:alpha(opacity=0);
-	-webkit-transition: opacity 0.33s ease-out;
-	  -moz-transition: opacity 0.33s ease-out; 
-	   -ms-transition: opacity 0.33s ease-out; 
-	    -o-transition: opacity 0.33s ease-out; 
-	       transition: opacity 0.33s ease-out;
-	-webkit-transform: translateZ(0);
-		 -moz-transform: translateZ(0);
-		  -ms-transform: translateZ(0);
-		   -o-transform: translateZ(0);
-		      transform: translateZ(0);
-}
-
-html.frozen .shadow {
-	display: block;
-	opacity: 1.0;
-	-moz-opacity: 1.0; 
-	-ms-filter: "alpha(opacity=100)"; 
-	filter:alpha(opacity=100);
-	width: 100%;
-	height: 8px;
-	position: absolute;
-	left: 0;
-	z-index: 999999;
-	background: transparent;
-	box-shadow: rgba(0,0,0,0.7) 0 0 40px;
-	-moz-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
-	-webkit-box-shadow: rgba(0,0,0,0.7) 0 0 40px;
-	-webkit-transition: opacity 0.33s ease-in;
-	  -moz-transition: opacity 0.33s ease-in; 
-	   -ms-transition: opacity 0.33s ease-in; 
-	    -o-transition: opacity 0.33s ease-in; 
-	       transition: opacity 0.33s ease-in;
-}
-
-.shadow.top {
-	top: -10px;	
-}
-
-.shadow.bottom {
-	top: 100%;
-}
-
 html.frozen #reader {
-	background-color: transparent;
-	background-color: rgba(0, 0, 0, 0.8);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000,endColorstr=#CC000000); /* IE6–IE9 */
-	zoom: 1;
 	top: 0;
-	-webkit-transition: background-color 0.33s ease-in;
-	  -moz-transition: background-color 0.33s ease-in; 
-	   -ms-transition: background-color 0.33s ease-in; 
-	    -o-transition: background-color 0.33s ease-in; 
-	       transition: background-color 0.33s ease-in;
 }
 
 #reader {
@@ -89,7 +33,7 @@ html.frozen #reader {
 	border: none;
 	background-color: transparent;
 	background-color: rgba(0, 0, 0, 0);
-	z-index: 999990;
+	z-index: 99999;
 	color: black;
 	cursor: default;
 	float: none;
@@ -102,26 +46,86 @@ html.frozen #reader {
 	margin: 0;
 	padding: 0px;
 	direction: ltr;
-	zoom: 1;
 	user-select: auto;
 	-moz-user-select: auto;
 	-o-user-select: auto;
 	-webkit-user-select: auto;
-	-webkit-transition: background-color 0.33s ease-out;
-	  -moz-transition: background-color 0.33s ease-out; 
-	   -ms-transition: background-color 0.33s ease-out; 
-	    -o-transition: background-color 0.33s ease-out; 
-	       transition: background-color 0.33s ease-out;
-	-webkit-transform: translateZ(0);
-		 -moz-transform: translateZ(0);
-		  -ms-transform: translateZ(0);
-		   -o-transform: translateZ(0);
-		      transform: translateZ(0);
 }
 
-#reader embed,
-#reader object {
-	display: none;
+html.activating #reader_background {
+	opacity: 1.0;
+	-webkit-transition: opacity 0.40s ease-out;
+	  -moz-transition: opacity 0.40s ease-out;
+	   -ms-transition: opacity 0.40s ease-out;
+	    -o-transition: opacity 0.40s ease-out;
+	       transition: opacity 0.40s ease-out;
+}
+
+html.deactivating #reader_background {
+	opacity: 0;
+	-webkit-transition: opacity 0.40s ease-in;
+	  -moz-transition: opacity 0.40s ease-in;
+	   -ms-transition: opacity 0.40s ease-in;
+	    -o-transition: opacity 0.40s ease-in;
+	       transition: opacity 0.40s ease-in;
+}
+
+html.preloading #reader_background {
+	opacity: 0;
+}
+
+#reader_background {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.8);
+	-webkit-transform: translateZ(0);
+  	-moz-transform: translateZ(0);
+  	 -ms-transform: translateZ(0);
+    	-o-transform: translateZ(0);
+				transform: translateZ(0);
+}
+
+#reader .shadow {
+	height: 24px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	z-index: 99999;
+}
+
+#reader .shadow.top {
+	top: -10px;
+	background: transparent url(../img/reader-shadow-top.png) repeat-x;
+}
+
+#reader .shadow.bottom {
+	bottom: -8px;
+	background: transparent url(../img/reader-shadow-bottom.png) repeat-x;
+}
+
+html.activating .shadow {
+	opacity: 1.0;
+	-webkit-transition: opacity 0.40s ease-out;
+	  -moz-transition: opacity 0.40s ease-out;
+	   -ms-transition: opacity 0.40s ease-out;
+	    -o-transition: opacity 0.40s ease-out;
+	       transition: opacity 0.40s ease-out;
+}
+
+html.deactivating #reader .shadow {
+	opacity: 0;
+	-webkit-transition: opacity 0.40s ease-in;
+	  -moz-transition: opacity 0.40s ease-in;
+	   -ms-transition: opacity 0.40s ease-in;
+	    -o-transition: opacity 0.40s ease-in;
+	       transition: opacity 0.40s ease-in;
+}
+
+html.preloading #reader .shadow {
+	opacity: 0;
 }
 
 #reader ::-webkit-scrollbar:horizontal,
@@ -143,22 +147,38 @@ html.frozen #reader {
 	width: 21px;
 }
 
-* html #article_container { 
-	width: expression( document.body.clientWidth > 1001 ? "1000px" : "auto" );
-	width: expression( document.body.clientWidth < 301 ? "300px" : "auto" ); 
-}
-
-html.frozen #article_container {
-	-webkit-transition: all 0.33s ease-in;
-	  -moz-transition: all 0.33s ease-in;  
-	   -ms-transition: all 0.33s ease-in;  
-	    -o-transition: all 0.33s ease-in;  
-	       transition: all 0.33s ease-in;
+html.activating #article_container {
+	-webkit-transition: -webkit-transform 0.40s ease-out;
+	  -moz-transition: -moz-transform 0.40s ease-out;
+	   -ms-transition: -ms-transform 0.40s ease-out;
+	    -o-transition: -o-transform 0.40s ease-out;
+	       transition: transform 0.40s ease-out;
 	-webkit-transform: translate3d(0, 0, 0);
   	-moz-transform: translate3d(0, 0, 0); 
   	 -ms-transform: translate3d(0, 0, 0); 
     	-o-transform: translate3d(0, 0, 0);
 				transform: translate3d(0, 0, 0);
+}
+
+html.deactivating #article_container {
+	-webkit-transition: -webkit-transform 0.40s ease-in;
+	  -moz-transition: -moz-transform 0.40s ease-in;
+	   -ms-transition: -ms-transform 0.40s ease-in;
+	    -o-transition: -o-transform 0.40s ease-in;
+	       transition: transform 0.40s ease-in;
+	-webkit-transform: translate3d(0, 100%, 0);
+	 	-moz-transform: translate3d(0, 100%, 0); 
+	 	 -ms-transform: translate3d(0, 100%, 0); 
+	   	-o-transform: translate3d(0, 100%, 0);
+				 transform: translate3d(0, 100%, 0);
+}
+
+html.preloading #article_container {
+	-webkit-transform: translate3d(0, 100%, 0);
+	 	-moz-transform: translate3d(0, 100%, 0); 
+	 	 -ms-transform: translate3d(0, 100%, 0); 
+	   	-o-transform: translate3d(0, 100%, 0);
+				 transform: translate3d(0, 100%, 0);	
 }
 
 #article_container {
@@ -170,25 +190,6 @@ html.frozen #article_container {
 	text-align: left;
 	max-width: 1050px;
 	min-width: 300px;
-	-webkit-transition: all 0.33s ease-out;
-	  -moz-transition: all 0.33s ease-out;  
-	   -ms-transition: all 0.33s ease-out;  
-	    -o-transition: all 0.33s ease-out;
-	       transition: all 0.33s ease-out;
-	-webkit-transform: translate3d(0, 100%, 0);
-  	-moz-transform: translate3d(0, 100%, 0); 
-  	 -ms-transform: translate3d(0, 100%, 0); 
-    	-o-transform: translate3d(0, 100%, 0);
-				 transform: translate3d(0, 100%, 0);
-	-webkit-transform-style: preserve-3d;
-	 -moz-transform-style: preserve-3d;
-	  -ms-transform-style: preserve-3d;
-	   -o-transform-style: preserve-3d;
-	      transform-style: preserve-3d;
-}
-
-* html #reader > #article_container > article { 
-	height: expression( this.scrollHeight < 100.1% ? "100%" : "auto" );
 }
 
 #reader > #article_container > article {
@@ -196,13 +197,13 @@ html.frozen #article_container {
 	margin: 20px 12px 20px 23px;
 	min-height: 101%;
 	background-color: #FDFDFD;
-	box-shadow: rgba(0,0,0,0.5) 0 0 30px;
-	-moz-box-shadow: rgba(0,0,0,0.5) 0 0 30px;
-	-webkit-box-shadow: rgba(0,0,0,0.5) 0 0 30px;
 	border: 1px solid #bbb;
 }
 
 #reader article .page {
+	background: #FDFDFD;
+	position: relative;
+	overflow: hidden;
 	text-decoration: none;
 	word-spacing: normal;
 	letter-spacing: 0;
@@ -215,6 +216,18 @@ html.frozen #article_container {
 	-moz-user-select: auto;
 	-o-user-select: auto;
 	-webkit-user-select: auto;
+  outline: none;
+  pointer-events: auto;
+	-webkit-transition: height .5s ease-out;
+	  -moz-transition: height .5s ease-out;
+	   -ms-transition: height .5s ease-out;
+	    -o-transition: height .5s ease-out;
+	       transition: height .5s ease-out;
+	-webkit-transform: translateZ(0);
+  	-moz-transform: translateZ(0);
+  	 -ms-transform: translateZ(0);
+    	-o-transform: translateZ(0);
+				transform: translateZ(0);
 }
 
 #reader #article_title {
@@ -226,6 +239,7 @@ html.frozen #article_container {
 	word-wrap: break-word;
 	text-align: left;
 	width: 99%;
+	background: #FDFDFD;
 }
 
 #reader h1,
@@ -249,6 +263,7 @@ html.frozen #article_container {
 	clear: both;
 	line-height: 1.4em;
 	font-size: 18px;
+	background: #FDFDFD;
 }
 
 #reader #page_content * {
@@ -273,7 +288,7 @@ html.frozen #article_container {
 
 #reader #page_content blockquote {
 	line-height: 1.4em;
-	margin: 9px 0 18px;
+	margin: 27px 0;
 }
 
 #reader #page_content img {
@@ -349,7 +364,7 @@ html.frozen #article_container {
 	padding: 9px;
 	margin: 18px 0;
 	font-weight: normal !important;
-	font-size: 14px;
+	font-size: 14px !important;
 }
 
 #reader pre pre,
@@ -375,6 +390,7 @@ html.frozen #article_container {
 #reader #article_comments {
 	clear: both;
 	padding: 20px 0 40px;
+	background: #FDFDFD;
 }
 
 #reader #article_comments p.end-sign {

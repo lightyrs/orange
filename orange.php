@@ -1,6 +1,8 @@
 <?php
+
+header('Content-type: text/plain');
 header('Cache-Control: public');
-header('Expires: Thu, 7 Feb 2013 20:00:00 GMT');
+header('Expires: ' . strtotime('now + 365 days'));
 
 require_once 'SimpleCache.php';
 require_once 'JSLikeHTMLElement.php';
@@ -10,12 +12,13 @@ if (!isset($_GET['url']) || !isset($_GET['domain']) || substr($_GET['url'], 0, 4
   die('<p>Sorry, Orange was unable to parse this page for content.</p>');
 }
 
-$url = $_GET['url'];
-$domain = $_GET['domain'];
-$cache_url = substr(preg_replace('/[^\p{L}]/u', '', $url), -20);
-if (!preg_match('!^https?://!i', $url)) $url = 'http://'.$url;
-
 $cache = new SimpleCache();
+
+$url = strtolower($_GET['url']);
+$domain = strtolower($_GET['domain']);
+$cache_url = substr(preg_replace('/[^\p{L}]/u', '', $url), -20);
+
+if (!preg_match('!^https?://!i', $url)) $url = 'http://'.$url;
 
 if ($cache->exists($domain, $cache_url)) {
   $article = $cache->get($domain, $cache_url);

@@ -2095,3 +2095,58 @@ Stack trace:
 [17-Oct-2011 17:32:00] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 27
 [22-Oct-2011 15:50:46] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
 [22-Oct-2011 15:50:46] PHP Warning:  file_put_contents(cache/H/Hypothes.is/httpwwwHypothesis.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[22-Oct-2011 17:34:13] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[22-Oct-2011 17:34:13] PHP Warning:  file_put_contents(cache/H/Hypothes.is/httpwwwHypothesis.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[23-Oct-2011 21:27:53] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[24-Oct-2011 07:14:04] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[24-Oct-2011 15:11:36] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[24-Oct-2011 16:28:06] PHP Warning:  getimagesize() [<a href='function.getimagesize'>function.getimagesize</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/Readability.php on line 373
+[24-Oct-2011 16:28:06] PHP Warning:  getimagesize(http://www.dextrose.com/images/content/aves-engine/ipad_iphone.jpg) [<a href='function.getimagesize'>function.getimagesize</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/Readability.php on line 373
+[24-Oct-2011 16:28:08] PHP Warning:  getimagesize() [<a href='function.getimagesize'>function.getimagesize</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/Readability.php on line 373
+[24-Oct-2011 16:28:08] PHP Warning:  getimagesize(http://www.dextrose.com/images/content/aves-engine/objecteditor2.jpg) [<a href='function.getimagesize'>function.getimagesize</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/Readability.php on line 373
+[25-Oct-2011 10:32:39] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 27
+[26-Oct-2011 16:48:32] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[26-Oct-2011 16:48:32] PHP Warning:  file_put_contents(cache/S/Sirkel.cloudfoundry.com/irkelcloudfoundrycom.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[28-Oct-2011 09:50:45] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 373
+[28-Oct-2011 17:25:07] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[28-Oct-2011 18:39:45] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[31-Oct-2011 11:23:52] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 27
+[31-Oct-2011 20:31:36] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 607
+[31-Oct-2011 20:31:49] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 607
+[31-Oct-2011 20:32:00] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 607
+[31-Oct-2011 20:32:47] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 607
+[31-Oct-2011 20:57:12] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/Readability.php on line 607
+[04-Nov-2011 01:32:16] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[04-Nov-2011 08:55:14] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[04-Nov-2011 08:56:42] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[04-Nov-2011 08:58:01] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[04-Nov-2011 11:45:02] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[04-Nov-2011 11:45:02] PHP Warning:  file_put_contents(cache/S/Scrolldit.com/httpwwwScrollditcom.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[04-Nov-2011 13:34:31] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[04-Nov-2011 13:34:31] PHP Warning:  file_put_contents(cache/S/Scrolldit.com/httpwwwScrollditcom.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[04-Nov-2011 14:38:03] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[04-Nov-2011 15:50:58] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[04-Nov-2011 15:50:58] PHP Warning:  file_put_contents(cache/S/Scrolldit.com/httpwwwScrollditcom.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[04-Nov-2011 16:17:43] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[04-Nov-2011 16:17:43] PHP Warning:  file_put_contents(cache/S/Scrolldit.com/httpwwwscrollditcom.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[04-Nov-2011 16:17:57] PHP Warning:  mkdir() [<a href='function.mkdir'>function.mkdir</a>]: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 12
+[04-Nov-2011 16:17:57] PHP Warning:  file_put_contents(cache/S/Scrolldit.com/httpwwwscrollditcom.cache) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory in /home/harris11/public_html/orange/SimpleCache.php on line 16
+[06-Nov-2011 19:58:25] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 20:08:27] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 20:12:45] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 20:26:17] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 20:26:52] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 21:07:38] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 22:02:07] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 22:05:45] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 22:07:28] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 22:12:24] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 22:15:26] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[06-Nov-2011 22:17:56] PHP Fatal error:  Call to a member function appendChild() on a non-object in /home/harris11/public_html/orange/Readability.php on line 277
+[07-Nov-2011 06:52:52] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 30
+[07-Nov-2011 06:54:58] PHP Warning:  file_get_contents() [<a href='function.file-get-contents'>function.file-get-contents</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/orange.php on line 30
+[07-Nov-2011 06:54:58] PHP Warning:  file_get_contents(http://askfriends.linkstore.ru) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/orange.php on line 30
+[07-Nov-2011 06:55:12] PHP Warning:  file_get_contents() [<a href='function.file-get-contents'>function.file-get-contents</a>]: Couldn't resolve host name in /home/harris11/public_html/orange/orange.php on line 30
+[07-Nov-2011 06:55:12] PHP Warning:  file_get_contents(http://askfriends.linkstore.ru) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: operation failed in /home/harris11/public_html/orange/orange.php on line 30
+[07-Nov-2011 06:55:22] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 30
+[07-Nov-2011 07:04:52] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/harris11/public_html/orange/orange.php on line 30

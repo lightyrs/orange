@@ -127,7 +127,7 @@ var Orange = {
             $best_image = $images.sort(Orange.utils.sort.by_image_size).first();
           }
 
-          $best_image.clone().prependTo(el).wrap("<div class='thumbnail' />").scaleImage();     
+          $best_image.clone().appendTo(el.find(".thumbnail")).scaleImage();     
         }
 
         article.content = data;
@@ -212,14 +212,14 @@ var Orange = {
         article = Orange.articles[i];
         domain = article.domain;
 
-        articles.push('<article class="item pre-render" title="' + domain + '" data-article="' + i + '"><a class="date" href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a><img class="favicon" src="http://' + domain[0] + '.getfavicon.appspot.com/http://' + domain + '?defaulticon=lightpng" alt="' + domain + '" width="16" data-domain="' + domain + '" /><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." width="16" height="16" /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><a class="meta user" href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a><div class="meta stats"><a class="points" href="#">' + article.points + '</a><a class="comment-count" href="#">' + article.num_comments + '</a></div></article>');
+        articles.push('<article class="item pre-render" title="' + domain + '" data-article="' + i + '"><div class="thumbnail"></div><p class="date"><a href="' + article.hn_url + '" target="_blank">' + article.published_date + '</a></p><a class="favicon" href="' + domain + '"><img src="http://' + domain[0] + '.getfavicon.appspot.com/http://' + domain + '?defaulticon=lightpng" alt="' + domain + '" width="16" /></a><img class="loader" src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="Loading..." width="16" height="16" /><h3 class="title"><a href="' + article.url + '" target="_blank">' + article.title + '</a></h3><footer><ul class="meta unstyled"><li class="user"><a href="' + article.hn_user_url + '" target="_blank">' + article.user + '</a></li><li class="points"><img src="img/upvotes.png" alt="points" width="11" height="11" /><a href="#">' + article.points + '</a></li><li class="comments"><img src="img/comments.png" alt="comments" width="13" height="11" /><a class="comment-count" href="#">' + article.num_comments + '</a></li></ul></footer></article>');
 
         domain = null;
       }
 
       Orange.spinner.hide();
 
-      Orange.els.grid.detach().html("<div id='article_wrapper'>" + articles.join("") + "</div>" + infinite_scroller).appendTo(Orange.els.container);
+      Orange.els.grid.detach().html("<div>" + articles.join("") + "</div>" + infinite_scroller).appendTo(Orange.els.container);
       Orange.hnsearch.render_json();
 
       article = null;
@@ -306,8 +306,8 @@ var Orange = {
     },
 
     domain: function() {
-      Orange.els.grid.delegate(".item .favicon", "click", function(e) {
-        var display_query = $(this).data("domain"),
+      Orange.els.grid.delegate(".item a.favicon", "click", function(e) {
+        var display_query = $(this).attr("href"),
             query = encodeURI(display_query);
         if (display_query === "news.ycombinator.com") {
           Orange.hnsearch.fetch_json(Orange.urls.search_hn("hn", 0), "", 0);
@@ -413,10 +413,11 @@ var Orange = {
     show: function($this, $target) {
       var $container = $("#article_container"),
           $article = $container.children("article"),
+          $page = $article.children(".page"),
           article,
           $content;
   
-      $article.remove(); 
+      $page.remove(); 
   
       Orange.els.html.attr("class", "frozen activating");   
       
@@ -427,9 +428,9 @@ var Orange = {
         $content = article.hn_text;
       }
   
-      $article.find("#article_title").html('<a href="' + article.url + '" title="' + article.domain + '">' + article.title + '</a>')
+      $page.find("#article_title").html('<a href="' + article.url + '" title="' + article.domain + '">' + article.title + '</a>')
         .end().find("#page_content").html($content)
-        .end().appendTo($container);
+        .end().appendTo($article);
 
 			Orange.els.hud.find("a.source").attr("href", article.url).attr("title", article.domain);
 
@@ -451,7 +452,7 @@ var Orange = {
         });       
       } catch(e) {} // One of those rare occasions: http://goo.gl/oQY5Y      
       
-      Orange.reader.hide($article, $container);  
+      Orange.reader.hide($page, $container);  
       
       $content = null;
       $article = null;
@@ -459,9 +460,9 @@ var Orange = {
       $target = null;   
     },
     
-    hide: function($article, $container) { 
+    hide: function($page, $container) { 
       Orange.els.reader.click(function(e) {
-        if (e.target !== $article[0] && !($(e.target).closest("article, #hud_container").length)) {
+        if (e.target !== $page[0] && !($(e.target).closest(".page, #hud_container").length)) {
 					clearTimeout(window.hud_timer);
           Orange.els.html.attr("class", "frozen deactivating");
           setTimeout(function() {

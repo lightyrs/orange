@@ -4,11 +4,11 @@
 
 .container-fluid {
 	padding: 0;
-	position: relative;
+	margin: 0;
+	overflow: hidden;
 }
 
 .container-fluid > .sidebar {
-	float: left;
 	width: 19%;
 	height: 100%;
 	position: fixed;
@@ -45,7 +45,6 @@ h1 a:hover {
 }
 
 .sidebar nav {
-	float: right;
 	clear: both;
 	text-align: right;
 	padding: 0 12px 0 0;
@@ -81,19 +80,21 @@ nav ul.searches li a.close {
 }
 
 .container-fluid > .content {
-	float: left;
+	overflow: hidden;
 	width: 80%;
 	margin: 0 0 0 20%;
 	padding: 17px 0 7px;
-	max-width: none;
-	min-width: 0;
+}
+
+#article_wrapper {
+	display: inline;
 }
 
 article.item {
+	float: left;
 	width: 209px;
 	height: 209px;
 	border: 1px solid #ccc;
-	float: left;
 	overflow: hidden;
 	padding: 15px;
 	margin: 0 0 10px 10px;
@@ -136,7 +137,6 @@ article.item:hover {
 }
 
 span.infinite-scroll {
-	display: block;
 	float: left;
 	border: 1px solid #ccc;
 	line-height: 239px;
@@ -203,15 +203,11 @@ span.infinite-scroll #spinner_two {
 	margin: -18px 0 0 -10px;
 }
 
-article.item > * {
-	position: relative;
-	z-index: 10;
-}
-
 article.item .loader {
 	display: none;
-	float: right;
-	margin-right: 10px;
+	position: absolute;
+	top: 15px;
+	right: 40px;
 }
 
 article.item.rendered.content .loader {
@@ -219,24 +215,23 @@ article.item.rendered.content .loader {
 }
 
 article.item .date {
-	float: left;
+	font-size: 13px;
+	line-height: 18px;
+	margin-bottom: 9px;
 }
 
-article.item.preview .date a {
+article.item.preview .date {
 	color: white;
 	text-shadow: 1px 1px 1px black;	
 }
 
 article.item .favicon {
-	float: right;
 	width: 16px;
 	height: 16px;
+	top: 15px;
+	right: 15px;
+	position: absolute;
 	overflow: hidden;
-}
-
-article.item .favicon img {
-	width: 16px;
-	height: 16px;
 }
 
 article.item.expanded h3.title {
@@ -246,6 +241,7 @@ article.item.expanded h3.title {
 article.item h3.title {
 	max-width: 380px;
 	height: 155px;
+	padding-top: 9px;
 	clear: both;
 	line-height: 24px;
 	word-wrap: break-word;
@@ -284,7 +280,7 @@ article.item .thumbnail {
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 0;
+	z-index: -1;
 	width: 237px;
 	height: 237px;
 	border: 1px solid #fff;
@@ -313,40 +309,36 @@ article.item.preview .thumbnail {
 	filter: alpha(opacity=100);
 }
 
-article.item footer {
-	margin-top: 7px;
-	padding-top: 7px;
-	text-align: right;
-}
-
-article.item footer ul.meta {
-	margin: 0;
-	padding: 0;
+article.item .meta {
 	line-height: 18px;
-}
-
-article.item footer ul.meta li {
+	text-align: right;
 	font-weight: bold;
-	display: inline;
-	padding: 0 0 0 10px;
+	position: absolute;
+	top: 210px;
 }
 
-article.item.preview footer ul.meta li a {
+article.item.preview .meta {
 	color: white;
 	text-shadow: 1px 1px 1px black;
 }
 
-article.item footer li.user {
-	padding: 0;
-}
-
-article.item footer li.user a {
-	float: left;
+article.item .meta.user {
 	display: block;
+	padding: 0;
 	font-weight: bold;
 }
 
-article.item footer li img { 
+article.item .meta.stats {
+	right: 15px;
+	text-align: right;
+}
+
+article.item.preview .meta.stats a {
+	color: white;
+	text-shadow: 1px 1px 1px black;
+}
+
+article.item img.meta { 
 	-khtml-opacity: .50; 
 	-moz-opacity: .50; 
 	-ms-filter: "alpha(opacity=50)"; 

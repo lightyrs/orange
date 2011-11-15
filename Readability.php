@@ -10,7 +10,7 @@
 * More information: http://fivefilters.org/content-only/
 * License: Apache License, Version 2.0
 * Requires: PHP5
-* Date: 2010-10-29
+* Date: 2011-07-22
 * 
 * Differences between the PHP port and the original
 * ------------------------------------------------------
@@ -63,17 +63,17 @@ class Readability
 	* Defined up here so we don't instantiate them repeatedly in loops.
 	**/
 	public $regexps = array(
-		'unlikelyCandidates' => '/combx|comment|community|disqus|extra|foot|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|agegate|pagination|pager|popup|tweet|twitter/i',
-		'okMaybeItsACandidate' => '/and|article|body|column|main|shadow/i',
-		'positive' => '/article|body|content|entry|hentry|main|page|pagination|post|text|blog|story/i',
-		'negative' => '/combx|comment|com-|contact|foot|footer|footnote|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget/i',
-		'divToPElements' => '/<(a|blockquote|dl|div|img|ol|p|pre|table|ul)/i',
+		'unlikelyCandidates' => '/combx|comment|community|disqus|extra|foot|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|agegate|pagination|pager|popup|tweet|twitter|like|share/i',
+		'okMaybeItsACandidate' => '/and|article|section|body|column|main|shadow/i',
+		'positive' => '/article|body|content|entry|hentry|main|page|pagination|post|text|blog|story|interactiveFreeFormMain|wikistyle|wp-post-image|featured|contentPane|cnnVPLeftCol/i',
+		'negative' => '/combx|comment|com-|contact|foot|footer|footnote|masthead|media|meta|navigation|outbrain|promo|related|scroll|share|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|cnn_strylftcexpbx/i',
+		'divToPElements' => '/<(a|blockquote|dl|div|img|ol|p|pre|code|table|ul|iframe|object|embed)/i',
 		'replaceBrs' => '/(<br[^>]*>[ \n\r\t]*){2,}/i',
 		'replaceFonts' => '/<(\/?)font[^>]*>/i',
 		// 'trimRe' => '/^\s+|\s+$/g', // PHP has trim()
 		'normalize' => '/\s{2,}/',
 		'killBreaks' => '/(<br\s*\/?>(\s|&nbsp;?)*){1,}/',
-		'video' => '/http:\/\/(www\.)?(youtube|vimeo)\.com/i',
+		'video' => '/http:\/\/(www\.)?(youtube|vimeo|kickstarter|youtube-nocookie|brightcove)\.com/i',
 		'skipFootnoteLink' => '/^\s*(\[?[a-z0-9]{1,2}\]?|^|edit|citation needed)\s*$/i'
 	);	
 	
@@ -90,13 +90,13 @@ class Readability
 	function __construct($html, $url=null, $domain)
 	{
 		/* Turn all double br's into p's */
-		/* Note, this is pretty costly as far as processing goes. Maybe optimize later. */
 		$html = preg_replace($this->regexps['replaceBrs'], '</p><p>', $html);
 		$html = preg_replace($this->regexps['replaceFonts'], '<$1span>', $html);
 		$html = mb_convert_encoding($html, 'HTML-ENTITIES', "UTF-8");
 		$this->dom = new DOMDocument();
 		$this->dom->preserveWhiteSpace = false;
 		$this->dom->registerNodeClass('DOMElement', 'JSLikeHTMLElement');
+		if (trim($html) == '') $html = '<html></html>';
 		@$this->dom->loadHTML($html);
 		$this->url = $url;
 		$this->domain = $domain;
@@ -132,8 +132,8 @@ class Readability
 	**/
 	public function init()
 	{
+		if (!isset($this->dom->documentElement)) return false;		
 		$this->removeScripts($this->dom);
-		//die($this->getInnerHTML($this->dom->documentElement));
 		
 		// Assume successful outcome
 		$this->success = true;
@@ -274,7 +274,7 @@ class Readability
 		if ($this->body == null)
 		{
 			$this->body = $this->dom->createElement('body');
-			$this->dom->documentElement->appendChild($this->body);
+			$this->dom->appendChild($this->body);
 		}
 		
 		$this->body->setAttribute('id', 'readabilityBody');
@@ -285,6 +285,7 @@ class Readability
 		{
 			$styleTags->item($i)->parentNode->removeChild($styleTags->item($i));
 		}
+
 
 		/* Turn all double br's into p's */
 		/* Note, this is pretty costly as far as processing goes. Maybe optimize later. */
@@ -496,7 +497,8 @@ class Readability
 
 		/* Clean out junk from the article content */
 		$this->cleanConditionally($articleContent, 'form');
-		$this->clean($articleContent, 'object');
+		$this->clean($articleContent, 'input');
+		$this->clean($articleContent, 'button');
 		$this->clean($articleContent, 'h1');
 
 		/**
@@ -506,7 +508,6 @@ class Readability
 		if ($articleContent->getElementsByTagName('h2')->length == 1) {
 			$this->clean($articleContent, 'h2'); 
 		}
-		$this->clean($articleContent, 'iframe');
 
 		$this->cleanHeaders($articleContent);
 
@@ -521,20 +522,13 @@ class Readability
 		{
 			$imgCount    = $articleParagraphs->item($i)->getElementsByTagName('img')->length;
 			$embedCount  = $articleParagraphs->item($i)->getElementsByTagName('embed')->length;
+			$iframeCount  = $articleParagraphs->item($i)->getElementsByTagName('iframe')->length;
 			$objectCount = $articleParagraphs->item($i)->getElementsByTagName('object')->length;
 			
-			if ($imgCount === 0 && $embedCount === 0 && $objectCount === 0 && $this->getInnerText($articleParagraphs->item($i), false) == '')
+			if ($imgCount === 0 && $iframeCount === 0 && $embedCount === 0 && $objectCount === 0 && $this->getInnerText($articleParagraphs->item($i), false) == '')
 			{
 				$articleParagraphs->item($i)->parentNode->removeChild($articleParagraphs->item($i));
 			}
-		}
-
-		try {
-			$articleContent->innerHTML = preg_replace('/<br[^>]*>\s*<p/i', '<p', $articleContent->innerHTML);
-			//articleContent.innerHTML = articleContent.innerHTML.replace(/<br[^>]*>\s*<p/gi, '<p');      
-		}
-		catch (Exception $e) {
-			$this->dbg("Cleaning innerHTML of breaks failed. This is an IE strict-block-elements bug. Ignoring.: " . $e);
 		}
 	}
 	
@@ -628,11 +622,21 @@ class Readability
 			if ($tagName == 'P' || $tagName == 'TD' || $tagName == 'PRE') {
 				$nodesToScore[] = $node;
 			}
+			
+			if ($tagName == 'IFRAME') {
+			  if (preg_match($this->regexps['video'], $node->getAttribute('src'))) {
+					$nodesToScore[] = $node;
+				} else {
+				  $node->parentNode->removeChild($node);
+					$nodeIndex--;
+					continue; 
+				}
+			}
 
 			/* Turn all divs that don't have children block level elements into p's */
 			if ($tagName == 'DIV') {
 				if (!preg_match($this->regexps['divToPElements'], $node->innerHTML)) {
-					//$this->dbg('Altering div to p');
+					$this->dbg('Altering div to p');
 					$newNode = $this->dom->createElement('p');
 					try {
 						$newNode->innerHTML = $node->innerHTML;
@@ -652,7 +656,7 @@ class Readability
 					for ($i = 0, $il = $node->childNodes->length; $i < $il; $i++) {
 						$childNode = $node->childNodes->item($i);
 						if ($childNode->nodeType == 3) { // XML_TEXT_NODE
-							//$this->dbg('replacing text node with a p tag with the same content.');
+							$this->dbg('replacing text node with a p tag with the same content.');
 							$p = $this->dom->createElement('p');
 							$p->innerHTML = $childNode->nodeValue;
 							$p->setAttribute('style', 'display: inline;');
@@ -747,9 +751,19 @@ class Readability
 		if ($topCandidate === null || strtoupper($topCandidate->tagName) == 'BODY')
 		{
 			$topCandidate = $this->dom->createElement('div');
-			$topCandidate->innerHTML = ($page instanceof DOMDocument) ? $page->saveXML($page->documentElement) : $page->innerHTML;
-			$page->innerHTML = '';
-			$page->appendChild($topCandidate);
+			if ($page instanceof DOMDocument) {
+	      if (!isset($page->documentElement)) {
+	      	// we don't have a body either? what a mess! :)
+	      } else {
+	        $topCandidate->innerHTML = $page->documentElement->innerHTML;
+	        $page->documentElement->innerHTML = '';
+	        $page->documentElement->appendChild($topCandidate);
+	      }
+      } else {
+	      $topCandidate->innerHTML = $page->innerHTML;
+	      $page->innerHTML = '';
+	      $page->appendChild($topCandidate);
+      }
 			$this->initializeNode($topCandidate);
 		}
 
@@ -761,6 +775,10 @@ class Readability
 		$articleContent->setAttribute('id', 'readability-content');
 		$siblingScoreThreshold = max(10, ((int)$topCandidate->getAttribute('readability')) * 0.2);
 		$siblingNodes          = $topCandidate->parentNode->childNodes;
+		if (!isset($siblingNodes)) {
+	    $siblingNodes = new stdClass;
+	    $siblingNodes->length = 0;
+    }
 
 		for ($s=0, $sl=$siblingNodes->length; $s < $sl; $s++)
 		{
@@ -852,6 +870,7 @@ class Readability
 		**/
 		if (strlen($this->getInnerText($articleContent, false)) < 250)
 		{
+			if (!isset($this->body->childNodes)) $this->body = $this->dom->createElement('body');
 			$this->body->innerHTML = $this->bodyCache;
 			
 			if ($this->flagIsActive(self::FLAG_STRIP_UNLIKELYS)) {
@@ -884,6 +903,11 @@ class Readability
 		for($i = $scripts->length-1; $i >= 0; $i--)
 		{
 			$scripts->item($i)->parentNode->removeChild($scripts->item($i));
+		}
+		$linkTags = $this->dom->getElementsByTagName('link');
+		for ($i = $linkTags->length-1; $i >= 0; $i--)
+		{
+			$linkTags->item($i)->parentNode->removeChild($linkTags->item($i));
 		}
 	}
 	
@@ -929,6 +953,7 @@ class Readability
 	* @return void
 	*/
 	public function cleanStyles($e) {
+		if (!is_object($e)) return;
 		$elems = $e->getElementsByTagName('*');
 		foreach ($elems as $elem) {
 			$elem->removeAttribute('style');
@@ -1017,7 +1042,7 @@ class Readability
 	*/
 	public function clean($e, $tag) {
 		$targetList = $e->getElementsByTagName($tag);
-		$isEmbed = ($tag == 'object' || $tag == 'embed');
+		$isEmbed = ($tag == 'object' || $tag == 'embed' || $tag == 'iframe');
 		
 		for ($y=$targetList->length-1; $y >= 0; $y--) {
 			/* Allow youtube and vimeo videos through as people usually want to see those. */
@@ -1095,9 +1120,7 @@ class Readability
 				$contentLength = strlen($this->getInnerText($tagsList->item($i)));
 				$toRemove      = false;
 
-				if ( $img > $p ) {
-					$toRemove = true;
-				} else if ($li > $p && $tag != 'ul' && $tag != 'ol') {
+				if ($li > $p && $tag != 'ul' && $tag != 'ol') {
 					$toRemove = true;
 				} else if ( $input > floor($p/3) ) {
 					$toRemove = true; 

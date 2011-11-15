@@ -1,110 +1,92 @@
 <!doctype html>
-<!--[if lt IE 7]> <html class="ie6 ie" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="ie7 ie" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="ie8 ie" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="preloading"> <!--<![endif]-->
+<html lang="en" class="preloading" manifest="orange.appcache">
 <head>
-	<base target='_blank' /> 
-  <meta charset="utf-8">
+  <link rel="dns-prefetch" href="//s3.amazonaws.com">
+  <link rel="dns-prefetch" href="//news.ycombinator.com">
 
   <title>orange</title>
   <meta name="description" content="Hacker News Reader">
   <meta name="author" content="Harris Novick">
 
-  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- CSS: implied media=all -->
-  <!-- CSS concatenated and minified via ant build script-->
-	<link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/reader.css">
-	<link rel="stylesheet" href="css/github.css">
-  <!-- end CSS-->
-	
-	<!--[if lt IE 9]>
-	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+  <link rel="stylesheet" href="css/reader.css">
+  <link rel="stylesheet" href="css/github.css">
+
+  <base target="_blank">
 </head>
 
 <body>
   <div class="container-fluid">
-		<section class="sidebar" id="sidebar" role="sidebar">
-			<h1>
-				<span id="spinner_one"></span>
-				<a href="." target="_self">orange</a>
-			</h1>
-			<nav>
-				<ul>
-					<li><a href="#" data-search="front">HN</a></li>					
-					<li><a href="#" data-search="ask">Ask HN</a></li>					
-					<li><a href="#" data-search="show">Show HN</a></li>
-					<li><a href="#" class="search">Search HN</a></li>
-					<ul class="searches"></ul>
-				</ul>
-			</nav>
-		</section>
-    <section id="article_grid" class="content clearfix">
-			<!-- articles rendered here -->
+    <section class="sidebar" id="orange_sidebar" role="sidebar">
+      <h1>
+        <span id="spinner_one"></span>
+        <a href="." target="_self">orange</a>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="#" data-search="front">HN</a></li>         
+          <li><a href="#" data-search="ask">Ask HN</a></li>         
+          <li><a href="#" data-search="show">Show HN</a></li>
+          <li><a href="#" class="search">Search HN</a></li>
+          <ul class="searches"></ul>
+        </ul>
+      </nav>
     </section>
-		<div id="search" class="popover right">
-		  <div class="arrow"></div>
-		  <div class="inner">
-		    <div class="content">
-					<input class="medium query" size="30" type="text" />
-					<input type="submit" class="btn primary" value="Search HN" />
-		    </div>
-		  </div>
-		</div>
-  </div> <!-- end of #container -->
+    <section id="article_grid" class="content">
+      <!-- articles rendered here -->
+    </section>
+    <div id="search" class="popover right">
+      <div class="arrow"></div>
+      <div class="inner">
+        <div class="content">
+          <input class="medium query" size="30" type="text" />
+          <input type="submit" class="btn primary" value="Search HN" />
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<div id="reader">
-		<div id="reader_background"></div>
-		<div class="shadow top"></div>
-		<div id="article_container">
-			<article>
-				<div class="page">					
-					<h2 id="article_title"></h2>
-					<div id="page_content"></div>
-					<div id="article_comments"></div>
-				</div>
-			</article>		
-		</div>
-		<div class="shadow bottom"></div>	
-	</div>
-	
-	<div id="preload">
-		<img src="http://harrisnovick.com/orange/img/ajax-loader.gif" alt="" width="16" height="16" />
-		<img src="img/upvotes.png" alt="" width="11" height="11" />
-		<img src="img/comments.png" alt="" width="13" height="11" />
-		<img src="img/scrollbar-thumb.png" alt="" width="21" height="110" />
-		<img src="img/scrollbar-track.png" alt="" width="21" height="104" />
-		<img src="img/reader-shadow-top.png" alt="" width="154" height="24" />
-		<img src="img/reader-shadow-bottom.png" alt="" width="154" height="24" />
-	</div>
-
-  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
-
-	<script src="js/mylibs/spin.min.js"></script>
-	<script src="js/mylibs/date.extensions.min.js"></script>
-	<script src="js/mylibs/jquery.myimgscale-0.2.min.js"></script>
-	<script src="js/mylibs/jquery.viewport.min.js"></script>
-	<script src="js/mylibs/jquery.scrollstop.min.js"></script>
-	<script src="js/mylibs/jquery.imagefit.min.js"></script>
-	<script src="js/mylibs/highlight.pack.js"></script>
-	
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="js/script.js"></script>
-  <!-- end scripts-->
-
-  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
-       chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7 ]>
-    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
-  <![endif]-->
+  <div id="reader">
+    <div id="hud_container">
+      <div id="reader_hud">
+        <a class="comments hidden" href="#" title="Comments">Comments</a>
+        <a class="source" href="#" title="">Source</a>
+        <a class="style" href="#" title="Style">Style</a>
+        <a class="bookmark" href="#" title="Bookmark">Bookmark</a>
+        <a class="share" href="#" title="Share">Share</a>
+      </div>
+    </div>
+    <div class="shadow top"></div>
+    <div id="article_container">
+      <article></article>    
+    </div>
+    <div class="shadow bottom"></div>
+  </div>
   
+  <div id="preload">
+    <img src="img/ajax-loader.gif" alt="" width="16" height="16" />
+    <img src="img/upvotes.png" alt="" width="11" height="11" />
+    <img src="img/comments.png" alt="" width="13" height="11" />
+    <img src="img/scrollbar-thumb.png" alt="" width="21" height="110" />
+    <img src="img/scrollbar-track.png" alt="" width="21" height="104" />
+    <img src="img/reader-shadow-top.png" alt="" width="154" height="24" />
+    <img src="img/reader-shadow-bottom.png" alt="" width="154" height="24" />
+  </div>
+
+  <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js"><\/script>')</script>
+
+  <script src="js/mylibs/spin.min.js"></script>
+  <script src="js/mylibs/date.extensions.min.js"></script>
+  <script src="js/mylibs/jquery.myimgscale-0.2.min.js"></script>
+  <script src="js/mylibs/jquery.viewport.min.js"></script>
+  <script src="js/mylibs/jquery.scrollstop.min.js"></script>
+	<script defer src="js/mylibs/fitvids.min.js"></script>
+  <script defer src="js/mylibs/highlight.pack.js"></script>
+  
+  <script defer src="js/script.js"></script>
 </body>
 </html>

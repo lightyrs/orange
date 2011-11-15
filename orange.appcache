@@ -1,0 +1,47 @@
+CACHE MANIFEST
+# 2011-11-10:v1
+
+# Explicitly cached 'master entries'.
+CACHE:
+/favicon.ico
+# index.html
+# css/bootstrap.css
+# css/github.css
+# css/reader.css
+# css/style.css
+css/fonts/VeraMono-webfont.eot
+css/fonts/VeraMono-webfont.svg
+css/fonts/VeraMono-webfont.ttf
+css/fonts/VeraMono-webfont.woff
+img/1x1.png
+img/ajax-loader.gif
+img/comments.png
+img/icon-bookmark.png
+img/icon-comments.png
+img/icon-share.png
+img/icon-source.png
+img/icon-style.png
+img/reader-shadow-bottom.png
+img/reader-shadow-top.png
+img/scrollbar-thumb.png
+img/scrollbar-track.png
+img/shadow.png
+img/upvotes.png
+js/libs/jquery-1.7.min.js
+js/mylibs/date.extensions.min.js
+js/mylibs/highlight.pack.js
+js/mylibs/jquery.myimgscale-0.2.min.js
+js/mylibs/jquery.scrollstop.min.js
+js/mylibs/jquery.viewport.min.js
+js/mylibs/spin.min.js
+# js/script.js
+
+# Resources that require the user to be online.
+NETWORK:
+*
+
+# static.html will be served if main.py is inaccessible
+# offline.jpg will be served in place of all images in images/large/
+# offline.html will be served in place of all other .html files
+FALLBACK:
+# *.html /offline.html
